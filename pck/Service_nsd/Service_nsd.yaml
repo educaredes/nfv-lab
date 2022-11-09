@@ -1,0 +1,30 @@
+nsd-catalog:
+  nsd:
+  - constituent-vnfd:
+    - member-vnf-index: '1'
+      vnfd-id-ref: vclass
+    - member-vnf-index: '2'
+      vnfd-id-ref: vcpe
+    description: Residential Network Service (RENES) with two VNFs.
+    id: vCPE
+    name: vCPE
+    short-name: vCPE
+    vendor: UPM
+    version: '1.0'
+    vld:
+    - description: DATA VL
+      id: data_vl
+      mgmt-network: 'true'
+      name: data_vl
+      short-name: data_vl
+      type: ELAN
+      vendor: Universidad Politecnica de Madrid
+      version: '0.1'
+      vim-network-name: default
+      vnfd-connection-point-ref:
+      - member-vnf-index-ref: '1'
+        vnfd-connection-point-ref: eth1
+        vnfd-id-ref: vclass
+      - member-vnf-index-ref: '2'
+        vnfd-connection-point-ref: eth1
+        vnfd-id-ref: vcpe
