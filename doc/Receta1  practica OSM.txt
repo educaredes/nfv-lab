@@ -12,19 +12,9 @@ sudo ovs-vsctl add-br AccessNet2
 
 sudo ovs-vsctl add-br ExtNet2
 
-sudo cat <<EOF | microk8s kubectl -n 7b2950d8-f92b-4041-9a55-8d1837ad7b0a create -f -
-apiVersion: "k8s.cni.cncf.io/v1"
-kind: NetworkAttachmentDefinition
-metadata:
- name: bridgeosm
-spec:
-  config: '{
-    "cniVersion": "0.4.0",
-     "type": "bridge"
-  }'
-EOF
+export OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
 
-sudo cat <<EOF | microk8s kubectl -n 7b2950d8-f92b-4041-9a55-8d1837ad7b0a create -f -
+sudo cat <<EOF | microk8s kubectl -n $OSMNS create -f -
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
@@ -39,7 +29,7 @@ spec:
   }'
 EOF
 
-sudo cat <<EOF | microk8s kubectl -n 7b2950d8-f92b-4041-9a55-8d1837ad7b0a create -f -
+sudo cat <<EOF | microk8s kubectl -n $OSMNS create -f -
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:

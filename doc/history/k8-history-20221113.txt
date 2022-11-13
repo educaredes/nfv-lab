@@ -1,0 +1,263 @@
+    1  rm .bash_history 
+    2  /usr/local/bin/clean_and_halt 
+    3  sudo hostnamectl set-hostname k8s
+    4  sudo sed -i 's/vnxlab/osm/g' /etc/hosts
+    5  sudo vi /etc/netplan/01-netcfg.yaml
+    6  sudo netplan apply 
+    7  sudo snap install microk8s --classic --channel=1.21
+    8  sudo usermod -a -G microk8s $USER
+    9  sudo chown -f -R $USER ~/.kube
+   10  sudo microk8s.enable storage dns
+   11  sudo microk8s.enable metallb:192.168.56.11-192.168.56.11
+   12  sudo reboot
+   13  ifconfig
+   14  microk8s status --wait-ready
+   15  sed -h
+   16  sed -i ?
+   17  microk8s status --wait-ready
+   18  microk8s kubectl get nodes
+   19  microk8s kubectl get services
+   20  microk8s enable helm3
+   21  microk8s enable helm
+   22  microk8s config > k8s-cluster.yaml
+   23  sed -i 's/10.0.2.15/192.168.64.11/' k8s-
+   24  sed -i 's/10.0.2.15/192.168.56.11/' k8s-cluster.yaml
+   25  scp k8s-cluster.yaml upm@192.168.56.12:~
+   26  sudo /etc/hosts
+   27  sudo vi /etc/hosts
+   28  ifconfig
+   29  sudo reboot
+   30  cd upm
+   31  ls
+   32  pwd
+   33  ls
+   34  cd tmp
+   35  ls
+   36  cd ..
+   37  sudo vnx -s 
+   38  sudo vnx -s --show-status
+   39  sudo vnx  --show-status
+   40  lxc-attach -n h11 -e /usr/bin/bash
+   41  sudo lxc-attach -n h11 -e /usr/bin/bash
+   42  sudo vnx -s nfv3_home_lxc_ubuntu64 -b --show-status
+   43  sudo vnx -s nfv3_home_lxc_ubuntu64 -b -P
+   44  sudo vnx  --show-status
+   45  sudo vnx -s nfv3_server_lxc_ubuntu64 -b -P
+   46  sudo vnx -s nfv3_simple_lxc_ubuntu64 -b -P
+   47  sudo vnx -s simple_lxc_ubuntu64 -b -P
+   48  ls
+   49  history
+   50  ls
+   51  cd Downloads/
+   52  ls
+   53  cd NFV-LAB-2020/
+   54  ls
+   55  vi init.sh 
+   56  ./init.sh 
+   57  sudo microk8s kubectl status
+   58  sudo microk8s kubectl --help
+   59  sudo microk8s kubectl show
+   60  sudo microk8s kubectl get pods
+   61  sudo microk8s kubectl --help 
+   62  sudo microk8s kubectl --help |less
+   63  sudo microk8s kubectl get namespace
+   64  export $OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
+   65  export OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
+   66  sudo microk8s kubectl -n $OSMNS get pods
+   67* 
+   68  sudo microk8s kubectl exec -i -n $OSMNS -t $ACCESS -- /bin/bash
+   69  sudo microk8s kubectl exec -i -n $OSMNS -t $CPE -- /bin/bash
+   70  sudo microk8s kubectl -n $OSMNS get pods
+   71  sudo microk8s kubectl -n $OSMNS get pods | grep sudo microk8s kubectl -n $OSMNS get pods
+   72* sudo microk8s kubectl -n $OSMNS get pods | grep  helmchartrepo-accesschart-0058293679 
+   73  sudo microk8s kubectl -n $OSMNS get pods | awk
+   74  sudo microk8s kubectl -n $OSMNS get pods | awk {print $1}
+   75  sudo microk8s kubectl -n $OSMNS get pods | awk '{print $1}'
+   76  sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0058293679 | awk '{print $1}'
+   77* sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0058293679 | awk '{print $1}' | sudo microk8s kubectl exec -i -n $OSMNS -t $( -- /bin/bash
+   78  sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0058293679 | awk '{print $1}' | export ACCESS1=$(<dev/stdin)
+   79  sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0058293679 | awk '{print $1}' | export ACCESS1=$(</dev/stdin)
+   80  echo $ACCESS1
+   81* sudo microk8s kubectl -n $OSMNS get pods | grep hel | awk '{print $1}' 
+   82  export ACCESS1={sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0058293679 | awk '{print $1}'}
+   83  export ACCESS1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0058293679 | awk '{print $1}')
+   84  echo $ACCESS1
+   85  sudo microk8s kubectl exec -i -n $OSMNS -t $ACCESS1 -- /bin/bash
+   86  echo $ACCESS1
+   87  history | grep OSMNS
+   88  export VCPE1_CPE=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart-0062000606 | awk '{print $1}')
+   89  echo $VCPE1_CPE
+   90  sudo microk8s kubectl exec -i -n $OSMNS -t $VCPE1_CPE -- /bin/bash
+   91  sudo microk8s kubectl -n 7b2950d8-f92b-4041-9a55-8d1837ad7b0a cp /usr/bin/vnx_config_nat $VCEP1_CPE:/usr/bin
+   92  sudo microk8s kubectl -n 7b2950d8-f92b-4041-9a55-8d1837ad7b0a cp /usr/bin/vnx_config_nat $VCPE1_CPE:/usr/bin
+   93  sudo microk8s kubectl exec -i -n $OSMNS -t $VCPE1_CPE -- /bin/bash
+   94  export VCPE1_ACCESS=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0099248550 | awk '{print $1}')
+   95  export VCPE1_CPE=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart-0081785659 | awk '{print $1}')
+   96  sudo microk8s kubectl exec -i -n $OSMNS -t $VCPE1_CPE -- /bin/bash
+   97  export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a
+   98  microk8s kubectl -n $OSMNS cp /usr/bin/vnx_config_nat $VCPE1_CPE:/usr/bin
+   99* 
+  100  microk8s kubectl -n $OSMNS cp /usr/bin/vnx_config_nat $VCPE1_CPE:/usr/bin
+  101  sudo microk8s kubectl exec -n $OSMNS -it $VCPE1_CPE -- /bin/bash
+  102  microk8s kubectl -n $OSMNS cp conf/dhcpd-1.conf $VCPE1_CPE:/etc/dhcp/dhcpd.conf
+  103  diff conf/dhcpd-1.conf ~/escenarios/nfv-lab/conf/dhcpd-1.conf 
+  104  cp conf/dhcpd-1.conf ~/escenarios/nfv-lab/conf/dhcpd-1.conf 
+  105  diff conf/dhcpd-1.conf ~/escenarios/nfv-lab/conf/dhcpd-1.conf 
+  106  sudo microk8s kubectl exec -n $OSMNS -it $VCPE1_CPE -- /bin/bash
+  107  export OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
+  108  export VCPE1_CPE=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpe-0007698333 | awk '{print $1}')
+  109  sudo microk8s kubectl exec -n $OSMNS -it $VCPE1_CPE -- /bin/bash
+  110  sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpe-0007698333 | awk '{print $1}'
+  111  sudo microk8s kubectl -n $OSMNS get pods
+  112  sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpe-0007698333 | awk '{print $1}'
+  113  sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpe-0007698333 | awk '{print $0}'
+  114  sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpe-0007698333 
+  115  sudo microk8s kubectl exec -n $OSMNS -it $VCPE1_CPE -- /bin/bash
+  116  export VCPE1_CPE=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpe-0007698333 | awk '{print $1}')
+  117  export VCPE1_CPE=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart-0007698333 | awk '{print $1}')
+  118  sudo microk8s kubectl exec -n $OSMNS -it $VCPE1_CPE -- /bin/bash
+  119  export OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
+  120  export VCPE1_ACCESS=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart | awk '{print $1}')
+  121  sudo microk8s kubectl exec -n $OSMNS -it $VCPE1_ACCESS -- /bin/bash
+  122  cd ~/escenarios/nfv-la
+  123  cd ~/escenarios/nfv-lab
+  124  ls
+  125  microk8s kubectl -n $OSMS -it $VCPE1_ACCESS hostname -I 
+  126  microk8s kubectl -n $OSMNS -it $VCPE1_ACCESS hostname -I 
+  127  echo $OSMNS
+  128  echo $VCPE1_ACCESS
+  129  microk8s kubectl exec -n $OSMNS -it $VCPE1_ACCESS hostname -I 
+  130  microk8s kubectl exec -n $OSMNS -it $VCPE1_ACCESS -- hostname -I 
+  131  ./vcpe_start.sh
+  132  ./vcpe-1.sh 
+  133  echo $VCPE1_ACCESS 
+  134  ./vcpe-1.sh 
+  135  export VCPE1_CPE=helmchartrepo-cpechart-0012431556-77d845b894-46gkg
+  136  ./vcpe-1.sh 
+  137  vi shell_vcpe.sh
+  138  vi shell_vaccess.sh
+  139  cat shell_vcpe.sh > shell_vaccess.sh
+  140  vi shell_vaccess.sh 
+  141  chmod a+w shell* 
+  142  ./shell_vaccess.sh 
+  143  ./shell_vcpe.sh 
+  144  echo $VCPE
+  145  vi shell_vaccess.sh 
+  146  rm shell_v*
+  147  ls
+  148  microk8s kubectl -n $OSMNS -it $VCPE1_CPE -- /bin/bash
+  149  microk8s kubectl exec -n $OSMNS -it $VCPE1_CPE -- /bin/bash
+  150  vi podsh
+  151  chmod a+x podsh
+  152  ./podsh
+  153  vi podsh
+  154  ./podsh
+  155  ./podsh $VCPE1_CPE
+  156  [200~export OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
+  157  export VCPE1_CPE=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart | awk '{print $1}')~
+  158  export VCPE1_ACCESS=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart | awk '{print $1}')
+  159  ./vcpe-1.sh 
+  160  export VCPE1_CPE=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart | awk '{print $1}')
+  161  echo $VCPE1_CPE
+  162  export VCPE1_CPE=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart | awk '{print $1}')
+  163  export VCPE1_ACCESS=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart | awk '{print $1}')
+  164  echo $VCPE1_ACCESS
+  165  ./vcpe-1.sh 
+  166  export VCPE1=$VCPE1_CPE
+  167  export VACCESS1=$VCPE1_ACCESS
+  168  export VACC1=$VCPE1_ACCESS
+  169  vi vcpe-1.sh 
+  170  ./podsh $VCPE1
+  171  touch kk
+  172  vi kk
+  173  fi
+  174  sed -i /homeint/vxlan_sys_8742/ kk
+  175  sed -i /homeint/vxlan_sys_8742/g kk
+  176  sed -i /homeint/vxlan_sys_8742/g ./kk
+  177  sed -i '/homeint/vxlan_sys_8742/' ./kk
+  178  alias 
+  179  sed -i 's/homeint/vxlan_sys_8742/' ./kk
+  180  less kk
+  181  export VCPE1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart | awk '{print $1}')
+  182  ./podsh $VCPE1
+  183  export VACC1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart | awk '{print $1}')
+  184  ./vcpe-1.sh 
+  185  ./podsh $VCPE1
+  186  export VCPE1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart | awk '{print $1}')
+  187  export VACC1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart | awk '{print $1}')
+  188  ./vcpe-1.sh 
+  189  ./podsh $VCPE1
+  190  export VCPE1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart | awk '{print $1}')
+  191  export VACC1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart | awk '{print $1}')
+  192  ./vcpe-1.sh 
+  193  ./podsh $VCPE1
+  194  echo $VACCESS1
+  195  echo $VACC1
+  196  ./podsh $VCPE1
+  197  vi vcpe-1.sh 
+  198  echo $VACCESS
+  199  echo $VACC1
+  200  echo $VCPE1
+  201  export OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
+  202  export VACC1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart | awk '{print $1}')
+  203  export VCPE1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart | awk '{print $1}')
+  204  ./vcpe-1.sh 
+  205  xport OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
+  206  export VACC2=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0023192822 | awk '{print $1}')
+  207  export VCPE2=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart-0091594704 | awk '{print $1}')
+  208  ./vcpe-2.sh.old 
+  209  export VACC2=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0075479683 | awk '{print $1}')
+  210  echo $VACC2
+  211  export VCPE2=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart-0085876701 | awk '{print $1}')
+  212  echo $VCPE1
+  213  echo $VCPE2
+  214  export VCPE2=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart-00858760t1 | awk '{print $1}')
+  215  ./vcpe-2.sh.old 
+  216  echo $VCPE2
+  217  export VACC2=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0060807410 | awk '{print $1}')
+  218  export VCPE2=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart-0017990969 | awk '{print $1}')
+  219  ./vcpe-2.sh.old 
+  220  ./podsh $VCPE2
+  221  ./podsh $VCPE1
+  222  ./podsh $VCPE2
+  223  export VACC1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart | awk '{print $1}')
+  224  export VCPE1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart | awk '{print $1}')
+  225  ./vcpe-1.sh 
+  226  microk8s kubectl -n $OSMNS get pods 
+  227  microk8s kubectl describe pods helmchartrepo-accesschart-0075479683-6fb4d9967f-jppt8
+  228  microk8s kubectl describe pods -n $OSMNS helmchartrepo-accesschart-0075479683-6fb4d9967f-jppt8
+  229  microk8s kubectl -n $OSMNS get pods 
+  230  microk8s kubectl -n $OSMNS delete pod -l helmchartrepo-accesschart-0075479683
+  231  microk8s kubectl -n $OSMNS delete pod -l name=helmchartrepo-accesschart-0075479683
+  232  microk8s kubectl -n $OSMNS delete pod helmchartrepo-accesschart-0075479683-6fb4d9967f-jppt8
+  233  microk8s kubectl -n $OSMNS delete pod mygitrepo-osm1-0005782100-6564b59999-4tkbs
+  234  microk8s kubectl -n $OSMNS get pods 
+  235  microk8s kubectl -n $OSMNS get services
+  236  microk8s kubectl -n $OSMNS delete pods --all
+  237  microk8s kubectl -n $OSMNS get pods
+  238  kubectl get deployments -n $OSMNS
+  239  microk8s kubectl get deployments -n $OSMNS
+  240  microk8s kubectl delete -n $OSMNS deployment helmchartrepo-accesschart-0075479683
+  241  microk8s kubectl delete -n $OSMNS deployment mygitrepo-osm1-0005782100
+  242  microk8s kubectl get deployments -n $OSMNS
+  243  export VCPE1=helmchartrepo-cpechart-0043347803
+  244  export VACC1=helmchartrepo-accesschart-0038833652
+  245  ./vcpe-1.sh 
+  246  vi vcpe-1.sh 
+  247  vi vcpe_start.sh
+  248  vi vcpe-1.sh 
+  249  ./vcpe-1.sh 
+  250  vi vcpe-1.sh 
+  251  microk8s kubectl get deployments -n $OSMNS
+  252  export VACC1=helmchartrepo-accesschart-0058163765
+  253  export VCPE1=helmchartrepo-cpechart-0057417935
+  254  ./vcpe-1.sh 
+  255  microk8s kubectl exec -n $OSMNS -it deploy/$VCPE1 -- /bin/bash
+  256  microk8s kubectl -n $OSMNS get pods 
+  257  export VCPEPOD=helmchartrepo-cpechart-0057417935-d6b6777b9-hqsnp
+  258  microk8s kubectl -n $OSMNS cp conf/dhcpd-1.conf $VCPEPOD:/etc/dhcp/dhcpd.conf
+  259  microk8s kubectl exec -n $OSMNS -it deploy/$VCPE1 -- /bin/bash
+  260  export VCPE1=helmchartrepo-cpechart-0089571362
+  261  export VACC1=helmchartrepo-accesschart-0068697021
+  262  ./renes1.sh 
+  263  history > doc/history/k8-history-20221113.txt
