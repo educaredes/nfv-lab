@@ -1,0 +1,276 @@
+    1  history
+    2  mkdir -p $HOME/.bash_completion.d
+    3  _OSM_COMPLETE=bash_source osm > $HOME/.bash_completion.d/osm-complete.sh
+    4  vi $HOME/.bashrc
+    5  vi .bashrc
+    6  source .bashrc
+    7  less .bash_completion.d/osm-complete.sh 
+    8  osm ns-create --ns-name vCPE --nsd_name nsred1 --vim_account dummy-vim
+    9  osm ns-create --ns-name vCPE --nsd-name nsred1 --vim-account dummy-vim
+   10  osm ns-create --ns_name vCPE --nsd_name nsred1 --vim_account dummy-vim
+   11  osm ns-create --ns_name vCPE --nsd_name nsred1 --vim_account dummy_vim
+   12  osm k8scluster-list
+   13  osm ns-create --ns_name vCPE2 --nsd_name nsred1 --vim_account dummy_vim
+   14  osm ns-op-list
+   15  osm ns-op-show
+   16  osm ns-show
+   17  osm ns-list
+   18  osm ns-op-list 5c39b617-a381-4068-a9b3-c8fc15fed6ef
+   19  osm vnf-list
+   20  osm vnf-list -h
+   21  osm vnf-list --long
+   22* osm 
+   23  osm vnf-list
+   24  osm vnf-show 5f1ab14a-c809-4d52-9d5e-d532526beb1e
+   25  osm vnf-show 5f1ab14a-c809-4d52-9d5e-d532526beb1e | grep name
+   26* osm vnf-show 5f1ab14a-c809-4d52-9d5e-d532526beb1e | grep name | grep access |
+   27  osm vnf-show --help
+   28  osm vnf-show --filter service
+   29  osm vnf-show --filter service 5f1ab14a-c809-4d52-9d5e-d532526beb1e | grep name | grep access
+   30  osm vnf-show --filter service 5f1ab14a-c809-4d52-9d5e-d532526beb1e 
+   31  osm vnf-show --filter name 5f1ab14a-c809-4d52-9d5e-d532526beb1e 
+   32  osm vnf-show  5f1ab14a-c809-4d52-9d5e-d532526beb1e 
+   33  osm vnf-show  --filter kdur.services5f1ab14a-c809-4d52-9d5e-d532526beb1e 
+   34  osm vnf-show  --filter kdur.services 5f1ab14a-c809-4d52-9d5e-d532526beb1e 
+   35  osm vnf-show  --filter kdur 5f1ab14a-c809-4d52-9d5e-d532526beb1e 
+   36  osm vnf-show  --filter kdur_services 5f1ab14a-c809-4d52-9d5e-d532526beb1e 
+   37* osm vnf-show    5f1ab14a-c809-4d52-9d5e-d532526beb1e 
+   38  osm vnf-show --help
+   39  osm vnf-show --help
+   40  osm vnf-show --literal 5f1ab14a-c809-4d52-9d5e-d532526beb1e | grep name | grep access
+   41  osm vnf-show --literal 5f1ab14a-c809-4d52-9d5e-d532526beb1e
+   42  osm vnf-show --literal 5f1ab14a-c809-4d52-9d5e-d532526beb1e | grep name | grep access |  awk '{split($0,a,":");print a[1]}'
+   43  osm vnf-show --literal 5f1ab14a-c809-4d52-9d5e-d532526beb1e | grep name | grep access |  awk '{split($0,a,":");print a[2]}'
+   44  osm ns-list
+   45  osm ns-list --literal
+   46  osm ns-list --help
+   47  osm ns-list --long
+   48  osm ns-list 
+   49  osm ns-list | grep vCPE
+   50  osm ns-list | grep "vCPE "
+   51  osm ns-list | grep "vCPE " |osm vnf-show --literal 5f1ab14a-c809-4d52-9d5e-d532526beb1e | grep name | grep access |  awk '{split($0,a,":");print a[2]}'
+   52  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}'
+   53  osm ns-list | grep "vCPE " |osm vnf-show --literal --  | grep name | grep access |  awk '{split($0,a,":");print a[2]}'
+   54  osm ns-list | grep "vCPE " |osm vnf-show --literal $(</dev/stdin)  | grep name | grep access |  awk '{split($0,a,":");print a[2]}'
+   55  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-show --literal $(</dev/stdin)  | grep name | grep access |  awk '{split($0,a,":");print a[2]}'
+   56  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}'
+   57  osm-vnf list
+   58  osm vnf list
+   59  osm vnf-list
+   60  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --filter $(</dev/stdin) 
+   61  osm vnf-list --help
+   62  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns  $(</dev/stdin) 
+   63  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns  $(</dev/stdin) | awk '{split($0,a,":");print a[2]}'
+   64  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns  $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[1]}'
+   65  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns  $(</dev/stdin) | grep "access" 
+   66  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns  $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}'
+   67  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns  $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(<dev/sdtin) | grep name | grep access |  awk '{split($0,a,":");print a[2]}'
+   68  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns  $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/sdtin) | grep name | grep access |  awk '{split($0,a,":");print a[2]}'
+   69  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns  $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' 
+   70  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns  $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) 
+   71  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns  $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep access | awk '{split($0,a,":");print a[2]}'
+   72  osm helm
+   73  osm repo-list
+   74  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns  $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep access | awk '{split($0,a,":");print a[2]}'
+   75  osm ns-list
+   76  osm repo-list
+   77  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin)
+   78  osm ns-list
+   79  osm ns-delete 0200c51d-56d9-4717-80fd-647911c0dedb
+   80  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep access | awk '{split($0,a,":");print a[2]}'
+   81  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep cpe | awk '{split($0,a,":");print a[2]}'
+   82  osm ns-list | grep "vCPE " | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep cpe | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep cpe | awk '{split($0,a,":");print a[2]}'
+   83  osm ns-delete vCPE
+   84  history | grep ns-create
+   85  osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy-vim
+   86  osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim
+   87  osm ns-list | grep "vcpe1" | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep access | awk '{split($0,a,":");print a[2]}'
+   88  osm ns-list | grep "vcpe1" | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "cpe" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep cpe | awk '{split($0,a,":");print a[2]}'
+   89  history 
+   90  vi $HOME/.bashrc
+   91  cat '. .bash_completion.d/osm-complete.sh' >> $HOME/.bashrc
+   92  cat ". .bash_completion.d/osm-complete.sh" >> $HOME/.bashrc
+   93  echo '. .bash_completion.d/osm-complete.sh' >> $HOME/.bashrc
+   94  vi $HOME/.bashrc
+   95  history 
+   96  osm ns-list
+   97  osm ns-delete vcpe1
+   98  batcat
+   99  ls
+  100  cd Downloads/
+  101  ls
+  102  helm
+  103  history
+  104  osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim
+  105  osm ns-list | grep "vcpe1" | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "cpe" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep cpe | awk '{split($0,a,":");print a[2]}'
+  106  osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim
+  107  osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim
+  108  osm ns-list | grep "vcpe1" | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "cpe" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep cpe | awk '{split($0,a,":");print a[2]}'
+  109  osm ns-list | grep "vcpe1" | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep access | awk '{split($0,a,":");print a[2]}'
+  110  osm ns-list
+  111  osm ns-delete f026f7a8-3a53-410a-ad30-72c4fd9ebd1a
+  112  osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim
+  113  osm ns-delete 957c343d-3322-4723-9611-e55f4a536d8b
+  114  osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim
+  115  osm ns-list
+  116  osm ns-list
+  117  watch -4 ns-list
+  118  watch -n 5 ns-list
+  119  watch -n 5 osm ns-list
+  120  osm ns-delete 3b617ba5-c0e4-489c-9e27-47744cdb18de
+  121  export LASTNS=$(osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim)
+  122  echo $LASTNS
+  123  osm ns-delete $LASTNS
+  124  export LASTNS=$(osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim)
+  125  watch -n 5 osm ns-list
+  126  osm ns-delete $LASTNS
+  127  watch -n 5 osm ns-list
+  128  export LASTNS=$(osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim)
+  129  watch -n 5 osm ns-list
+  130  osm ns-delete $LASTNS
+  131  export LASTNS=$(osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim)
+  132  watch -n 5 osm ns-list
+  133  osm ns-delete $LASTNS
+  134  watch -n 5 osm ns-list
+  135  export LASTNS=$(osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim)
+  136  watch -n 5 osm ns-list
+  137  export NSTEXT=vcpe1
+  138  osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep -E 'access|cpe' | awk '{split($0,a,":");print a[2]}'
+  139  osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep -E 'access|cpe' | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep -E 'access|cpe' | awk '{split($0,a,":");print a[2]}'
+  140  for i in access cpe; do   osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep $i | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep $i | awk '{split($0,a,":");print a[2]}'; done
+  141  for i in access cpe; do    osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep $i | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep $i | awk '{split($0,a,":");print a[2]}'; done
+  142  export $NSTEXT=vcpe2
+  143  export LASTNS=$(osm ns-create --ns_name vcpe2 --nsd_name nsred1 --vim_account dummy_vim)
+  144  watch -n 5 osm ns-list
+  145  for i in access cpe; do    osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep $i | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep $i | awk '{split($0,a,":");print a[2]}'; done
+  146  export NSTEST=vcpe2
+  147  for i in access cpe; do    osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep $i | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep $i | awk '{split($0,a,":");print a[2]}'; done
+  148  osm ns-delete $LASTNS
+  149  watch -n 5 osm ns-list
+  150  export LASTNS=$(osm ns-create --ns_name vcpe2 --nsd_name nsred1 --vim_account dummy_vim)
+  151  watch -n 5 osm ns-list
+  152  export NSTEXT=vcpe2
+  153  for i in access cpe; do    osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep $i | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep $i | awk '{split($0,a,":");print a[2]}'; done
+  154  osm ns-delete $LASTNS
+  155  watch -n 5 osm ns-list
+  156  watch -n 5 osm ns-list
+  157  osm ns-delete $LASTNS
+  158  watch -n 5 osm ns-list
+  159  export NSTEST=vcpe2
+  160  export LASTNS=$(osm ns-create --ns_name vcpe2 --nsd_name nsred1 --vim_account dummy_vim)
+  161  watch -n 5 osm ns-list
+  162  for i in access cpe; do    osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep $i | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep $i | awk '{split($0,a,":");print a[2]}'; done
+  163  cd 
+  164  cd escenarios/
+  165  cd nfv-lab/
+  166  l
+  167  ls
+  168  vi README.md 
+  169  vi Readme 
+  170  rm Readme 
+  171  ls -al
+  172  rm index.yaml 
+  173  vi helm/accesschart/templates/deployment.yaml helm/cpechart/templates/deployment.yaml 
+  174  cd helm/accesschart/
+  175  ls
+  176  vi Chart.yaml 
+  177  vi values.yaml 
+  178  grep -R osm 
+  179  cd ..
+  180  vi helm/accesschart/templates/deployment.yaml helm/cpechart/templates/deployment.yaml 
+  181  cd ..
+  182  cd helm
+  183  ls
+  184  cd test
+  185  ls -al
+  186  vi templates/deployment.yaml 
+  187  cd ..
+  188  cd ..
+  189  vi helm/accesschart/templates/deployment.yaml helm/cpechart/templates/deployment.yaml 
+  190  cd helm
+  191  helm lint accesschart
+  192  helm lint cpechart/
+  193  cd ..
+  194  helm package helm/accesschart
+  195  helm package helm/cpechart
+  196  helm repo index --url https://educaredes.github.io/nfv-lab/ .
+  197  less index.yaml 
+  198  cd 
+  199  cd Downloads/
+  200  ls
+  201  ls -al
+  202  cd
+  203  cd escenarios/nfv-lab/
+  204  ls
+  205  export LASTNS=$(osm ns-create --ns_name vcpe2 --nsd_name nsred1 --vim_account dummy_vim)
+  206  watch -n 5 osm ns-list
+  207  export NSTEXT=vcpe1
+  208  for i in access cpe; do    osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep $i | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep $i | awk '{split($0,a,":");print a[2]}'; done
+  209  osm ns-list
+  210  osm ns-delete $LASTNS
+  211  export LASTNS=$(osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim)
+  212  watch -n 5 osm ns-list
+  213  for i in access cpe; do    osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep $i | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep $i | awk '{split($0,a,":");print a[2]}'; done
+  214  osm ns-delete $LASTNS
+  215  export LASTNS=$(osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim)
+  216  watch -n 5 osm ns-list
+  217  osm ns-delete $LASTNS
+  218  export LASTNS=$(osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim)
+  219  osm ns-delete $LASTNS
+  220  export LASTNS=$(osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim)
+  221  cd 
+  222  cd Downloads/
+  223  ls
+  224  tar tvzf osm1-0.1.0.tgz 
+  225  rm *.*
+  226  ls
+  227  cd ..
+  228  ls
+  229  less ns-vcpe.yaml 
+  230  less ns-vcpe.yaml 
+  231  cd practicaosm
+  232  ls
+  233  cd ..
+  234  ls
+  235  cd osm
+  236  ls
+  237  cd ..
+  238  ls -al
+  239  less ns-vcpe.yaml 
+  240  cd escenarios/nfv-lab/pck/
+  241  ls
+  242  osm package-create --help
+  243  osm package-build --help
+  244  osm package-build --skip-charm-build accessknf
+  245  tar tvzf accessknf.tar.gz 
+  246  osm package-build --skip-charm-build accessknf_vnfd
+  247  osm package-build --skip-charm-build cpeknf_vnfd
+  248  osm package-build --skip-charm-build renes_nsd
+  249  mv renes_nsd/ renes_nsd.old
+  250  osm package-create renes_nsd
+  251  osm package-create NSD renes_nsd
+  252  osm package-create ns renes_nsd
+  253  osm package-create ns renes
+  254  osm package-create ns --help
+  255  osm package-create --vendor educaredes ns renes 
+  256  ls
+  257  cd renes_ns
+  258  ls
+  259  osm package-build --skip-charm renes_ns
+  260  osm package-build --skip-charm-build renes_ns
+  261  osm package-validate renes_ns
+  262  cd ..
+  263  osm package-build --skip-charm-build renes_ns
+  264  osm package-build --skip-charm-build cpeknf_vnfd
+  265  cd ..
+  266  osm package-build --skip-charm-build renes_ns
+  267  cd pck
+  268  osm package-build --skip-charm-build renes_ns
+  269  export LASTNS=$(osm ns-create --ns_name renes1 --nsd_name renes --vim_account dummy_vim)
+  270  watch -n 5 osm ns-list
+  271  export NSTEXT=renes1
+  272  for i in access cpe; do    osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep $i | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep $i | awk '{split($0,a,":");print a[2]}'; done
+  273  for i in access cpe; do    osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | xargs osm vnf-list --ns | grep $i | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep $i | awk '{split($0,a,":");print a[2]}'; done
+  274  for i in access cpe; do    osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | xargs osm vnf-list --ns | grep $i | awk '{split($0,a,"|");print a[2]}' | xargs osm vnf-show --literal | grep name | grep $i | awk '{split($0,a,":");print a[2]}'; done
+  275  cd ..
+  276  history > doc/history/osm-history-20221113.txt
