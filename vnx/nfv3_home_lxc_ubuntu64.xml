@@ -42,43 +42,41 @@ SPAIN
     
   <net name="virbr0" mode="virtual_bridge" managed="no"/>
 
-  <net name="AccessNet" mode="openvswitch" managed="no"/>
+  <net name="AccessNet1" mode="openvswitch" managed="no"/>
   <net name="home1net" mode="virtual_bridge" />
   <net name="home2net" mode="virtual_bridge" />
   
   <vm name="h11" type="lxc" exec_mode="lxc-attach" arch="x86_64">
     <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
     <if id="1" net="home1net">
-      <ipv4>dhcp</ipv4>
+      <ipv4>192.168.255.11/24</ipv4>
     </if>
     <exec seq="on_boot" type="verbatim">
        # Change MgmtNet and TunnNet interfaces MTU
        ifconfig eth1 mtu 1400
        sed -i -e '/iface eth1 inet static/a \   mtu 1400' /etc/network/interfaces
        echo "alias www='chromium-browser --no-sandbox > /dev/null 2>&amp;1 &amp;'" >> /root/.bash_aliases
-       echo "nameserver 8.8.8.8" >> /etc/resolvconf/resolv.conf.d/head
-       service resolvconf restart
     </exec>
+    <route type="ipv4" gw="192.168.255.1">0.0.0.0/0</route>
   </vm>   
   <vm name="h12" type="lxc" exec_mode="lxc-attach" arch="x86_64">
     <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
     <if id="1" net="home1net">
-      <ipv4>dhcp</ipv4>
+      <ipv4>192.168.255.12/24</ipv4>
     </if>
     <exec seq="on_boot" type="verbatim">
        # Change MgmtNet and TunnNet interfaces MTU
        ifconfig eth1 mtu 1400
        sed -i -e '/iface eth1 inet static/a \   mtu 1400' /etc/network/interfaces
        echo "alias www='chromium-browser --no-sandbox > /dev/null 2>&amp;1 &amp;'" >> /root/.bash_aliases
-       echo "nameserver 8.8.8.8" >> /etc/resolvconf/resolv.conf.d/head
-       service resolvconf restart
     </exec>
+    <route type="ipv4" gw="192.168.255.1">0.0.0.0/0</route>
   </vm> 
   <vm name="brg1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
     <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
     <if id="1" net="home1net">
     </if>
-    <if id="2" net="AccessNet">
+    <if id="2" net="AccessNet1">
       <ipv4>10.255.0.2/24</ipv4>
     </if>
     <exec seq="on_boot" type="verbatim">
@@ -86,7 +84,7 @@ SPAIN
         sleep 5
         ovs-vsctl add-br br0
         ovs-vsctl add-port br0 eth1
-        ovs-vsctl add-port br0 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.255.0.1
+        ovs-vsctl add-port br0 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.255.0.1 options:dst_port=8742
     </exec>
   </vm>
   <vm name="h21" type="lxc" exec_mode="lxc-attach" arch="x86_64">
@@ -99,8 +97,6 @@ SPAIN
        ifconfig eth1 mtu 1400
        sed -i -e '/iface eth1 inet static/a \   mtu 1400' /etc/network/interfaces
        echo "alias www='chromium-browser --no-sandbox > /dev/null 2>&amp;1 &amp;'" >> /root/.bash_aliases
-       echo "nameserver 8.8.8.8" >> /etc/resolvconf/resolv.conf.d/head
-       service resolvconf restart
     </exec>
   </vm>   
   <vm name="h22" type="lxc" exec_mode="lxc-attach" arch="x86_64">
@@ -113,15 +109,13 @@ SPAIN
        ifconfig eth1 mtu 1400
        sed -i -e '/iface eth1 inet static/a \   mtu 1400' /etc/network/interfaces
        echo "alias www='chromium-browser --no-sandbox > /dev/null 2>&amp;1 &amp;'" >> /root/.bash_aliases
-       echo "nameserver 8.8.8.8" >> /etc/resolvconf/resolv.conf.d/head
-       service resolvconf restart
     </exec>
   </vm> 
   <vm name="brg2" type="lxc" exec_mode="lxc-attach" arch="x86_64">
     <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
     <if id="1" net="home2net">
     </if>
-    <if id="2" net="AccessNet">
+    <if id="2" net="AccessNet1">
       <ipv4>10.255.0.4/24</ipv4>
     </if>
     <exec seq="on_boot" type="verbatim">
@@ -129,7 +123,7 @@ SPAIN
         sleep 5
         ovs-vsctl add-br br0
         ovs-vsctl add-port br0 eth1
-        ovs-vsctl add-port br0 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.255.0.3
+        ovs-vsctl add-port br0 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.255.0.3 options:dst_port=8742
     </exec>
   </vm>
 </vnx>

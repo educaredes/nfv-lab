@@ -1,0 +1,198 @@
+    1  rm .bash_history 
+    2  /usr/local/bin/clean_and_halt 
+    3  sudo hostnamectl set-hostname k8s
+    4  sudo sed -i 's/vnxlab/osm/g' /etc/hosts
+    5  sudo vi /etc/netplan/01-netcfg.yaml
+    6  sudo netplan apply 
+    7  sudo snap install microk8s --classic --channel=1.21
+    8  sudo usermod -a -G microk8s $USER
+    9  sudo chown -f -R $USER ~/.kube
+   10  sudo microk8s.enable storage dns
+   11  sudo microk8s.enable metallb:192.168.56.11-192.168.56.11
+   12  sudo reboot
+   13  ifconfig
+   14  microk8s status --wait-ready
+   15  sed -h
+   16  sed -i ?
+   17  microk8s status --wait-ready
+   18  microk8s kubectl get nodes
+   19  microk8s kubectl get services
+   20  microk8s enable helm3
+   21  microk8s enable helm
+   22  microk8s config > k8s-cluster.yaml
+   23  sed -i 's/10.0.2.15/192.168.64.11/' k8s-
+   24  sed -i 's/10.0.2.15/192.168.56.11/' k8s-cluster.yaml
+   25  scp k8s-cluster.yaml upm@192.168.56.12:~
+   26  sudo /etc/hosts
+   27  sudo vi /etc/hosts
+   28  ifconfig
+   29  sudo reboot
+   30  microk8s kubectl get namespaces
+   31  ls -al
+   32  pwd
+   33  cd escenarios/nfv-lab/img/vnf-img/
+   34  ls
+   35  sudo docker build -t educaredes/vnf-img .
+   36  exit
+   37  cd escenarios/nfv-lab/
+   38  ls
+   39  cd
+   40  ls
+   41  cd vnf-img
+   42  ls
+   43  docker login -u educaredes
+   44  ls
+   45  docker push educaredes/vnf-img
+   46  docker image ls
+   47  cd ..
+   48  ls
+   49  rmdir vnf-helm
+   50  helm create vnf-helm
+   51  helm
+   52  helm3
+   53  sudo apt-get install helm
+   54  curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+   55  sudo apt-get install apt-transport-https --yes
+   56  helm create vnf-helm
+   57  bash
+   58  cd escenarios/nfv-lab/img/
+   59  helm create vnf-helm
+   60  helm3
+   61  sudo apt-get install helm
+   62  snap install helm
+   63  sudo snap install helm
+   64  sudo snap install --classic helm
+   65  helm create vnf-helm
+   66  ls
+   67  cd vnf-helm
+   68  ls
+   69  vi values.yaml 
+   70  ls
+   71  vi Chart.yaml 
+   72  grep -R spec
+   73  vi templates/deployment.yaml 
+   74  cd ..
+   75  helm package vnf-helm
+   76  ls -al
+   77  helm repo --help
+   78  ls
+   79  rm vnf-helm-0.1.0.tgz 
+   80  cd ..
+   81  helm package img/vnf-helm
+   82  helm repo index --url https://educaredes.github.io/nfv-lab/ .
+   83  ls -al
+   84  cd img
+   85  helm install vnf-img vnf-img --namespace dedault
+   86  ls
+   87  helm install vnf-helm vnf-helm --namespace dedault
+   88  sudo microk8s status
+   89  sudo microk8s enable helm
+   90  helm install vnf-helm vnf-helm --namespace dedault
+   91  microk8s status
+   92  sudo microk8s helm3 install 
+   93  sudo microk8s helm3 install vnf-helm
+   94  sudo microk8s helm3 install vnf vnf-helm
+   95  microk8s kubectl --help
+   96  microk8s helm3 test vnf
+   97  export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services vnf-vnf-helm)
+   98  export NODE_PORT=$(microk8s kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services vnf-vnf-helm)
+   99  export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+  100  export NODE_IP=$(microk8s kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+  101  echo http://$NODE_IP:$NODE_PORT
+  102  helm lint vnf-helm/
+  103  helm create test
+  104  cd ..
+  105  cd img
+  106  sudo microk8s helm3 install test test
+  107  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=test,app.kubernetes.io/instance=test" -o jsonpath="{.items[0].metadata.name}")
+  108  vi ~/.bashrc 
+  109  alias kubectl='microk8s kubectl'
+  110  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=test,app.kubernetes.io/instance=test" -o jsonpath="{.items[0].metadata.name}")
+  111  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  112  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+  113  echo $POD_NAME
+  114  echo $CONTAINER_PORT
+  115  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+  116  sudo microk8s helm3 uninstall test test
+  117  sudo microk8s helm3 uninstall test 
+  118  sudo microk8s helm3 install testing-pod test
+  119  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=test,app.kubernetes.io/instance=testing-pod" -o jsonpath="{.items[0].metadata.name}")
+  120  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  121  helm status testing-pod
+  122  microk8s helm status testing-pod
+  123  microk8s helm status test
+  124  microk8s helm3 status test
+  125  history | grep helm
+  126  microk8s helm3 test test
+  127  microk8s helm3 test testing-pod
+  128  sudo microk8s helm3 uninstall testing-pod 
+  129  history | grep helm
+  130  microk8s helm3 test testing-pod
+  131  sudo microk8s helm3 install testing-pod test
+  132  sudo microk8s helm3 install vnf vnf-helm
+  133  sudo microk8s helm3 uninstall vnf 
+  134  sudo microk8s helm3 uninstall test
+  135  sudo microk8s helm3 uninstall testing-pod
+  136  sudo microk8s helm3 install vnf vnf-helm
+  137  sudo microk8s helm3 test vnf
+  138  vi vnf-helm/templates/tests/test-connection.yaml 
+  139  cd ..
+  140  cd img/vnf-doc
+  141  cd img/vnf-img
+  142  vi Dockerfile 
+  143  sudo docker build -t educaredes/vnf-img .
+  144  vi Dockerfile 
+  145  docker pull educaredes/vnf-img
+  146  cd ..
+  147  cd vnf-helm/templates/
+  148  vi tests/test-connection.yaml 
+  149  cd ,,
+  150  cd ..
+  151  sudo microk8s helm3 install vnf vnf-helm
+  152  sudo microk8s helm3 uninstall vnf vnf-helm
+  153  sudo microk8s helm3 install vnf vnf-helm
+  154  sudo microk8s helm3 test vnf  
+  155  ls
+  156  vi vnf-helm/templates/tests/test-connection.yaml 
+  157  sudo microk8s helm3 uninstall vnf 
+  158  sudo microk8s helm3 test vnf  
+  159  sudo microk8s helm3 install vnf vnf-helm
+  160  vi vnf-helm/templates/tests/test-connection.yaml 
+  161  vi vnf-helm/templates/service.yaml 
+  162  vi vnf-helm/templates/deployment.yaml 
+  163  vi vnf-helm/templates/tests/test-connection.yaml 
+  164  sudo microk8s helm3 install vnf vnf-helm
+  165  vi vnf-helm/templates/deployment.yaml 
+  166  cd vnf-helm
+  167  grep -R test 
+  168  vi templates/tests/test-connection.yaml 
+  169  grep -R labels *
+  170  vi templates/_helpers.tpl 
+  171  vi templates/NOTES.txt 
+  172  cd tests
+  173  cd templates/
+  174  ls
+  175  cd tests
+  176  vi test-connection.yaml 
+  177  cd ..
+  178  sudo microk8s helm3 install vnf vnf-helm
+  179  cd ..
+  180  sudo microk8s helm3 install vnf vnf-helm
+  181  helm lint vnf-helm
+  182  vi vnf-helm/templates/tests/test-connection.yaml
+  183  helm lint vnf-helm
+  184  vi vnf-helm/templates/tests/test-connection.yaml
+  185  cp test/templates/tests/test-connection.yaml vnf-helm/templates/tests/test-connection.yaml 
+  186  helm lint vnf-helm
+  187  vi vnf-helm/templates/tests/test-connection.yaml 
+  188  helm lint vnf-helm
+  189  vi vnf-helm/templates/tests/test-connection.yaml 
+  190  helm lint vnf-helm
+  191  vi vnf-helm/templates/tests/test-connection.yaml 
+  192  helm lint vnf-helm
+  193  vi vnf-helm/templates/tests/test-connection.yaml 
+  194  helm lint vnf-helm
+  195  sudo microk8s helm3 install vnf vnf-helm
+  196  sudo microk8s helm3 uninstall vnf vnf-helm
+  197  history
+  198  history > escenarios/nfv-lab/k8-history.txt

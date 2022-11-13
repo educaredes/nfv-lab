@@ -1,0 +1,24 @@
+    1  ifconfig
+    2  ifconfig eth0
+    3  ifconfig eth1
+    4  osm k8scluster-add cluster --creds .kube/config --vim mylocation1
+    5  osm k8scluster-add --creds k8s-cluster.yaml --version 1.21 --vim dummy_vim --\ description "External k8s cluster" --k8s-nets '{"net1": "osm-ext"}' microk8s-cluster
+    6  osm k8scluster-add --creds k8s-cluster.yaml --version 1.21 --vim dummy_vim --description "External k8s cluster" --k8s-nets '{"net1": "osm-ext"}' microk8s-cluster
+    7  ls
+    8  vi ns-vcpe.yaml 
+    9  osm nspkg-delete ns-vcpe
+   10  osm nspkg-delete ns-vcpe.yaml
+   11  osm nspkg-delete ovs
+   12  osm ns-create --ns-name vCPE --nsd_name ovs –vim_account dummy-vim
+   13  osm ns-create --ns_name vCPE --nsd_name ovs –vim_account dummy-vim
+   14  osm ns-create --ns_name vCPE --nsd_name ovs --vim_account dummy-vim
+   15  osm nspkg-create ns-vcpe.yaml
+   16  osm ns-create --ns_name vCPE --nsd_name ovs --vim_account dummy-vim
+   17  osm ns-create --ns_name vCPE --nsd_name ovs --vim_account dummy_vim
+   18  ls -al
+   19  cd tutoriales/
+   20  ls
+   21  cd coit
+   22  ls
+   23  history
+   24  history > escenarios/nfv-lab/osm-history.txt 

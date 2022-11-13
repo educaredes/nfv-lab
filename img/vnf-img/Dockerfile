@@ -8,7 +8,6 @@ RUN apt-get update \
     curl \
     iptables \
     inetutils-ping \
-    sudo \
     nano \
     build-essential \
     bridge-utils \
@@ -19,6 +18,4 @@ RUN apt-get update \
     iperf3 \
     vim
 
-COPY dhcpd.conf /etc/dhcp/dhcpd.conf
-COPY isc-dhcp-server /etc/default/isc-dhcp-server
-
+COPY vnx_config_nat /usr/bin/
