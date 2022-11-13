@@ -91,6 +91,7 @@ SPAIN
        # Change MgmtNet and TunnNet interfaces MTU
        ifconfig eth1 mtu 1380
        sed -i -e '/iface eth1 inet static/a \   mtu 1380' /etc/network/interfaces
+
        #echo "alias www='chromium-browser --no-sandbox > /dev/null 2>&amp;1 &amp;'" >> /root/.bash_aliases
     </exec>
   </vm>   
