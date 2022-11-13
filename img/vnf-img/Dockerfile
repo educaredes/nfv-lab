@@ -21,3 +21,4 @@ RUN apt-get update \
 
 COPY vnx_config_nat /usr/bin/
 COPY isc-dhcp-server /etc/default/isc-dhcp-server
+COPY dhcpd.conf /etc/dhcp/dhcpd.conf 

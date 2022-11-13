@@ -1,0 +1,1 @@
+6948a862e0998d2437788c5f1ecba1c6	accessknf_vnfd/accessknf_vnfd.yaml

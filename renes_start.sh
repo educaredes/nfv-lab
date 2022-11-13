@@ -3,22 +3,21 @@
 USAGE="
 Usage:
     
-vcpe_start <vnf_tunnel_ip> <home_tunnel_ip> <vcpe_private_ip> <vcpe_public_ip> <vcpe_gw> <dhcpd_conf_file>
+renes_start <vnf_tunnel_ip> <home_tunnel_ip> <vcpe_private_ip> <vcpe_public_ip> <vcpe_gw> <dhcpd_conf_file>
     being:
         <vnf_tunnel_ip>: the ip address for the vnf side of the tunnel
         <home_tunnel_ip>: the ip address for the home side of the tunnel
         <vcpe_private_ip>: the private ip address for the vcpe
         <vcpe_public_ip>: the public ip address for the vcpe 
         <vcpe_gw>: the default gateway for the vcpe
-        <dhcpd_conf_file>: the dhcp file for the vcpe to give private addresses to the home network
 "
 
-#if [[ $# -ne 6 ]]; then
-#        echo ""       
-#    echo "ERROR: incorrect number of parameters"
-#    echo "$USAGE"
-#    exit 1
-#fi
+if [[ $# -ne 5 ]]; then
+        echo ""       
+    echo "ERROR: incorrect number of parameters"
+    echo "$USAGE"
+    exit 1
+fi
 
 set -u # to verify variables are defined
 : $OSMNS
@@ -30,8 +29,6 @@ HOMETUNIP="$2"
 VCPEPRIVIP="$3"
 VCPEPUBIP="$4"
 VCPEGW="$5"
-DHCPDCONF="$6"
-
 
 ## 1. Obtener IPs de las VNFs
 echo "## 1. Obtener IPs de las VNFs"
@@ -71,13 +68,7 @@ microk8s kubectl exec -n $OSMNS $VCPE -- ip route add 0.0.0.0/0 via $VCPEGW
 
 ## 6. Iniciar Servidor DHCP
 echo "## 6. Iniciar Servidor DHCP"
-if [ -f "$DHCPDCONF" ]; then
-    echo "--Using $DHCPDCONF for DHCP"
-    microk8s kubectl -n $OSMNS cp $DHCPDCONF $VCPE:/etc/dhcp/dhcpd.conf
-else
-    echo "--$DHCPCONF not found for DHCP, the container will use the default"
-fi
-microk8s kubectl exec -n $OSMNS $VCPE -- sed -i 's/homeint/vxlan_sys_8742/' /etc/default/isc-dhcp-server
+microk8s kubectl exec -n $OSMNS $VCPE -- sed -i 's/homeint/brint/' /etc/default/isc-dhcp-server
 microk8s kubectl exec -n $OSMNS $VCPE -- service isc-dhcp-server restart
 sleep 10
 
