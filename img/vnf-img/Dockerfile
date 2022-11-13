@@ -16,6 +16,8 @@ RUN apt-get update \
     openvswitch-switch \
     openvswitch-common \
     iperf3 \
+    iproute2 \
     vim
 
 COPY vnx_config_nat /usr/bin/
+COPY isc-dhcp-server /etc/default/isc-dhcp-server

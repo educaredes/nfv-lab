@@ -61,33 +61,44 @@ osm repo-add --type helm-chart --description "Repo para practica OSM" helmchartr
 osm nfpkg-create accessknf_nfd.yaml
 osm nfpkg-create cpeknf_nfd.yaml
 osm nspkg-create nsred1_nsd.yaml
-osm ns-create --ns_name vCPE --nsd_name nsred1 --vim_account dummy_vim
+osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim
 
 Obtener chart de una VNF: 
 osm vnf-show --literal $VNFID | grep name | grep access |  awk '{split($0,a,":");print a[2]}'
 
 
-Obtener identificador parcial del chart "access" de un servicio "vcpe1"
-osm ns-list | grep "vcpe1" | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep access | awk '{split($0,a,":");print a[2]}'
+Obtener identificadores parciales de los charts de un servicio "vcpe1"
+export NSTEXT=vcpe1
+osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep -E 'access|cpe' | awk '{split($0,a,":");print a[2]}'
+
 #resultado ejemplo: helmchartrepo-accesschart-0058293679 
 
-Obtener identificador parcial del chart "access" de un servicio "vcpe1"
+Obtener identificador parcial del chart "cpe" de un servicio "vcpe1"
 osm ns-list | grep "vcpe1" | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "cpe" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep cpe | awk '{split($0,a,":");print a[2]}'
-
 
 
 A partir del identificador parcial, en la maquina k8s, fijar variable para abrir consolas
 export OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
-export VCPE1_ACCESS=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0058293679 | awk '{print $1}')
+export VACC1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0007698333 | awk '{print $1}')
+export VCPE1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart-0097150092 | awk '{print $1}')
 
-#resultado ejemplo: helmchartrepo-accesschart-0058293679 
+
+
+# Sin identificador parcial, con un solo servicio de red en la maquina k8s, fijar variable para abrir consolas
+export OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
+export VCPE1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart | awk '{print $1}')
+export VACC1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart | awk '{print $1}')
+
 
 Abrir consola 
 
-sudo microk8s kubectl exec -i -n $OSMNS -t $VCPE1_ACCESS1 -- /bin/bash
+sudo microk8s kubectl exec -n $OSMNS -it $VCPE1_ACCESS -- /bin/bash
+
+sudo microk8s kubectl exec -n $OSMNS -it $VCPE1_CPE -- /bin/bash
 
 
 TRAS ELLO, CREAR LOS ESCENARIOS VNX Y HACER LO DE "Configuracion rutas practica OSM"
+
 
 
 

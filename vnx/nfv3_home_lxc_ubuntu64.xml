@@ -30,10 +30,10 @@ SPAIN
     <version>2.0</version>
     <scenario_name>nfv3_home_lxc_ubuntu64</scenario_name>
     <automac offset="4"/>
-    <!--vm_mgmt type="none" /-->
-    <vm_mgmt type="private" network="10.250.0.0" mask="24" offset="12">
+    <vm_mgmt type="none" />
+    <!--vm_mgmt type="private" network="10.250.0.0" mask="24" offset="12">
        <host_mapping />
-    </vm_mgmt> 
+    </vm_mgmt--> 
     <vm_defaults>
         <console id="0" display="no"/>
         <console id="1" display="yes"/>
@@ -49,7 +49,7 @@ SPAIN
   <vm name="h11" type="lxc" exec_mode="lxc-attach" arch="x86_64">
     <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
     <if id="1" net="home1net">
-      <ipv4>192.168.255.11/24</ipv4>
+      <ipv4>dhcp</ipv4>
     </if>
     <exec seq="on_boot" type="verbatim">
        # Change MgmtNet and TunnNet interfaces MTU
@@ -62,7 +62,7 @@ SPAIN
   <vm name="h12" type="lxc" exec_mode="lxc-attach" arch="x86_64">
     <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
     <if id="1" net="home1net">
-      <ipv4>192.168.255.12/24</ipv4>
+      <ipv4>dhcp</ipv4>
     </if>
     <exec seq="on_boot" type="verbatim">
        # Change MgmtNet and TunnNet interfaces MTU

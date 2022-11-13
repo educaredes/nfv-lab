@@ -56,7 +56,6 @@ SPAIN
       <ipv4>dhcp</ipv4>
     </if>
     <forwarding type="ip" />
-    <route type="ipv4" gw="10.100.3.2">10.100.2.0/24</route>
     <filetree seq="on_boot" root="/usr/bin/" perms="755">/usr/bin/vnx_config_nat</filetree>
     <exec seq="on_boot" type="verbatim">
        sleep 1
@@ -68,7 +67,7 @@ SPAIN
   <vm name="s1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
     <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
     <if id="1" net="Internet">
-      <ipv4>10.100.3.3/24</ipv4>
+      <ipv4>10.100.3.2/24</ipv4>
     </if>
     <route type="ipv4" gw="10.100.3.1">default</route>
   </vm>
