@@ -58,46 +58,63 @@ EOF
 #VNXNFVLAB2022-v1
 osm repo-add --type helm-chart --description "Repo para practica OSM" helmchartrepo https://josevirseda.github.io/Helm/
 
-osm nfpkg-create accessknf_nfd.yaml
-osm nfpkg-create cpeknf_nfd.yaml
-osm nspkg-create nsred1_nsd.yaml
-osm ns-create --ns_name vcpe1 --nsd_name nsred1 --vim_account dummy_vim
+osm package-create --vendor educaredes vnf accessknf
+osm package-create --vendor educaredes vnf cpeknf
+osm package-create --vendor educaredes ns renes
+osm package-build --skip-charm-build FOLDER
+
+export LASTNS=$(osm ns-create --ns_name renes1 --nsd_name renes --vim_account dummy_vim)
+para borrarlo
+osm ns-delete $LASTNS
+para ver cuando se instancia
+watch -n 5 osm ns-list
 
 Obtener chart de una VNF: 
 osm vnf-show --literal $VNFID | grep name | grep access |  awk '{split($0,a,":");print a[2]}'
 
 
-Obtener identificadores parciales de los charts de un servicio "vcpe1"
-export NSTEXT=vcpe1
-osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "access" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep -E 'access|cpe' | awk '{split($0,a,":");print a[2]}'
+Obtener identificadores de los DEPLOYMENT de un servicio "renes1"
+export NSTEXT=renes1
+for i in access cpe; do 
+  osm ns-list | grep $NSTEXT | awk '{split($0,a,"|");print a[3]}' | xargs osm vnf-list --ns | grep $i | awk '{split($0,a,"|");print a[2]}' | xargs osm vnf-show --literal | grep name | grep $i | awk '{split($0,a,":");print a[2]}'
+done
 
-#resultado ejemplo: helmchartrepo-accesschart-0058293679 
+Copiar y pegar el resultado en una ventana de la máquina k8s
 
-Obtener identificador parcial del chart "cpe" de un servicio "vcpe1"
-osm ns-list | grep "vcpe1" | awk '{split($0,a,"|");print a[3]}' | osm vnf-list --ns $(</dev/stdin) | grep "cpe" | awk '{split($0,a,"|");print a[2]}' | osm vnf-show --literal $(</dev/stdin) | grep name | grep cpe | awk '{split($0,a,":");print a[2]}'
+export VACC1=helmchartrepo-access-chart-...
+export VCPE1=helmchartrepo-cpe-chart-...
 
-
-A partir del identificador parcial, en la maquina k8s, fijar variable para abrir consolas
+# OLD A partir del identificador parcial, en la maquina k8s, fijar variable para abrir consolas
 export OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
-export VACC1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0007698333 | awk '{print $1}')
-export VCPE1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart-0097150092 | awk '{print $1}')
+export VACC1=$(microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart-0023192822 | awk '{print $1}')
+export VCPE1=$( microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart-0091594704 | awk '{print $1}')
 
 
 
-# Sin identificador parcial, con un solo servicio de red en la maquina k8s, fijar variable para abrir consolas
+# OLD Sin identificador parcial, con un solo servicio de red en la maquina k8s, fijar variable para abrir consolas
 export OSMNS="7b2950d8-f92b-4041-9a55-8d1837ad7b0a"
-export VCPE1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart | awk '{print $1}')
-export VACC1=$(sudo microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart | awk '{print $1}')
+export VCPE1=$(microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-cpechart | awk '{print $1}')
+export VACC1=$(microk8s kubectl -n $OSMNS get pods | grep helmchartrepo-accesschart | awk '{print $1}')
 
 
 Abrir consola 
 
-sudo microk8s kubectl exec -n $OSMNS -it $VCPE1_ACCESS -- /bin/bash
+microk8s kubectl exec -n $OSMNS -it deploy/$VACC1 -- /bin/bash
 
-sudo microk8s kubectl exec -n $OSMNS -it $VCPE1_CPE -- /bin/bash
+microk8s kubectl exec -n $OSMNS -it deploy/$VCPE1 -- /bin/bash
 
 
 TRAS ELLO, CREAR LOS ESCENARIOS VNX Y HACER LO DE "Configuracion rutas practica OSM"
+
+Troubleshooting
+
+Para pods que aparecen sin que los queramos --> borrar los deployments
+
+microk8s kubectl get deployments -n $OSMNS # obtenemos los nombres a borrar, DEPLOYMENT, sirve también para ver si los deployments están READY
+
+microk8s kubectl delete -n $OSMNS deployment DEPLOYMENT
+
+https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-deployments-and-services
 
 
 
