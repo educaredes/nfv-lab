@@ -1,100 +1,25 @@
 apiVersion: v1
 entries:
-  2accesschart:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2022-11-13T12:53:46.377775142+01:00"
-    description: A Helm chart for Kubernetes
-    digest: 04b14f77258880bb43e821d81ce915bdfce9f48e1f0a0c160b1d7b3ac1d6bbfc
-    name: 2accesschart
-    type: application
-    urls:
-    - https://educaredes.github.io/nfv-lab/Helm-main-virseda/2accesschart-0.1.0.tgz
-    version: 0.1.0
-  2cpechart:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2022-11-13T12:53:46.380197939+01:00"
-    description: A Helm chart for Kubernetes
-    digest: e0ec23b210668055d50120de12d844e2bd45f9a708e83d2c7fb780ab43b8d7ca
-    name: 2cpechart
-    type: application
-    urls:
-    - https://educaredes.github.io/nfv-lab/Helm-main-virseda/2cpechart-0.1.0.tgz
-    version: 0.1.0
-  2wanchart:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2022-11-13T12:53:46.383024501+01:00"
-    description: A Helm chart for Kubernetes
-    digest: 27132d2637a2a7e566873f507dfe8718b6bf608c1b6d20184148b5906435fbdc
-    name: 2wanchart
-    type: application
-    urls:
-    - https://educaredes.github.io/nfv-lab/Helm-main-virseda/2wanchart-0.1.0.tgz
-    version: 0.1.0
   accesschart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-11-13T12:53:46.370203566+01:00"
+    created: "2022-11-13T19:44:20.802372601+01:00"
     description: A Helm chart for Kubernetes
-    digest: fbf5dbf6a48eebfc9e68f3d97351a2123401398d215bb8da0f245f2118f4b1d6
+    digest: b6eff9cf299a4f1d7c806421e0fef9f39e59e31e15777f56a872f3cfe3303766
     name: accesschart
     type: application
     urls:
     - https://educaredes.github.io/nfv-lab/accesschart-0.1.0.tgz
     version: 0.1.0
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2022-11-13T12:53:46.385900517+01:00"
-    description: A Helm chart for Kubernetes
-    digest: db4a039bfb5f2faa1e8ee21d47714247d09bdd149452161aa67a2cc58ae661b4
-    name: accesschart
-    type: application
-    urls:
-    - https://educaredes.github.io/nfv-lab/Helm-main-virseda/accesschart-0.1.0.tgz
-    version: 0.1.0
   cpechart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-11-13T12:53:46.373281259+01:00"
+    created: "2022-11-13T19:44:20.805525147+01:00"
     description: A Helm chart for Kubernetes
-    digest: 1980f1e8faf39f70c6fddb54f57297bbd7ea16877ba31e80ec3216e9346f35d3
+    digest: 33e7a2973a7664e175bccb21815e3fa0aaf2e41a8d6a41e8a15490f2c4e0136b
     name: cpechart
     type: application
     urls:
     - https://educaredes.github.io/nfv-lab/cpechart-0.1.0.tgz
     version: 0.1.0
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2022-11-13T12:53:46.388918698+01:00"
-    description: A Helm chart for Kubernetes
-    digest: 9df361c7ac900caff91dfbe86d6e8fde8da3811cf4b24f66d986b3b1111a50c6
-    name: cpechart
-    type: application
-    urls:
-    - https://educaredes.github.io/nfv-lab/Helm-main-virseda/cpechart-0.1.0.tgz
-    version: 0.1.0
-  ejemplo:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2022-11-13T12:53:46.391174521+01:00"
-    description: A Helm chart for Kubernetes
-    digest: a8011a419ce7feb15e2d943ec3f627bcdf116f549d98cfe01f730ec02bf9d990
-    name: ejemplo
-    type: application
-    urls:
-    - https://educaredes.github.io/nfv-lab/Helm-main-virseda/ejemplo-0.1.0.tgz
-    version: 0.1.0
-  wanchart:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2022-11-13T12:53:46.393846199+01:00"
-    description: A Helm chart for Kubernetes
-    digest: 2474724660fba8c7f2127ae6648dfefc6fcad32065bbeea065cc77d74514d797
-    name: wanchart
-    type: application
-    urls:
-    - https://educaredes.github.io/nfv-lab/Helm-main-virseda/wanchart-0.1.0.tgz
-    version: 0.1.0
-generated: "2022-11-13T12:53:46.365509915+01:00"
+generated: "2022-11-13T19:44:20.772735265+01:00"
