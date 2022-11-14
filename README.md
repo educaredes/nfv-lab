@@ -50,18 +50,18 @@ done
 7. On RDSV-K8S, configure two variables to hold the deployment-ids, copy-pasting the previous results
 
 ```
-export VACC1=helmchartrepo-accesschart-...
+VACC1=helmchartrepo-accesschart-...
 ```
 
 ```
-export VCPE1=helmchartrepo-cpechart-...
+VCPE1=helmchartrepo-cpechart-...
 ```
 
 8. Configure the KNFs:
 
 ```
 export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a   #OSM namespace
-./renes1.sh
+./renes1.sh $VACC1 $VCPE1
 ```
 
 9. On the VNX scenario, accesss the h11 terminal (root/xxxx) and  check connectivity
