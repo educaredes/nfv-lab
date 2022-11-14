@@ -7,7 +7,7 @@ It contains a helm-repository, check out the [index.yaml](index.yaml)
 
 ## Quick testing guide
 1. Launch the machines RDSV-OSM and RDSV-K8S
-2. On both machines open a terminal, clone the repository and change to the folder
+2. On both machines open a terminal, clone the repository and change to the folder nfv-lab
 
 ```
 cd Desktop
@@ -34,8 +34,9 @@ until it is completely instantiated
 ```
 osm ns-create --ns_name renes1 --nsd_name renes --vim_account dummy_vim
 watch osm ns-list
-(exit with ctrl+C)
 ```
+
+Exit with ctrl+C
 
 6. On RDSV-OSM, extract the deployment-ids of the KNFs
 
@@ -49,13 +50,17 @@ done
 7. On RDSV-K8S, configure two variables to hold the deployment-ids, copy-pasting the previous results
 
 ```
-export VACC1=helmchartrepo-access-chart-...
-export VCPE1=helmchartrepo-cpe-chart-...
+export VACC1=helmchartrepo-accesschart-...
 ```
 
-8. Configure the KNFs by launching:
+```
+export VCPE1=helmchartrepo-cpechart-...
+```
+
+8. Configure the KNFs:
 
 ```
+export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a   #OSM namespace
 ./renes1.sh
 ```
 
