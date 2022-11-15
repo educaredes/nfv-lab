@@ -38,7 +38,7 @@ watch osm ns-list
 
 Exit with ctrl+C
 
-6. On RDSV-OSM launch the additional cofiguration:
+6. On RDSV-OSM launch the additional configuration:
 
 ```
 export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a   #OSM namespace
