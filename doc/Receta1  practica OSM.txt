@@ -1,7 +1,20 @@
 UNA VEZ REGISTRADO EL CLUSTER DE K8S EN OSM:
 
+registrar el cluster para que kubectl acceda desde la máquina OSM:
+- en la máquina K8S
+$ microk8s config 
 
+en la máquina OSM, editar el fichero ~/.kube/config y pegar el texto resultado
+del comando anterior al final del fichero
+Después, cambiar la línea 
+server: https://10.0.2.15:16443
+para que sea la dirección alcanzable del k8s
+server: https://192.168.56.11:16443
 
+probar por ejemplo con 
+$ kubectl get namespaces
+comprobar que sale el namespace remoto registrado para osm
+7b2950d8-f92b-4041-9a55-8d1837ad7b0a
 
 #VNXLAB2022-v3 (los de AccessNet2 y ExtNet2 creo que no hacen falta)
 sudo ovs-vsctl add-br ExtNet1
