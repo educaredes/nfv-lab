@@ -44,7 +44,7 @@ Exit with ctrl+C
 export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a   #OSM namespace
 ./osm_renes1.sh
 ```
-(alternatively, follow the [Quick testing guide from RDSV-K8S](README-alt-6-9.md))
+(alternatively, follow the [Alternative steps for testing](README-alt-6-9.md))
 
 7. On RDSV-K8S, accesss the h11 terminal (root/xxxx) and check connectivity:
 
