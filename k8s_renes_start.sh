@@ -19,4 +19,4 @@ set -u # to verify variables are defined
 : $VCPEGW
 
 export KUBECTL="microk8s kubectl"
-./_start.sh
+./renes_start.sh
