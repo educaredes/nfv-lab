@@ -23,12 +23,20 @@ sudo vnx -f vnx/nfv3_server_lxc_ubuntu64.xml -t
 ```
 
 4. On RDSV-OSM, from the Desktop (graphically):
-- access the package folder nfv-lab/pck
+
 - start Firefox to access OSM at localhost (admin/admin)
+- register a new k8s  repository using id: helmchartrepo, type: "Helm Chart" 
+and URL https://educaredes.github.io/nfv-lab/
+
+![new-k8s-repository-details](doc/new-k8s-repository.png)
+
+5. On RDSV-OSM, from the Desktop (graphically):
+- select the Package menu in OSM
+- access the package folder nfv-lab/pck
 - onboard the VNFs accessknf_vnfd.tar.gz and cpeknf_vnfd.tar.gz
 - onboard the NS renes_ns.tar.gz
 
-5. On RDSV-OSM, from the terminal instantiate the service renes1 ans wait 
+6. On RDSV-OSM, from the terminal instantiate the service renes1 ans wait 
 until it is completely instantiated:
 
 ```
@@ -38,7 +46,8 @@ watch osm ns-list
 
 Exit with ctrl+C
 
-6. On RDSV-OSM launch the additional configuration:
+
+7. On RDSV-OSM launch the additional configuration:
 
 ```
 export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a   #OSM namespace
@@ -46,7 +55,7 @@ export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a   #OSM namespace
 ```
 (alternatively, follow the [Alternative steps for testing](README-alt-6-9.md))
 
-7. On RDSV-K8S, accesss the h11 terminal (root/xxxx) and check connectivity:
+8. On RDSV-K8S, accesss the h11 terminal (root/xxxx) and check connectivity:
 
 ```
 ifconfig eth1 # should have a 192.168.1.255.X/24 IP address

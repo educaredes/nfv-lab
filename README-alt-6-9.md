@@ -1,8 +1,8 @@
 # Alternative steps for testing
 
-After following 1-5 from [README.md](README.md) then:
+After following 1-6 from [README.md](README.md) then:
 
-6. On RDSV-OSM, extract the deployment-ids of the KNFs:
+1. On RDSV-OSM, extract the deployment-ids of the KNFs:
 
 ```
 export NSTEXT=renes1
@@ -11,7 +11,7 @@ for i in access cpe; do
 done
 ```
 
-7. On RDSV-K8S, configure two variables to hold the deployment-ids, copy-pasting the previous results:
+2. On RDSV-K8S, configure two variables to hold the deployment-ids, copy-pasting the previous results:
 
 ```
 VACC1=helmchartrepo-accesschart-...
@@ -21,14 +21,14 @@ VACC1=helmchartrepo-accesschart-...
 VCPE1=helmchartrepo-cpechart-...
 ```
 
-8. Configure the KNFs:
+3. Configure the KNFs:
 
 ```
 export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a   #OSM namespace
 ./k8s_renes1.sh $VACC1 $VCPE1
 ```
 
-9. On the VNX scenario, accesss the h11 terminal (root/xxxx) and check connectivity:
+4. On the VNX scenario, accesss the h11 terminal (root/xxxx) and check connectivity:
 
 ```
 ifconfig eth1 # should have a 192.168.1.255.X/24 IP address
