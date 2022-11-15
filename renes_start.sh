@@ -20,10 +20,6 @@ deployment_id() {
     echo `osm ns-list | grep $1 | awk '{split($0,a,"|");print a[3]}' | xargs osm vnf-list --ns | grep $2 | awk '{split($0,a,"|");print a[2]}' | xargs osm vnf-show --literal | grep name | grep $2 | awk '{split($0,a,":");print a[2]}' | sed 's/ //g'`
 }
 
-KUBECTL="kubectl"
-ACC_EXEC="$KUBECTL exec -n $OSMNS $VACC --"
-CPE_EXEC="$KUBECTL exec -n $OSMNS $VCPE --"
-
 # Router por defecto en red residencial
 VCPEPRIVIP="192.168.255.1"
 
@@ -51,6 +47,10 @@ if [[ ! $VCPE =~ "helmchartrepo-cpechart"  ]]; then
     echo "ERROR: incorrect <cpe_deployment_id>: $VCPE"
     exit 1
 fi
+
+KUBECTL="kubectl"
+ACC_EXEC="$KUBECTL exec -n $OSMNS $VACC --"
+CPE_EXEC="$KUBECTL exec -n $OSMNS $VCPE --"
 
 ## 2. Obtener IPs de las VNFs
 echo "## 2. Obtener IPs de las VNFs"
