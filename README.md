@@ -61,7 +61,7 @@ VCPE1=helmchartrepo-cpechart-...
 
 ```
 export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a   #OSM namespace
-./renes1.sh $VACC1 $VCPE1
+./k8s_renes1.sh $VACC1 $VCPE1
 ```
 
 9. On the VNX scenario, accesss the h11 terminal (root/xxxx) and  check connectivity
