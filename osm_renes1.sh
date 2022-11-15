@@ -17,4 +17,3 @@ export VCPEPUBIP="10.100.1.1"
 export VCPEGW="10.100.1.254"
 
 ./osm_renes_start.sh
-~                     
