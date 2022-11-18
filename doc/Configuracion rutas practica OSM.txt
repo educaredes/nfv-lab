@@ -56,10 +56,9 @@ ip route add 0.0.0.0/0 via 10.100.1.254
 # COSAS QUE HACER
 en RDSV-k8 rm /home/upm/.docker/config.json
 
-
 DONE: Cambiar el docker de la máquina para que tenga iptables,  isc-dhcp-server  y el vnx_config_nat 
 
-Cambiar la máquina virtual de osm para que tenga autocompletar. Receta:
+DONE: Cambiar la máquina virtual de osm para que tenga autocompletar. Receta:
 ```
 mkdir -p $HOME/.bash_completion.d
 _OSM_COMPLETE=bash_source osm > $HOME/.bash_completion.d/osm-complete.sh
@@ -68,7 +67,31 @@ echo '. .bash_completion.d/osm-complete.sh' >> $HOME/.bashrc
 source $HOME/.bashrc
 ```
 
-Habilitar la MV para que los escenarios VNX puedan lanzar herramientas gráficas
+DONE: Habilitar la MV para que los escenarios VNX puedan lanzar herramientas gráficas
+
+DONE: hacer posible que desde  RDSV_OSM se pueda gestionar el cluster remotamente por línea de comandos, con kubectl. Para ello:
+
+- En la máquina RDSV-K8S
+$ microk8s config 
+(sacará un texto por pantalla)
+
+DONE: En la máquina RDSV-OSM, 
+
+    . editar el fichero ~/.kube/config y pegar el texto resultado
+del comando anterior al final del fichero
+
+    . Después, cambiar la línea 
+server: https://10.0.2.15:16443
+    . para que sea la dirección alcanzable del k8s
+server: https://192.168.56.11:16443
+
+    . Y probar por ejemplo con 
+
+$ kubectl get namespaces
+
+    . comprobar que sale el namespace remoto registrado para osm
+
+7b2950d8-f92b-4041-9a55-8d1837ad7b0a
 
 
 

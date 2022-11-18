@@ -26,7 +26,7 @@ sudo vnx -f vnx/nfv3_server_lxc_ubuntu64.xml -t
 
 - start Firefox to access OSM at localhost (admin/admin)
 - register a new k8s  repository using id: helmchartrepo, type: "Helm Chart" 
-and URL https://educaredes.github.io/nfv-lab/
+and URL https://educaredes.github.io/nfv-lab (DO NOT TERMINATE WITH "/")
 
 ![new-k8s-repository-details](doc/new-k8s-repository.png)
 
