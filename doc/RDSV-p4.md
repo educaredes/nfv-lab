@@ -147,7 +147,7 @@ KID=<id obtenido de k8scluster-list>   # todo seguido, sin espacios y sin < >
 osm k8scluster-show $KID
 ```
 
-En el resultado del show, busque la información sobre el `namespace` que va a utilizr OSM en el clúster para desplegar los pods de los servicios de red. Puede utilizar:
+En el resultado del show, busque la información sobre el `namespace` que va a utilizar OSM en el clúster para desplegar los pods de los servicios de red. Puede utilizar:
 
 ```
 osm k8scluster-show --literal $KID | grep -A1 projects
@@ -207,15 +207,22 @@ grep -R "educaredes/vnf-img"
 
 ### 12. Realice el "onboarding" de KNFs y servicio de red
 
-Desde el _PC anfitrión_, acceda gráficamente al directorio `$HOME/shared/nfv-lab/pck`. Realice el proceso de instalación de los descriptores de las KNFs y del servicio de red (onboarding):
-- Acceda al menu de OSM Packages->VNF packages y arrastre los ficheros accessknf_vnfd.tar.gz y cpeknf_vnfd.tar.gz   
-- Acceda al menu de OSM Packages->NS packages y arrastre el fichero renes_ns.tar.gz
+Desde el _PC anfitrión_, acceda gráficamente al directorio 
+`$HOME/shared/nfv-lab/pck`. Realice el proceso de instalación de los 
+descriptores de las KNFs y del servicio de red (onboarding):
+- Acceda al menu de OSM Packages->VNF packages y arrastre los ficheros 
+accessknf_vnfd.tar.gz y cpeknf_vnfd.tar.gz   
+- Acceda al menu de OSM Packages->NS packages y arrastre el fichero 
+renes_ns.tar.gz
 
 ### 13. (P) Análisis de las definiciones del servicio de red y de las KNF
 
-Acceda a la descripción de las VNF y del servicio. Para entregar como resultado de la práctica:
-1.	En la descripción de las VNFs, identifique y copie la información referente a la imagen que se va a utilizar para el contenedor.
-2.	En la descripción del servicio, identifique y copie la información referente a las dos VNFs
+Acceda a la descripción de las VNF y del servicio. Para entregar como resultado
+de la práctica:
+1.	En la descripción de las VNFs, identifique y copie la información referente
+a la imagen que se va a utilizar para el contenedor.
+2.	En la descripción del servicio, identifique y copie la información 
+referente a las dos VNFs
 
 ### 14. Instanciación del servicio
 
@@ -226,7 +233,8 @@ export NSID1=$(osm ns-create --ns_name renes1 --nsd_name renes --vim_account dum
 echo $NSID1
 ```
 
-Mediante el comando `watch` visualizaremos el estado de la instanciación del servicio que hemos denominado `renes1`, hasta que muestre el estado READY. 
+Mediante el comando `watch` visualizaremos el estado de la instanciación del 
+servicio que hemos denominado `renes1`, hasta que muestre el estado READY. 
 
 ```
 watch osm ns-list
@@ -234,11 +242,13 @@ watch osm ns-list
 
 (se sale con Ctrl+C)
 
-Esta información también se puede obtener a través de la GUI de OSM, opción NS Instances.
+Esta información también se puede obtener a través de la GUI de OSM, opción 
+NS Instances.
 
 ### 15. Comprobación de los pods arrancados
 
-Desde el terminal en _RDSV-OSM_, usaremos kubectl para obtener los pods que han arrancado en _RDSV-K8S_
+Desde el terminal en _RDSV-OSM_, usaremos kubectl para obtener los pods que 
+han arrancado en _RDSV-K8S_
 
 ```
 kubectl -n $OSMNS get pods
@@ -253,7 +263,9 @@ CPEPOD=<nombre del pod de la KNF:cpe>
 
 ### 16. (P) Acceso a los pods ya arrancados
 
-Haga una captura del texto o captura de pantalla del resultado de los siguientes comandos y explique el resultado. ¿Qué red están utilizando los pods para esa comunicación?
+Haga una captura del texto o captura de pantalla del resultado de los 
+siguientes comandos y explique dicho resultado. ¿Qué red están utilizando 
+los pods para esa comunicación?
 
 ```
 kubectl -n $OSMNS exec -it $ACCPOD -- ifconfig eth0
@@ -266,17 +278,26 @@ kubectl -n $OSMNS exec -it $CPEPOD -- /bin/bash
 
 ### 17. (P) Conectividad hacia la red residencial
 
-Analice el detalle del ecenario en la Fig. 4 y analice cómo comprobar **desde _RDSV-OSM_** la conectividad entre el servicio desplegado y el dispositivo _brg1_ de la red residencial. Indique si hay conectividad y qué comando(s) ha utilizado.
+Analice el detalle del escenario en la Fig. 4 y analice cómo comprobar
+**desde _RDSV-OSM_** la conectividad entre el servicio desplegado y el
+dispositivo _brg1_ de la red residencial. Indique si hay conectividad y qué 
+comando(s) ha utilizado.
 
 ### 18. (P) Scripts de configuración del servicio
 
-Desde el _PC anfitrión_ acceda (mediante vi, nano, gedit, ...) al contenido del fichero osm_renes1.sh utilizado para configurar la instancia renes1 del servicio. Ccompare los valores utilizados con los de la figura detallada del escenario. Indique cuál es la dirección IP "pública" (en realidad es de un rango privado), que deberá usar la función NAT del CPE para dar salida al tráfico de la red residencial hacia Internet. 
+Desde el _PC anfitrión_ acceda (mediante vi, nano, gedit, ...) al contenido 
+del fichero `osm_renes1.sh` utilizado para configurar la instancia renes1 del
+servicio. Compare los valores utilizados con los de la figura detallada del 
+escenario. Indique cuál es la dirección IP "pública" (en realidad es de un 
+rango privado), que deberá usar la función NAT del CPE para dar salida al 
+tráfico de la red residencial hacia Internet. 
 
-(Opcional, para hacer tras la sesión del laboratorio). Analice y describa para qué se utilizan los scripts osm_renes_start.sh y renes_start.sh
+(Opcional, para hacer tras la sesión del laboratorio). Analice y describa para
+qué se utilizan los scripts osm_renes_start.sh y renes_start.sh
 
 ### 19. Configuración del servicio
 
-Desde _RDSV-OSM_, configure el servicio renes1 mediante osm_renes1.sh:
+Desde _RDSV-OSM_, configure el servicio renes1 mediante `osm_renes1.sh`:
 
 ```
 ./osm_renes1.sh
@@ -287,8 +308,8 @@ residencial.
 
 ### 20. (P) Servicio desde la red de acceso
 
-Compruebe la configuración de red de h11 y h12 y, si no han obtenido dirección
- IP, fuerce el acceso al servidor DHCP mediante el comando:
+Compruebe la configuración de red de h11 y h12 y, si no han obtenido dirección 
+IP, fuerce el acceso al servidor DHCP mediante el comando:
 
 ```
 dhclient eth1
@@ -298,11 +319,12 @@ Indique qué direcciones IP obtienen h11 y h12 en la red residencial “privada�
 así como la dirección IP del router.
 
 Relacione el resultado con los ficheros de configuración del contenedor docker 
-educaredes/vnf-img incluidos en el directorio $HOME/shared/nfv-lab/img/vnf-img.
+`educaredes/vnf-img` incluidos en el directorio 
+`$HOME/shared/nfv-lab/img/vnf-img`.
 
-### 21. (P) Análisis de tráfico en AccesNet1
+### 21. (P) Análisis de tráfico en AccessNet1
 
-Desde el _RDSV-K8S_, arranque wireshark y póngalo a capturar el tráfico en
+Desde _RDSV-K8S_, arranque wireshark y póngalo a capturar el tráfico en
 `AccessNet1`, usando:
 
 ```
