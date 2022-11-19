@@ -120,5 +120,16 @@ microk8s kubectl delete -n $OSMNS deployment DEPLOYMENT
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-deployments-and-services
 
 
+Mirar 
+osm k8scluster-list
 
+El id del cluster se usa en:
 
+osm k8scluster-show <id>
+osm k8scluster-show --literal <id>  | grep -A1 projects
+
+Output: valores de configuración projects_read/projects_write contienen el
+namespace asociado a OSM en el cluster 
+
+Problemas en X y root 
+sudo xauth add $(xauth list | tail -1)
