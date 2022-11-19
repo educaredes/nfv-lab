@@ -3,7 +3,7 @@ Repository for NFV lab with OSM MANO.
 It contains a helm-repository, check out the [index.yaml](index.yaml)
 
 ## Scenario
-![scenario detail](doc/nfv-lab-figura4.drawio.png)
+![scenario detail](doc/img/nfv-lab-figura4.drawio.png)
 
 ## Quick testing guide
 1. Launch the machines RDSV-OSM and RDSV-K8S
@@ -28,7 +28,7 @@ sudo vnx -f vnx/nfv3_server_lxc_ubuntu64.xml -t
 - register a new k8s  repository using id: helmchartrepo, type: "Helm Chart" 
 and URL https://educaredes.github.io/nfv-lab (DO NOT TERMINATE WITH "/")
 
-![new-k8s-repository-details](doc/new-k8s-repository.png)
+![new-k8s-repository-details](doc/img/new-k8s-repository.png)
 
 5. On RDSV-OSM, from the Desktop (graphically):
 - select the Package menu in OSM
@@ -36,7 +36,7 @@ and URL https://educaredes.github.io/nfv-lab (DO NOT TERMINATE WITH "/")
 - onboard the VNFs accessknf_vnfd.tar.gz and cpeknf_vnfd.tar.gz
 - onboard the NS renes_ns.tar.gz
 
-6. On RDSV-OSM, from the terminal instantiate the service renes1 ans wait 
+6. On RDSV-OSM, from the terminal instantiate the service renes1 and wait 
 until it is completely instantiated:
 
 ```
