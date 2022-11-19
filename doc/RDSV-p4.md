@@ -48,13 +48,8 @@ Como se refleja en la figura, se utilizará la tecnología _VXLAN_ para enviar e
 
 ## Entrega de resultados
 
-En los apartados siguientes encontrará:
-
->
-> apartados resaltados
->
-
-Deberá responder a esos apartados en un documento memoria-p4.pdf
+En los apartados siguientes encontrará algunos marcados con (P). Deberá 
+responder a esos apartados en un documento memoria-p4.pdf
 
 Suba a través del Moodle un único fichero zip que incluya el fichero pdf y las
 capturas que se solicitan.
@@ -62,9 +57,9 @@ capturas que se solicitan.
 ## Desarrollo de la práctica
 ### 1. Desde un PC del laboratorio, ejecute:
 
-    ```
-    /lab/rdsv/rdsv-get-osm
-    ```
+```
+/lab/rdsv/rdsv-get-osm
+```
 
 Este comando:
 - instala la ova que contiene las dos máquinas virtuales en VirtualBox,
@@ -201,14 +196,14 @@ Acceda a la opción de menú _K8s clusters_, haga clic sobre el botón _Add K8s 
 
 En la carpeta compartida `$HOME/shared/nfv-lab/helm` puede encontrar las definiciones de los helm charts `accesschart` y `cpechart`, mientras que en `$HOME/shared/nfv-lab/img` está la definición del contenedor docker único que se va a utilizar, `educaredes/vnf-img`. Este contenedor está alojado en DockerHub, compruébelo accediendo a [este enlace](https://hub.docker.com/u/educaredes)
 
->### 11. Relación entre helm y docker
->
->Busque en la carpeta `helm` en qué ficheros se hace referencia al contenedor docker. Anote el resultado
->e inclúyalo como parte de la entrega. Puede utilizar:
->
->```
->grep -R "educaredes/vnf-img"
->```
+### 11. (P) Relación entre helm y docker
+
+Busque en la carpeta `helm` en qué ficheros se hace referencia al contenedor docker. Anote el resultado
+e inclúyalo como parte de la entrega. Puede utilizar:
+
+```
+grep -R "educaredes/vnf-img"
+```
 
 ### 12. Realice el "onboarding" de KNFs y servicio de red
 
@@ -216,11 +211,11 @@ Desde el _PC anfitrión_, acceda gráficamente al directorio `$HOME/shared/nfv-l
 - Acceda al menu de OSM Packages->VNF packages y arrastre los ficheros accessknf_vnfd.tar.gz y cpeknf_vnfd.tar.gz   
 - Acceda al menu de OSM Packages->NS packages y arrastre el fichero renes_ns.tar.gz
 
->### 13. Análisis de las definiciones del servicio de red y de las KNF
->
->Acceda a la descripción de las VNF y del servicio. Para entregar como resultado de la práctica:
->1.	En la descripción de las VNFs, identifique y copie la información referente a la imagen que se va a utilizar para el contenedor.
->2.	En la descripción del servicio, identifique y copie la información referente a las dos VNFs
+### 13. (P) Análisis de las definiciones del servicio de red y de las KNF
+
+Acceda a la descripción de las VNF y del servicio. Para entregar como resultado de la práctica:
+1.	En la descripción de las VNFs, identifique y copie la información referente a la imagen que se va a utilizar para el contenedor.
+2.	En la descripción del servicio, identifique y copie la información referente a las dos VNFs
 
 ### 14. Instanciación del servicio
 
@@ -241,7 +236,7 @@ watch osm ns-list
 
 Esta información también se puede obtener a través de la GUI de OSM, opción NS Instances.
 
-### 14. Comprobación de los pods arrancados
+### 15. Comprobación de los pods arrancados
 
 Desde el terminal en _RDSV-OSM_, usaremos kubectl para obtener los pods que han arrancado en _RDSV-K8S_
 
@@ -256,30 +251,30 @@ ACCPOD=<nombre del pod de la KNF:access>
 CPEPOD=<nombre del pod de la KNF:cpe>
 ```
 
->### 15. Acceso a los pods ya arrancados
->
->Haga una captura del texto o captura de pantalla del resultado de los siguientes comandos y explique el resultado. ¿Qué red están utilizando los pods para esa comunicación?
->
->```
->kubectl -n $OSMNS exec -it $ACCPOD -- ifconfig eth0
-># anote la dirección IP
->
->kubectl -n $OSMNS exec -it $CPEPOD -- /bin/bash
-># Y a continuación haga un ping a la dirección IP anotada
-># salga con exit
->```
+### 16. (P) Acceso a los pods ya arrancados
 
->### 16. Conectividad hacia la red residencial
->
->Analice el detalle del ecenario en la Fig. 4 y analice cómo comprobar **desde _RDSV-OSM_** la conectividad entre el servicio desplegado y el dispositivo _brg1_ de la red residencial. Indique si hay conectividad y qué comando(s) ha utilizado.
+Haga una captura del texto o captura de pantalla del resultado de los siguientes comandos y explique el resultado. ¿Qué red están utilizando los pods para esa comunicación?
 
->### 17. Scripts de configuración del servicio
->
->Desde el _PC anfitrión_ acceda (mediante vi, nano, gedit, ...) al contenido del fichero osm_renes1.sh utilizado para configurar la instancia renes1 del servicio. Ccompare los valores utilizados con los de la figura detallada del escenario. Indique cuál es la dirección IP "pública" (en realidad es de un rango privado), que deberá usar la función NAT del CPE para dar salida al tráfico de la red residencial hacia Internet. 
->
->(Opcional, para hacer tras la sesión del laboratorio). Analice y describa para qué se utilizan los scripts osm_renes_start.sh y renes_start.sh
+```
+kubectl -n $OSMNS exec -it $ACCPOD -- ifconfig eth0
+# anote la dirección IP
 
-### 18. Configuración del servicio
+kubectl -n $OSMNS exec -it $CPEPOD -- /bin/bash
+# Y a continuación haga un ping a la dirección IP anotada
+# salga con exit
+```
+
+### 17. (P) Conectividad hacia la red residencial
+
+Analice el detalle del ecenario en la Fig. 4 y analice cómo comprobar **desde _RDSV-OSM_** la conectividad entre el servicio desplegado y el dispositivo _brg1_ de la red residencial. Indique si hay conectividad y qué comando(s) ha utilizado.
+
+### 18. (P) Scripts de configuración del servicio
+
+Desde el _PC anfitrión_ acceda (mediante vi, nano, gedit, ...) al contenido del fichero osm_renes1.sh utilizado para configurar la instancia renes1 del servicio. Ccompare los valores utilizados con los de la figura detallada del escenario. Indique cuál es la dirección IP "pública" (en realidad es de un rango privado), que deberá usar la función NAT del CPE para dar salida al tráfico de la red residencial hacia Internet. 
+
+(Opcional, para hacer tras la sesión del laboratorio). Analice y describa para qué se utilizan los scripts osm_renes_start.sh y renes_start.sh
+
+### 19. Configuración del servicio
 
 Desde _RDSV-OSM_, configure el servicio renes1 mediante osm_renes1.sh:
 
@@ -290,82 +285,82 @@ Desde _RDSV-OSM_, configure el servicio renes1 mediante osm_renes1.sh:
 Compruebe que haya conectividad entre el servicio de red y el `brg1` de la red 
 residencial.
 
->### 19. Servicio desde la red de acceso
->
->Compruebe la configuración de red de h11 y h12 y, si no han obtenido dirección
-> IP, fuerce el acceso al servidor DHCP mediante el comando:
->
->```
->dhclient eth1
->```
->
->Indique qué direcciones IP obtienen h11 y h12 en la red residencial “privada”, 
->así como la dirección IP del router.
->
->Relacione el resultado con los ficheros de configuración del contenedor docker 
->educaredes/vnf-img incluidos en el directorio $HOME/shared/nfv-lab/img/vnf-img.
+### 20. (P) Servicio desde la red de acceso
 
->### 20. Análisis de tráfico en AccesNet1
->
->Desde el _RDSV-K8S_, arranque wireshark y póngalo a capturar el tráfico en
->`AccessNet1`, usando:
->
->```
->wireshark -ki brg1-e2 &
->```
->
->Desde h11 realice un ping de 5 paquetes a la dirección IP de su router, 
->comprobando que funciona correctamente.
->
->```
->ping -c 5 <dir_IP_router>
->```
->
->Detenga wireshark, y guarde la captura con nombre “access1.pcapng”. Analice 
->el tráfico capturado, justificando las direcciones IP que aparecen en los 
->paquetes capturados.
+Compruebe la configuración de red de h11 y h12 y, si no han obtenido dirección
+ IP, fuerce el acceso al servidor DHCP mediante el comando:
 
->### 21. Análisis de tráfico en ExtNet1
->
->Arranque wireshark y póngalo a capturar el tráfico en ExtNet, por ejemplo 
->haciendo:
->
->```
->wireshark -ki isp-e1 &
->```
->
->Desde h11 realice un ping de 5 paquetes a la dirección IP de s1 (10.100.3.2), 
->comprobando que funciona correctamente.
->
->```
->ping -c 5 10.100.3.2
->```
->
->Detenga wireshark, y guarde la captura con nombre “ext1.pcapng”. Analice el 
->tráfico capturado, justificando las direcciones IP que aparecen en 
->los paquetes capturados.
->
->Desde la consola de h11, compruebe que tiene acceso a Internet. Además de usar 
->ping, puede arrancar un navegador.
->
->```
->ping -c 5 8.8.8.8
->firefox www.dit.upm.es &
->```
+```
+dhclient eth1
+```
 
->### 22. Servicio a segunda red residencial
->
->Indique y realice los pasos necesarios para dar acceso a Internet a la 
->segunda red residencial (h21, h22). Para la configuración del servicio, 
->tome como punto de partida `osm_renes1.sh` y cree un nuevo script
->`osm_renes2.sh`. 
->
->Compruebe que los pasos dados funcionan correctamente:
->- compruebe que h21 y h22 obtienen acceso a Internet
->- compruebe que a su vez sigue funcionando la primera red residencial (h11, h12)
->- indique qué direcciones IP han obtenido h21 y h2
->
->Incluya además el contenido de `osm_renes2.sh` en la memoria de respuestas.
+Indique qué direcciones IP obtienen h11 y h12 en la red residencial “privada”, 
+así como la dirección IP del router.
+
+Relacione el resultado con los ficheros de configuración del contenedor docker 
+educaredes/vnf-img incluidos en el directorio $HOME/shared/nfv-lab/img/vnf-img.
+
+### 21. (P) Análisis de tráfico en AccesNet1
+
+Desde el _RDSV-K8S_, arranque wireshark y póngalo a capturar el tráfico en
+`AccessNet1`, usando:
+
+```
+wireshark -ki brg1-e2 &
+```
+
+Desde h11 realice un ping de 5 paquetes a la dirección IP de su router, 
+comprobando que funciona correctamente.
+
+```
+ping -c 5 <dir_IP_router>
+```
+
+Detenga wireshark, y guarde la captura con nombre “access1.pcapng”. Analice 
+el tráfico capturado, justificando las direcciones IP que aparecen en los 
+paquetes capturados.
+
+### 22. (P) Análisis de tráfico en ExtNet1
+
+Arranque wireshark y póngalo a capturar el tráfico en ExtNet, por ejemplo 
+haciendo:
+
+```
+wireshark -ki isp-e1 &
+```
+
+Desde h11 realice un ping de 5 paquetes a la dirección IP de s1 (10.100.3.2), 
+comprobando que funciona correctamente.
+
+```
+ping -c 5 10.100.3.2
+```
+
+Detenga wireshark, y guarde la captura con nombre “ext1.pcapng”. Analice el 
+tráfico capturado, justificando las direcciones IP que aparecen en 
+los paquetes capturados.
+
+Desde la consola de h11, compruebe que tiene acceso a Internet. Además de usar 
+ping, puede arrancar un navegador.
+
+```
+ping -c 5 8.8.8.8
+firefox www.dit.upm.es &
+```
+
+### 23. (P) Servicio a segunda red residencial
+
+Indique y realice los pasos necesarios para dar acceso a Internet a la 
+segunda red residencial (h21, h22). Para la configuración del servicio, 
+tome como punto de partida `osm_renes1.sh` y cree un nuevo script
+`osm_renes2.sh`. 
+
+Compruebe que los pasos dados funcionan correctamente:
+- compruebe que h21 y h22 obtienen acceso a Internet
+- compruebe que a su vez sigue funcionando la primera red residencial (h11, h12)
+- indique qué direcciones IP han obtenido h21 y h2
+
+Incluya además el contenido de `osm_renes2.sh` en la memoria de respuestas.
 
 
 
