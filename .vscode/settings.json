@@ -2,5 +2,22 @@
     "cSpell.enableFiletypes": [
         "markdown"
     ],
-    "cSpell.language": "en,es-ES"
+    "cSpell.language": "en,es-ES",
+    "cSpell.words": [
+        "OSMNS",
+        "scluster"
+    ],
+    "cSpell.ignoreWords": [
+        "ACCPOD",
+        "CPEPOD",
+        "NSID",
+        "accesschart",
+        "accessknf",
+        "cpechart",
+        "cpeknf",
+        "helmchartrepo",
+        "microk",
+        "vcpe",
+        "vnfd"
+    ]
 }
