@@ -57,6 +57,10 @@ SPAIN
        dhclient eth9
        sleep 1
        /usr/bin/vnx_config_nat eth1 eth9
+
+       # Change interface MTU
+       ifconfig eth1 mtu 1380
+       sed -i -e '/iface eth1 inet static/a \   mtu 1380' /etc/network/interfaces
     </exec>
   </vm>
   <vm name="s1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
