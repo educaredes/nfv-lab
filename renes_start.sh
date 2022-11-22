@@ -58,7 +58,7 @@ $CPE_EXEC service openvswitch-switch start
 echo "## 3. En VNF:access agregar un bridge y configurar IPs y rutas"
 $ACC_EXEC ovs-vsctl add-br brint
 $ACC_EXEC ifconfig net1 $VNFTUNIP/24
-$ACC_EXEC ovs-vsctl add-port brint vxlanacc -- set interface vxlanacc type=vxlan options:remote_ip=$HOMETUNIP options:key=inet options:dst_port=8742
+$ACC_EXEC ovs-vsctl add-port brint vxlanacc -- set interface vxlanacc type=vxlan options:remote_ip=$HOMETUNIP
 $ACC_EXEC ovs-vsctl add-port brint vxlanint -- set interface vxlanint type=vxlan options:remote_ip=$IPCPE options:key=inet options:dst_port=8742
 $ACC_EXEC ip route add $IPCPE/32 via $K8SGW
 

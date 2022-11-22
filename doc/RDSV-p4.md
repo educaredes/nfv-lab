@@ -65,7 +65,7 @@ servicio de red residencial "RENES" (REsidential NEtwork Service) se va a
 ofrecer a través de dos VNF implementadas mediante Kubernetes (KNF):
 
 - Una KNF:access, que se conecta a la red de acceso y permitiría clasificar el
-  tráfico e implementar QoS en el acceso del usuario a la red
+  tráfico e implementar QoS en el acceso del usuario a la red.
 - Una KNF:vcpe, que integrará las funciones de servidor DHCP, NAT y reenvío de
   IP. 
 
@@ -89,7 +89,7 @@ anfitrión (`192.168.56.1`):
      red externa ExtNet1 que da salida al router isp1, y que además se utiliza
      tanto en la emulación del bgr1 como en las KNFs
 - **RDSV-OSM** (`192.168.56.12`). Instalación del entorno _OSM_, al que se
-  accede gráficamente con un navegador, o mediante terminal con el comando `osm`
+  accede gráficamente con un navegador, o mediante terminal con el comando `osm`.
 
 Esas máquinas tendrán conectividad entre ellas y con el host a través de la red
 192.168.56.0/24.
@@ -111,7 +111,7 @@ asignan dinámicamente al instanciar las KNFs.
 ## Entrega de resultados
 
 En los apartados siguientes encontrará algunos marcados con (P). Deberá 
-responder a esos apartados en un documento memoria-p4.pdf
+responder a esos apartados en un documento memoria-p4.pdf.
 
 Suba a través del Moodle un único fichero zip que incluya el fichero pdf y las
 capturas que se solicitan.
@@ -122,7 +122,7 @@ capturas que se solicitan.
 Ejecute en un PC del laboratorio:
 
 ```
-/lab/rdsv/rdsv-get-osm
+/lab/rdsv/rdsv-get-osmlab
 ```
 
 Este comando:
@@ -130,10 +130,8 @@ Este comando:
 - crea la red de interconexión entre ellas, si no está ya creada,
 - crea el directorio `$HOME/shared` en la cuenta del usuario del laboratorio y
   la añade como directorio compartido en las dos máquinas virtuales, en
-  `/home/upm/shared`
-
-El objetivo es que esté accesible tanto en el PC anfitrión como en las máquinas
-_RDSV-OSM_ y _RDSV-K8S_. 
+  `/home/upm/shared`. El objetivo es que esa carperta compartida sea accesible 
+  tanto en el PC anfitrión como en las máquinas _RDSV-OSM_ y _RDSV-K8S_. 
 
 A continuación descargue en ese directorio compartido el repositorio de la
 práctica: 
@@ -151,8 +149,15 @@ vboxmanage startvm RDSV-OSM --type headless # arrancar sin interfaz gráfica
 vboxmanage startvm RDSV-K8S
 ``` 
 
-(Nota: el entorno OSM puede tardar varios minutos en terminar de arrancar
-realmente)
+> **Nota:**
+> El entorno OSM puede tardar varios minutos en terminar de arrancar.
+
+Finalmente, para permitir el acceso a aplicaciones con entorno gráfico desde las
+máquinas arrancadas con VNX ejecute:
+
+```
+xhost +
+```
 
 ### 2. Arranque de escenarios VNX 
 
@@ -170,7 +175,8 @@ anfitrión.
 ping -c 5 192.168.56.12
 ping -c 5 192.168.56.1
 ```
-A continuación arranque el escenario de la red residencial
+
+A continuación arranque el escenario de la red residencial:
 
 ```
 cd /home/upm/shared/nfv-lab
@@ -186,7 +192,8 @@ de los hosts h11 y h12 que no tienen asignada dirección IP en la interfaz
 ifconfig eth1
 ```
 
-(Nota: los hosts tienen configurada la red de gestión VNX en la interfaz eth0)
+> **Nota:**
+> Los hosts tienen configurada la red de gestión VNX en la interfaz `eth0`.
 
 Compruebe también que el cliente DHCP no les permite obtener dirección IP y que
 no tienen acceso a Internet:
@@ -274,8 +281,8 @@ y VNFs.
 A través de la GUI registraremos el repositorio de helm charts que 
 utilizaremos en la práctica, alojado en Github Pages.
 
-Acceda a la opción de menú _K8s clusters_, haga clic sobre el botón
- _Add K8s Cluster_ y rellene los campos con los valores:
+Acceda a la opción de menú _K8s Repos_, haga clic sobre el botón
+ _Add K8s Repository_ y rellene los campos con los valores:
 - id: `helmchartrepo`
 - type: "Helm Chart" 
 - URL: `https://educaredes.github.io/nfv-lab` (NO DEBE TERMINAR EN "/")
@@ -287,7 +294,7 @@ En la carpeta compartida `$HOME/shared/nfv-lab/helm` puede encontrar las
 definiciones de los helm charts `accesschart` y `cpechart`, mientras que en
 `$HOME/shared/nfv-lab/img` está la definición del contenedor docker único que se
 va a utilizar, `educaredes/vnf-img`. Este contenedor está alojado en DockerHub,
-compruébelo accediendo a [este enlace](https://hub.docker.com/u/educaredes)
+compruébelo accediendo a [este enlace](https://hub.docker.com/u/educaredes).
 
 ### 6. (P) Relación entre helm y docker
 
@@ -311,12 +318,13 @@ descriptores de las KNFs y del servicio de red (onboarding):
 
 ### 8. (P) Análisis de descriptores
 
-Acceda a la descripción de las VNF y del servicio. Para entregar como resultado
-de la práctica:
+Acceda a la descripción de las VNFs/KNFs y del servicio. Para entregar como 
+resultado de la práctica:
 1.	En la descripción de las VNFs, identifique y copie la información referente
-a la imagen que se va a utilizar para el contenedor.
+al helm chart que se utiliza para desplegar el pod correspondiente en el clúster
+de Kubernetes.
 2.	En la descripción del servicio, identifique y copie la información 
-referente a las dos VNFs
+referente a las dos VNFs.
 
 ### 9. Creación de instancias del servicio
 
@@ -349,7 +357,7 @@ gestionar el servicio gráficamente.
 ### 10. Comprobación de los pods arrancados
 
 Desde el terminal en _RDSV-OSM_, usaremos kubectl para obtener los pods que 
-han arrancado en _RDSV-K8S_
+han arrancado en _RDSV-K8S_:
 
 ```
 kubectl -n $OSMNS get pods
@@ -386,8 +394,9 @@ escenario. Indique cuál es la dirección IP "pública" (en realidad es de un
 rango privado), que deberá usar la función NAT del CPE para dar salida al 
 tráfico de la red residencial hacia Internet. 
 
-(Opcional, para hacer tras la sesión del laboratorio). Analice y describa para
-qué se utilizan los scripts osm_renes_start.sh y renes_start.sh
+> **Parte opcional, para hacer tras la sesión del laboratorio:** 
+> Analice y describa para qué se utilizan los scripts `osm_renes_start.sh` y 
+`renes_start.sh`.
 
 ### 13. (P) Configuración del servicio
 
@@ -479,9 +488,6 @@ Compruebe que los pasos dados funcionan correctamente:
 - indique qué direcciones IP han obtenido h21 y h22
 
 Incluya además el contenido de `osm_renes2.sh` en la memoria de respuestas.
-
-
-
 
 
 
