@@ -26,12 +26,15 @@ cd /mnt/tmp/
 #echo "-- File copied in: $ELAPSED_TIME sec"
 #echo "--"
 
+
+check_in_vbox $VMNAME1
+check_in_vbox $VMNAME2
+
 if ! vboxmanage list hostonlyifs | grep -q vboxnet0 ; then
     vboxmanage hostonlyif create
 fi
 
-check_in_vbox $VMNAME1
-check_in_vbox $VMNAME2
+vboxmanage hostonlyif ipconfig vboxnet0 --ip=192.168.56.1 --netmask=255.255.255.0
 
 echo "--"
 echo "-- Importing $OVAFILE into VirtualBox..."
