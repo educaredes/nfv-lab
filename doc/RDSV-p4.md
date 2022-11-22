@@ -130,7 +130,7 @@ Este comando:
 - crea la red de interconexión entre ellas, si no está ya creada,
 - crea el directorio `$HOME/shared` en la cuenta del usuario del laboratorio y
   la añade como directorio compartido en las dos máquinas virtuales, en
-  `/home/upm/shared`. El objetivo es que esa carperta compartida sea accesible 
+  `/home/upm/shared`. El objetivo es que esa carpeta compartida sea accesible 
   tanto en el PC anfitrión como en las máquinas _RDSV-OSM_ y _RDSV-K8S_. 
 
 A continuación descargue en ese directorio compartido el repositorio de la
@@ -151,13 +151,6 @@ vboxmanage startvm RDSV-K8S
 
 > **Nota:**
 > El entorno OSM puede tardar varios minutos en terminar de arrancar.
-
-Finalmente, para permitir el acceso a aplicaciones con entorno gráfico desde las
-máquinas arrancadas con VNX ejecute:
-
-```
-xhost +
-```
 
 ### 2. Arranque de escenarios VNX 
 
@@ -208,6 +201,13 @@ Arranque también el escenario "server"
 
 ```
 sudo vnx -f vnx/nfv3_server_lxc_ubuntu64.xml -t
+```
+
+Finalmente, para permitir el acceso a aplicaciones con entorno gráfico desde las
+máquinas arrancadas con VNX ejecute:
+
+```
+xhost +
 ```
 
 ### 3. Definición del cluster k8s en OSM
@@ -453,7 +453,7 @@ Arranque wireshark y póngalo a capturar el tráfico en ExtNet, por ejemplo
 haciendo:
 
 ```
-wireshark -ki isp-e1 &
+wireshark -ki isp1-e1 &
 ```
 
 Desde h11 realice un ping de 5 paquetes a la dirección IP de s1 (10.100.3.2), 
