@@ -150,7 +150,6 @@ vboxmanage startvm RDSV-K8S
 ``` 
 
 > **Nota:**
->
 > El entorno OSM puede tardar varios minutos en terminar de arrancar.
 
 Finalmente, para permitir el acceso a aplicaciones con entorno gráfico desde las
