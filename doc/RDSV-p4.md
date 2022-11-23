@@ -5,7 +5,7 @@
   - [Escenario](#escenario)
   - [Entrega de resultados](#entrega-de-resultados)
   - [Desarrollo de la práctica](#desarrollo-de-la-práctica)
-    - [1. Instalación](#1-instalación)
+    - [1. Instalación en dos PCs](#1-instalación-en-dos-pcs)
     - [2. Arranque de escenarios VNX](#2-arranque-de-escenarios-vnx)
     - [3. Definición del cluster k8s en OSM](#3-definición-del-cluster-k8s-en-osm)
     - [4. Familiarización con GUI de OSM](#4-familiarización-con-gui-de-osm)
@@ -117,40 +117,80 @@ Suba a través del Moodle un único fichero zip que incluya el fichero pdf y las
 capturas que se solicitan.
 
 ## Desarrollo de la práctica
-### 1. Instalación
+### 1. Instalación en dos PCs
 
-Ejecute en un PC del laboratorio:
+Cada alumno, desde cuentas diferentes, accederá a un PC,  _labPC1_ 
+para el clúster de K8S, y _labPC2_ para OSM. 
 
-```
-/lab/rdsv/rdsv-get-osmlab
-```
-
-Este comando:
-- instala la ova que contiene las dos máquinas virtuales en VirtualBox,
-- crea la red de interconexión entre ellas, si no está ya creada,
-- crea el directorio `$HOME/shared` en la cuenta del usuario del laboratorio y
-  la añade como directorio compartido en las dos máquinas virtuales, en
-  `/home/upm/shared`. El objetivo es que esa carpeta compartida sea accesible 
-  tanto en el PC anfitrión como en las máquinas _RDSV-OSM_ y _RDSV-K8S_. 
-
-A continuación descargue en ese directorio compartido el repositorio de la
-práctica: 
+En _labPC1_ ejecute:
 
 ```
-cd ~/shared
-git clone https://github.com/educaredes/nfv-lab.git
-cd nfv-lab
+# En labPC1, instala y arranca RDSV-K8S y la conecta con OSM en labPC2
+/lab/rdsv/get-osmlab2 RDSV-K8S labPC2
 ```
 
-Y arranque por línea de comando las máquinas:
+En _labPC2_ ejecute:
 
 ```
-vboxmanage startvm RDSV-OSM --type headless # arrancar sin interfaz gráfica
-vboxmanage startvm RDSV-K8S
-``` 
+# En labPC2, instala y arranca RDSV-OSM y la conecta con K8S en labPC1
+/lab/rdsv/get-osmlab2 RDSV-OSM labPC1
+```
 
-> **Nota:**
-> El entorno OSM puede tardar varios minutos en terminar de arrancar.
+Desde cualquiera de los dos PCs compruebe la conectividad a ambas máquinas:
+
+```
+ping -c 5 192.168.56.11  # K8S
+ping -c 5 192.168.56.12  # OSM
+```
+
+Si hay conectividad, configure la MTU de la interfaz eth1 en ambas máquinas:
+
+```
+ssh upm@192.168.56.11 "sudo ip link set dev eth1 mtu 1400"
+```
+
+```
+ssh upm@192.168.56.12 "sudo ip link set dev eth1 mtu 1400"
+```
+
+Para los apartados siguientes, considere que _labPC1_, en el que ha arrancado
+_RDSV-K8S_, es el _PC anfitrión_ (estará menos cargado).
+
+>#### 1.alt. Instalación en un único PC
+>
+>Alternativamente, para tener todo el entorno en una única máquina, ejecute en un
+>PC del laboratorio:
+>
+>```
+>/lab/rdsv/rdsv-get-osmlab
+>```
+>
+>Este comando:
+>- instala la ova que contiene las dos máquinas virtuales en VirtualBox,
+>- crea la red de interconexión entre ellas, si no está ya creada,
+>- crea el directorio `$HOME/shared` en la cuenta del usuario del laboratorio y
+>la añade como directorio compartido en las dos máquinas virtuales, en
+>`/home/upm/shared`. El objetivo es que esa carpeta compartida sea accesible 
+>tanto en el PC anfitrión como en las máquinas _RDSV-OSM_ y _RDSV-K8S_. 
+>
+>A continuación descargue en ese directorio compartido el repositorio de la
+>práctica: 
+>
+>```
+>cd ~/shared
+>git clone https://github.com/educaredes/nfv-lab.git
+>cd nfv-lab
+>```
+>
+>Y arranque por línea de comando las máquinas:
+>
+>```
+>vboxmanage startvm RDSV-OSM --type headless # arrancar sin interfaz gráfica
+>vboxmanage startvm RDSV-K8S
+>``` 
+>
+>> **Nota:**
+>> El entorno OSM puede tardar varios minutos en terminar de arrancar.
 
 ### 2. Arranque de escenarios VNX 
 

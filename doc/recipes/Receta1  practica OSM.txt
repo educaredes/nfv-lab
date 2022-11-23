@@ -133,3 +133,42 @@ namespace asociado a OSM en el cluster
 
 Problemas en X y root 
 sudo xauth add $(xauth list | tail -1)
+
+Conectar dos máquinas del laboratorio con túneles
+
+En PC-OSM
+ovs-vsctl add-br rdsvlab
+vboxmanage modifyvm RDSV-OSM --nic2 bridged --bridgeadapter2 rdsvlab
+sudo ip address add  192.168.56.2/24 dev rdsvlab
+sudo ip link set dev rdsvlab mtu 1400
+sudo ip link set rdsvlab up
+vboxmanage startvm RDSV-OSM --type headless
+sudo ovs-vsctl add-port rdsvlab vxlanosm -- set interface vxlanosm type=vxlan options:remote_ip=138.4.31.124
+
+
+En PC-K8S
+sudo ovs-vsctl add-br rdsvlab
+vboxmanage modifyvm RDSV-K8S --nic2 bridged --bridgeadapter2 rdsvlab
+sudo ip address add  192.168.56.1/24 dev rdsvlab
+sudo ip link set dev rdsvlab mtu 1400
+sudo ip link set rdsvlab up
+vboxmanage startvm RDSV-K8S --type headless
+sudo ovs-vsctl add-port rdsvlab vxlanosm -- set interface vxlanosm type=vxlan options:remote_ip=138.4.31.125
+
+
+
+
+  897  ifconfig rdsvlab 192.168.56.1/24
+  898  vboxmanage startvm RDSV-OSM --type headless
+  899  ping 192.168.56.12
+  900  ovs-vsctl add-br rdsvlab2
+  901  vboxmanage modifyvm RDSV-K8S --nic2 bridged --bridgeadapter2 rdsvlab2
+  902  ovs-vsctl add-port rdsvlab vxlanosm -- set interface vxlanosm type=vxlan options:remote_ip=127.0.0.1
+  903  ovs-vsctl add-port rdsvlab2 vxlank8s -- set interface vxlank8s  type=vxlan options:remote_ip=127.0.0.1
+  904  less /var/log/openvswitch
+  905  ls /var/log/openvswitch
+  906  tail  /var/log/openvswitch/ovs-vswitchd.log
+  907  ovs-vsctl add-port rdsvlab2 vxlank8s -- set interface vxlank8s  type=vxlan options:remote_ip=127.0.0.1 options:key=1
+  908  ovs-vsctl  set interface vxlank8s  type=vxlan options:remote_ip=127.0.0.1 options:key=1
+  909  ovs-vsctl show
+  910  vboxmanage startvm RDSV-K8S --type headless
