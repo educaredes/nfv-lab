@@ -210,6 +210,13 @@ máquinas arrancadas con VNX ejecute:
 xhost +
 ```
 
+> **Nota:**
+> Mostrará como salida:
+>
+>```
+>access control disabled, clients can connect from any host
+>```
+
 ### 3. Definición del cluster k8s en OSM
 
 Ahora desde el _PC anfitrión_ use un terminal para acceder a _RDSV-OSM_:
@@ -248,6 +255,11 @@ de la práctica.
 ```
 export OSMNS=<namespace> # todo seguido, sin espacios y sin < >
 ```
+> **Ejemplo:**
+> >
+>```
+>export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a
+>```
 
 Desde el terminal en _RDSV-OSM_, comprobemos que el cliente de k8s `kubectl`
 está configurado para acceder al clúster. Liste los namespaces del clúster,
