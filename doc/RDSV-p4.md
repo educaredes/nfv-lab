@@ -119,22 +119,36 @@ capturas que se solicitan.
 ## Desarrollo de la práctica
 ### 1. Instalación en dos PCs
 
-Cada alumno, desde cuentas diferentes, accederá a un PC,  _labPC1_ 
-para el clúster de K8S, y _labPC2_ para OSM. 
+Cada alumno, desde cuentas diferentes, accederá a un PC,  _pc-k8s_ 
+para el clúster de K8S, y _pc-osm_ para OSM. 
 
-En _labPC1_ ejecute:
-
-```
-# En labPC1, instala y arranca RDSV-K8S y la conecta con OSM en labPC2
-/lab/rdsv/get-osmlab2 RDSV-K8S labPC2
-```
-
-En _labPC2_ ejecute:
+En _pc-k8s_ ejecute:
 
 ```
-# En labPC2, instala y arranca RDSV-OSM y la conecta con K8S en labPC1
-/lab/rdsv/get-osmlab2 RDSV-OSM labPC1
+# En pc-k8s, instala y arranca RDSV-K8S y la conecta con OSM en pc-osm
+/lab/rdsv/get-osmlab2 RDSV-K8S pc-osm
 ```
+>Ejemplo, con pc-osm=l060 y pc-k8s=l059
+>
+>```
+>/lab/rdsv/get-osmlab2 RDSV-K8S l060
+>```
+>
+
+En _pc-osm_ ejecute:
+
+```
+# En pc-osm, instala y arranca RDSV-OSM y la conecta con K8S en pc-k8s
+/lab/rdsv/get-osmlab2 RDSV-OSM pc-k8s
+```
+
+
+>Ejemplo, con pc-osm=l060 y pc-k8s=l059
+>
+>```
+>/lab/rdsv/get-osmlab2 RDSV-OSM l059
+>```
+>
 
 Desde cualquiera de los dos PCs compruebe la conectividad a ambas máquinas:
 
@@ -153,7 +167,23 @@ ssh upm@192.168.56.11 "sudo ip link set dev eth1 mtu 1400"
 ssh upm@192.168.56.12 "sudo ip link set dev eth1 mtu 1400"
 ```
 
-Para los apartados siguientes, considere que _labPC1_, en el que ha arrancado
+Además descargue en la carpeta shared en ambos PCs, el repositorio de la 
+práctica:
+
+```
+cd ~/shared
+git clone https://github.com/educaredes/nfv-lab.git
+cd nfv-lab
+```
+
+>Nota: si ya lo ha descargado antes puede actualizarlo con:
+>```
+>cd ~/shared
+>git pull
+>cd nfv-lab
+>```
+
+Para los apartados siguientes, considere que _pc-k8s_, en el que ha arrancado
 _RDSV-K8S_, es el _PC anfitrión_ (estará menos cargado).
 
 >#### 1.alt. Instalación en un único PC
