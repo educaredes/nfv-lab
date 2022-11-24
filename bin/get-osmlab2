@@ -1,0 +1,122 @@
+#!/bin/bash
+
+OVAOSM='RDSV2022-OSM-v1.ova'
+OVAK8S='RDSV2022-K8S-v1.ova'
+LABDIR=/lab/rdsv
+VMOSM='RDSV-OSM'
+VMK8S='RDSV-K8S'
+OVS4TUN='rdsvlab'
+TUNIP=''
+
+START_TIME=$SECONDS
+
+valid_ip() {
+    local ip=$1
+    local stat=1
+
+    if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+        OIFS=$IFS
+        IFS='.'
+        ip=($ip)
+        IFS=$OIFS
+        [[ ${ip[0]} -le 255 && ${ip[1]} -le 255 &&
+            ${ip[2]} -le 255 && ${ip[3]} -le 255 ]]
+        stat=$?
+    fi
+    return $stat
+}
+
+validate_host() {
+    local host=$1
+    if ! valid_ip $host; then
+        local dns_ip=$(host -t a $host | awk '{ print $4 }')
+        if ! valid_ip $dns_ip; then
+            echo "-- ERROR: $host is not a valid IPv4 address or hostname"
+            exit 1
+        else
+            TUNIP=$dns_ip
+        fi
+    else
+        TUNIP=$host
+    fi
+}
+
+check_in_vbox() {
+    if vboxmanage list vms | grep $1; then
+        echo "--"
+        echo "-- ERROR: $VMNAME virtual machine alredy exists in VirtualBox."
+        echo "--        Delete or rename it manually and execute this script again."
+        echo "--"
+        exit 1
+    fi
+}
+
+validate_vm() {
+    VMNAME=$1
+    if [ $1 = $VMOSM ]; then
+        IMPORTOPTS="--vsys 0"
+        OVAFILE=$OVAOSM
+        LOCALIP="192.168.56.2/24"
+        STARTCMD="vboxmanage startvm $VMNAME --type headless"
+    elif [ $1 = $VMK8S ]; then
+        IMPORTOPTS="--vsys 0 --memory 4096"
+        OVAFILE=$OVAK8S
+        LOCALIP="192.168.56.1/24"
+        STARTCMD="vboxmanage startvm $VMNAME"
+    else
+        echo "--"
+        echo "-- Usage:  $0 <vm_name> <remote_vm_ip>"
+        echo "-- <vm_name> must be $VMOSM or $VMK8S"
+        echo "--"
+        exit 1
+    fi
+    check_in_vbox $VMNAME
+}
+
+if [ "$#" -ne 2 ]; then
+    echo "--"
+    echo "-- Usage:  $0 <vm_name> <remote_vm_ip>"
+    echo "--"
+    exit 1
+fi
+
+validate_vm $1
+validate_host $2
+
+cd /mnt/tmp/
+
+if vboxmanage list hostonlyifs | grep -q vboxnet0; then
+    vboxmanage hostonlyif ipconfig vboxnet0 --ip=192.168.222.1 --netmask=255.255.255.0
+fi
+
+echo "--"
+echo "-- Importing $OVAFILE $IMPORTOPTS into VirtualBox..."
+echo "--"
+mkdir -p /mnt/tmp/cache/$USER/VirtualBox/
+vboxmanage setproperty machinefolder /mnt/tmp/cache/$USER/VirtualBox/
+
+if [ -f "$OVAFILE" ]; then
+    echo vboxmanage import /mnt/tmp/$OVAFILE --vsys=$VSYS
+    vboxmanage import /mnt/tmp/$OVAFILE $IMPORTOPTS
+else
+    echo vboxmanage import /lab/$LABDIR/$OVAFILE --vsys=$VSYS
+    vboxmanage import $LABDIR/$OVAFILE $IMPORTOPTS
+fi
+
+mkdir -p ~/shared
+vboxmanage sharedfolder add $VMNAME --name shared --hostpath ~/shared --automount --auto-mount-point=/home/upm/shared
+
+sudo ovs-vsctl --if-exists del-br $OVS4TUN
+sudo ovs-vsctl add-br $OVS4TUN
+vboxmanage modifyvm $VMNAME --nic2 bridged --bridgeadapter2 $OVS4TUN
+sudo ip address add $LOCALIP dev $OVS4TUN
+sudo ip link set dev $OVS4TUN mtu 1400
+sudo ip link set $OVS4TUN up
+sudo ovs-vsctl add-port $OVS4TUN vxlanosm -- set interface vxlanosm type=vxlan options:remote_ip=$TUNIP
+
+$STARTCMD
+
+ELAPSED_TIME=$(($SECONDS - $START_TIME))
+echo "--"
+echo "-- Total command duration: $ELAPSED_TIME sec"
+echo "--"

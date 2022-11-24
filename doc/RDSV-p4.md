@@ -5,7 +5,7 @@
   - [Escenario](#escenario)
   - [Entrega de resultados](#entrega-de-resultados)
   - [Desarrollo de la práctica](#desarrollo-de-la-práctica)
-    - [1. Instalación](#1-instalación)
+    - [1. Instalación en dos PCs](#1-instalación-en-dos-pcs)
     - [2. Arranque de escenarios VNX](#2-arranque-de-escenarios-vnx)
     - [3. Definición del cluster k8s en OSM](#3-definición-del-cluster-k8s-en-osm)
     - [4. Familiarización con GUI de OSM](#4-familiarización-con-gui-de-osm)
@@ -117,24 +117,58 @@ Suba a través del Moodle un único fichero zip que incluya el fichero pdf y las
 capturas que se solicitan.
 
 ## Desarrollo de la práctica
-### 1. Instalación
+### 1. Instalación en dos PCs
 
-Ejecute en un PC del laboratorio:
+Cada alumno, desde cuentas diferentes, accederá a un PC,  _pc-k8s_ 
+para el clúster de K8S, y _pc-osm_ para OSM. 
+
+En _pc-k8s_ ejecute:
 
 ```
-/lab/rdsv/rdsv-get-osmlab
+# En pc-k8s, instala y arranca RDSV-K8S y la conecta con OSM en pc-osm
+/lab/rdsv/get-osmlab2 RDSV-K8S pc-osm
+```
+>Ejemplo, con pc-osm=l060 y pc-k8s=l059
+>
+>```
+>/lab/rdsv/get-osmlab2 RDSV-K8S l060
+>```
+>
+
+En _pc-osm_ ejecute:
+
+```
+# En pc-osm, instala y arranca RDSV-OSM y la conecta con K8S en pc-k8s
+/lab/rdsv/get-osmlab2 RDSV-OSM pc-k8s
 ```
 
-Este comando:
-- instala la ova que contiene las dos máquinas virtuales en VirtualBox,
-- crea la red de interconexión entre ellas, si no está ya creada,
-- crea el directorio `$HOME/shared` en la cuenta del usuario del laboratorio y
-  la añade como directorio compartido en las dos máquinas virtuales, en
-  `/home/upm/shared`. El objetivo es que esa carpeta compartida sea accesible 
-  tanto en el PC anfitrión como en las máquinas _RDSV-OSM_ y _RDSV-K8S_. 
 
-A continuación descargue en ese directorio compartido el repositorio de la
-práctica: 
+>Ejemplo, con pc-osm=l060 y pc-k8s=l059
+>
+>```
+>/lab/rdsv/get-osmlab2 RDSV-OSM l059
+>```
+>
+
+Desde cualquiera de los dos PCs compruebe la conectividad a ambas máquinas:
+
+```
+ping -c 5 192.168.56.11  # K8S
+ping -c 5 192.168.56.12  # OSM
+```
+
+Si hay conectividad, configure la MTU de la interfaz eth1 en ambas máquinas:
+
+```
+ssh upm@192.168.56.11 "sudo ip link set dev eth1 mtu 1400"
+```
+
+```
+ssh upm@192.168.56.12 "sudo ip link set dev eth1 mtu 1400"
+```
+
+Además descargue en la carpeta shared en ambos PCs, el repositorio de la 
+práctica:
 
 ```
 cd ~/shared
@@ -142,15 +176,51 @@ git clone https://github.com/educaredes/nfv-lab.git
 cd nfv-lab
 ```
 
-Y arranque por línea de comando las máquinas:
+>Nota: si ya lo ha descargado antes puede actualizarlo con:
+>```
+>cd ~/shared
+>git pull
+>cd nfv-lab
+>```
 
-```
-vboxmanage startvm RDSV-OSM --type headless # arrancar sin interfaz gráfica
-vboxmanage startvm RDSV-K8S
-``` 
+Para los apartados siguientes, considere que _pc-k8s_, en el que ha arrancado
+_RDSV-K8S_, es el _PC anfitrión_ (estará menos cargado).
 
-> **Nota:**
-> El entorno OSM puede tardar varios minutos en terminar de arrancar.
+>#### 1.alt. Instalación en un único PC
+>
+>Alternativamente, para tener todo el entorno en una única máquina, ejecute en un
+>PC del laboratorio:
+>
+>```
+>/lab/rdsv/rdsv-get-osmlab
+>```
+>
+>Este comando:
+>- instala la ova que contiene las dos máquinas virtuales en VirtualBox,
+>- crea la red de interconexión entre ellas, si no está ya creada,
+>- crea el directorio `$HOME/shared` en la cuenta del usuario del laboratorio y
+>la añade como directorio compartido en las dos máquinas virtuales, en
+>`/home/upm/shared`. El objetivo es que esa carpeta compartida sea accesible 
+>tanto en el PC anfitrión como en las máquinas _RDSV-OSM_ y _RDSV-K8S_. 
+>
+>A continuación descargue en ese directorio compartido el repositorio de la
+>práctica: 
+>
+>```
+>cd ~/shared
+>git clone https://github.com/educaredes/nfv-lab.git
+>cd nfv-lab
+>```
+>
+>Y arranque por línea de comando las máquinas:
+>
+>```
+>vboxmanage startvm RDSV-OSM --type headless # arrancar sin interfaz gráfica
+>vboxmanage startvm RDSV-K8S
+>``` 
+>
+>> **Nota:**
+>> El entorno OSM puede tardar varios minutos en terminar de arrancar.
 
 ### 2. Arranque de escenarios VNX 
 
