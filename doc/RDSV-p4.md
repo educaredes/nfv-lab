@@ -178,9 +178,8 @@ cd nfv-lab
 
 >Nota: si ya lo ha descargado antes puede actualizarlo con:
 >```
->cd ~/shared
+>cd ~/shared/nfv-lab
 >git pull
->cd nfv-lab
 >```
 
 Para los apartados siguientes, considere que _pc-k8s_, en el que ha arrancado
