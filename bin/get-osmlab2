@@ -44,7 +44,7 @@ validate_host() {
 check_in_vbox() {
     if vboxmanage list vms | grep $1; then
         echo "--"
-        echo "-- ERROR: $VMNAME virtual machine alredy exists in VirtualBox."
+        echo "-- ERROR: $VMNAME virtual machine already exists in VirtualBox."
         echo "--        Delete or rename it manually and execute this script again."
         echo "--"
         exit 1
@@ -54,7 +54,7 @@ check_in_vbox() {
 validate_vm() {
     VMNAME=$1
     if [ $1 = $VMOSM ]; then
-        IMPORTOPTS="--vsys 0"
+        IMPORTOPTS="--vsys 0 --memory 9216"
         OVAFILE=$OVAOSM
         LOCALIP="192.168.56.2/24"
         STARTCMD="vboxmanage startvm $VMNAME --type headless"
@@ -83,6 +83,9 @@ fi
 validate_vm $1
 validate_host $2
 
+# Rearranque preventivo del servicio de ovs para evitar cuelgues detectados el 24/11/22
+sudo systemctl restart openvswitch-switch
+
 cd /mnt/tmp/
 
 if vboxmanage list hostonlyifs | grep -q vboxnet0; then
@@ -96,10 +99,10 @@ mkdir -p /mnt/tmp/cache/$USER/VirtualBox/
 vboxmanage setproperty machinefolder /mnt/tmp/cache/$USER/VirtualBox/
 
 if [ -f "$OVAFILE" ]; then
-    echo vboxmanage import /mnt/tmp/$OVAFILE --vsys=$VSYS
+    echo vboxmanage import /mnt/tmp/$OVAFILE $IMPORTOPS
     vboxmanage import /mnt/tmp/$OVAFILE $IMPORTOPTS
 else
-    echo vboxmanage import /lab/$LABDIR/$OVAFILE --vsys=$VSYS
+    echo vboxmanage import /lab/$LABDIR/$OVAFILE $IMPORTOPS
     vboxmanage import $LABDIR/$OVAFILE $IMPORTOPTS
 fi
 
