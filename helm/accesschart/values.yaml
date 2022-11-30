@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: lbellido/vnf-img
+  repository: educaredes/vnf-img
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
