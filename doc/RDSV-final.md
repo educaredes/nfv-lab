@@ -1,44 +1,25 @@
-# RDSV/SDNV Trabajo final
+# RDSV/SDNV Recomendaciones sobre el trabajo final
 
-- [RDSV/SDNV Trabajo final](#rdsvsdnv-trabajo-final)
-  - [Resumen](#resumen)
-  - [Entrega de resultados](#entrega-de-resultados)
-  - [Desarrollo del trabajo](#desarrollo-del-trabajo)
-    - [1. Instalación y arranque de las máquina virtuales en el laboratorio](#1-instalación-y-arranque-de-las-máquina-virtuales-en-el-laboratorio)
-    - [2. Repositorios propios](#2-repositorios-propios)
-      - [Carpetas](#carpetas)
-      - [Repositorio docker](#repositorio-docker)
-      - [Creación del repositorio helm](#creación-del-repositorio-helm)
-    - [2. Túneles VXLAN en KNF:access](#2-túneles-vxlan-en-knfaccess)
-    - [3. Modificación de la imagen de los contenedores de los escenarios VNX](#3-modificación-de-la-imagen-de-los-contenedores-de-los-escenarios-vnx)
-    - [Otras recomendaciones](#otras-recomendaciones)
+- [RDSV/SDNV Recomendaciones sobre el trabajo final](#rdsvsdnv-recomendaciones-sobre-el-trabajo-final)
+  - [1. Instalación y arranque de las máquina virtuales en el laboratorio](#1-instalación-y-arranque-de-las-máquina-virtuales-en-el-laboratorio)
+  - [2. Repositorios propios](#2-repositorios-propios)
+    - [Carpetas](#carpetas)
+    - [Repositorio docker](#repositorio-docker)
+    - [Creación del repositorio helm](#creación-del-repositorio-helm)
+  - [3. Túneles VXLAN en KNF:access](#3-túneles-vxlan-en-knfaccess)
+  - [4. Modificación de la imagen de los contenedores de los escenarios VNX](#4-modificación-de-la-imagen-de-los-contenedores-de-los-escenarios-vnx)
+  - [Otras recomendaciones](#otras-recomendaciones)
 
-## Resumen
 
-![Visión global del escenario](img/nfv-lab-figura3.drawio.png)
-
-*Fig. 3. Visión global del escenario*
-
-![Visión detallada del escenario](img/rdsv-sdnv-tf.drawio.png)
-
-*Fig. 4. Visión detallada del escenario*
-
-## Entrega de resultados
-
-Suba a través del Moodle un único fichero zip que incluya el fichero pdf y
-los scripts modificados y creados para el trabajo.
-
-## Desarrollo del trabajo
-
-### 1. Instalación y arranque de las máquina virtuales en el laboratorio
+## 1. Instalación y arranque de las máquina virtuales en el laboratorio
 
 Siga las instrucciones del la [práctica 4](RDSV-p4.md) para instalar y arrancar
 las máquinas virtuales en el laboratorio. Por prestaciones, se recomienda la
 [instalación en dos PCs](RDSV-p4.md#1-instalación-en-dos-pcs).
 
-### 2. Repositorios propios
+## 2. Repositorios propios
 
-#### Carpetas
+### Carpetas
 
 Se recomienda trabajar en la carpeta compartida `shared`.  Deberá crear dentro
 de ella una carpeta `rdsv-final`, y en ella copiar las siguientes carpetas de la
@@ -53,7 +34,7 @@ Además, copie los scripts:
 - `osm_renes_start.sh`
 - `osm_renes1.sh`, `osm_renes2.sh`
 
-#### Repositorio docker
+### Repositorio docker
 
 Cree una cuenta gratuita en Docker Hub https://hub.docker.com para subir su
 contenedor Docker. A continuación, acceda a la carpeta con las definiciones de
@@ -95,7 +76,7 @@ docker push <cuenta>/vnf-img
 cd ../..
 ```
 
-#### Creación del repositorio helm
+### Creación del repositorio helm
 
 Cree a través de github.com un repositorio git, vacío inicialmente, para
 crear su repositorio helm. Llámelo `repo-rdsv`. Descárguelo en la carpeta
@@ -140,7 +121,7 @@ Finalmente, arrancar desde OSM una instancia del servicio renes y mediante
 kubectl acceder a los contenedores para comprobar que incluyen el software
 y los ficheros instalados.
 
-### 2. Túneles VXLAN en KNF:access
+## 3. Túneles VXLAN en KNF:access
 
 La gestión de la calidad de servicio que hay que implementar en la KNF:access no
 funciona adecuadamente cuando se aplica sobre interfaces de túneles VXLAN
@@ -177,7 +158,7 @@ En caso de que realice la parte opcional de controlar también la calidad de
 servicio en brg1, deberá sustituir también el comando que crea el túnel VXLAN
 desde brg1.
 
-### 3. Modificación de la imagen de los contenedores de los escenarios VNX
+## 4. Modificación de la imagen de los contenedores de los escenarios VNX
 
 Para instalar nuevos paquetes en la imagen
 `vnx_rootfs_lxc_ubuntu64-20.04-v025-vnxlab` utilizada por los contenedores
@@ -200,11 +181,11 @@ halt -p
 Arrancar de nuevo los escenarios VNX y comprobar que el software instalado ya 
 está disponible.
 
-Este método se puede utilizar para instalar, por ejemplo, iperf3, que no está
+Este método se puede utilizar para instalar, por ejemplo, `iperf3`, que no está
 disponible en la imagen.
 
 
-### Otras recomendaciones
+## Otras recomendaciones
 
 - En el examen oral se pedirá arrancar el escenario desde cero, por lo que es
 importante que todos los pasos para cumplir los requisitos mínimos estén
