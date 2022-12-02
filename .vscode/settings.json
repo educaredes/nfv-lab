@@ -20,5 +20,8 @@
         "microk",
         "vcpe",
         "vnfd"
+    ],
+    "markdown.marp.themes": [
+        "doc/theme.css"
     ]
 }

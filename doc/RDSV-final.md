@@ -8,6 +8,8 @@
     - [Creación del repositorio helm](#creación-del-repositorio-helm)
   - [3. Túneles VXLAN en KNF:access](#3-túneles-vxlan-en-knfaccess)
   - [4. Modificación de la imagen de los contenedores de los escenarios VNX](#4-modificación-de-la-imagen-de-los-contenedores-de-los-escenarios-vnx)
+  - [5. Partes opcionales](#5-partes-opcionales)
+    - [Repositorio Docker privado](#repositorio-docker-privado)
   - [Otras recomendaciones](#otras-recomendaciones)
 
 
@@ -184,6 +186,12 @@ está disponible.
 Este método se puede utilizar para instalar, por ejemplo, `iperf3`, que no está
 disponible en la imagen.
 
+## 5. Partes opcionales
+
+### Repositorio Docker privado 
+
+Puede encontrar información detallada sobre la configuración de MicroK8s como
+repositorio privado de Docker en [este documento](repo-privado-docker.md).
 
 ## Otras recomendaciones
 
