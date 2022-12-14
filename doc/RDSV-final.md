@@ -142,18 +142,32 @@ Por estas otras líneas:
 
 ```
 $ACC_EXEC ip link add vxlanacc type vxlan id 0 remote $HOMETUNIP dstport 4789 dev net1
-$ACC_EXEC ip link add vxlanint type vxlan id 1 remote $IPCPE dstport 8742 dev net1
+# En la siguiente línea se ha corregido el dispositivo, que debe ser eth0
+$ACC_EXEC ip link add vxlanint type vxlan id 1 remote $IPCPE dstport 8742 dev eth0
 $ACC_EXEC ovs-vsctl add-port brint vxlanacc
 $ACC_EXEC ovs-vsctl add-port brint vxlanint
 $ACC_EXEC ifconfig vxlanacc up
 $ACC_EXEC ifconfig vxlanint up
 ```
 
+También es necesario cambiar el valor de "options:key" para KNF:cpe, en el
+comando que crea el túnel, sustituyendo:
+
+```
+$CPE_EXEC ovs-vsctl add-port brint vxlanint -- set interface vxlanint type=vxlan options:remote_ip=$IPACCESS options:key=inet options:dst_port=8742
+```
+
+por:
+
+```
+$CPE_EXEC ovs-vsctl add-port brint vxlanint -- set interface vxlanint type=vxlan options:remote_ip=$IPACCESS options:key=1 options:dst_port=8742
+```
+
 Para ver la configuración completa de un túnel VXLAN en Linux, puede utilizar 
 (ejemplo para interfaz vxlanacc):
 
 ```
-ip -d link show vxlan1
+ip -d link show vxlanacc
 ```
 
 En caso de que realice la parte opcional de controlar también la calidad de
