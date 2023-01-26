@@ -110,7 +110,7 @@ registro privado donde se encuentra de la siguiente manera:
 >que empaquetan nuestras KNFs para que ahora usen una imagen precargada en el
 >repositorio de imágenes Docker. Para ello, modificar de forma adecuada los
 >parámetros “repository” y “tag” asociados a la nueva imagen en el fichero
->values.yaml.
+>values.yaml. El apartado "repository" debe ser definido como ***localhost:32000/<nombre_imagen>***.
 
 
 Pasos para borrar imágenes del registro privado de imágenes Docker en MicroK8s: 
