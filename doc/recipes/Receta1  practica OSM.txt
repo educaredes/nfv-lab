@@ -172,3 +172,30 @@ sudo ovs-vsctl add-port rdsvlab vxlanosm -- set interface vxlanosm type=vxlan op
   908  ovs-vsctl  set interface vxlank8s  type=vxlan options:remote_ip=127.0.0.1 options:key=1
   909  ovs-vsctl show
   910  vboxmanage startvm RDSV-K8S --type headless
+
+
+Cosas viejas:
+
+<!-- En la máquina RDSV-K8S editar la dirección de _eth1_ para que coincida con la
+dirección de la máquina local. Para ello edite el fichero _/etc/netplan_:
+
+```
+cd /etc/netplan
+sudo nano 01-netcfg.yaml
+```
+
+Y luego aplique el cambio con:
+
+```
+sudo netplan apply
+```
+
+Use _ifconfig_ para comprobar si se ha realizado el cambio. Anote también la
+dirección de la interfaz _eth0_.
+
+Nota: la máquina virtual se suministra con una regla de NAT para que el tráfico
+dirigido hacia la API de k8s la máquina física se redirija
+a la máquina virtual (puerto 16443). Eso hace posible que OSM pueda comunicarse
+con el clúster k8s de la mv -->
+
+

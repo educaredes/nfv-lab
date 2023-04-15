@@ -16,7 +16,7 @@ set -u # to verify variables are defined
 : $VCPEPUBIP
 : $VCPEGW
 
-export KUBECTL="kubectl"
+export KUBECTL="microk8s kubectl"
 
 deployment_id() {
     echo `osm ns-list | grep $1 | awk '{split($0,a,"|");print a[3]}' | xargs osm vnf-list --ns | grep $2 | awk '{split($0,a,"|");print a[2]}' | xargs osm vnf-show --literal | grep name | grep $2 | awk '{split($0,a,":");print a[2]}' | sed 's/ //g'`
