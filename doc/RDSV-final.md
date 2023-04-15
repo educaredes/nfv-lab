@@ -16,8 +16,10 @@
 ## 1. Instalación y arranque de la máquina virtual
 
 Siga las instrucciones del la [revisión de la práctica 4](RDSV-p4.md) para
-instalar y arrancar la máquina virtual. El servidor OSM que se utilizará está
-instalado centralmente y los profesores le asignarán una cuenta de usuario.
+instalar y arrancar la máquina virtual, y pruebe a desplegar el escenario VNX y
+el servicio _renes_ para comprobar que la instalación funciona correctamente. El
+servidor OSM que se utiliza está instalado centralmente y los profesores le 
+asignarán una cuenta de usuario.
 
 ## 2. Repositorios propios
 
@@ -60,10 +62,11 @@ ENV TZ=Europe/Madrid
 Después, añadir un fichero README.txt que incluya los nombres de los integrantes
 del grupo en el contenedor, añadiendo una sentencia COPY al Dockerfile
 
-Además, se puede ya modificar el Dockerfile para que incluya los paquetes de ubuntu 
-"ryu-bin" y "arpwatch". Deberá también añadir el fichero
-`qos_simple_switch_13.py` con la modificación que se propone en la
-[práctica de QoS](http://osrg.github.io/ryu-book/en/html/rest_qos.html)
+Además, se puede ya modificar el Dockerfile para que incluya otros paquetes de
+ubuntu que vaya a necesitar en la imagen (p.ej.,  "ryu-bin", "arpwatch", etc.).
+Deberá también añadir el fichero `qos_simple_switch_13.py` con la modificación
+que se propone en la [práctica de
+QoS](http://osrg.github.io/ryu-book/en/html/rest_qos.html)
 
 Una vez hecho esto, puede crear el contenedor:
 
