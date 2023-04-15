@@ -1,6 +1,6 @@
-# RDSV/SDNV P4  - Plataforma de orquestación de servicios basados en NFV
+# RDSV/SDNV P4 - Plataforma de orquestación de servicios basados en NFV
 
-- [RDSV/SDNV P4  - Plataforma de orquestación de servicios basados en NFV](#rdsvsdnv-p4----plataforma-de-orquestación-de-servicios-basados-en-nfv)
+- [RDSV/SDNV P4 - Plataforma de orquestación de servicios basados en NFV](#rdsvsdnv-p4---plataforma-de-orquestación-de-servicios-basados-en-nfv)
   - [Resumen](#resumen)
   - [Escenario](#escenario)
   - [Entrega de resultados](#entrega-de-resultados)
