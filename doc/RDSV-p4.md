@@ -5,14 +5,17 @@
   - [Escenario](#escenario)
   - [Entrega de resultados](#entrega-de-resultados)
   - [Desarrollo de la práctica](#desarrollo-de-la-práctica)
-    - [1. Instalación en dos PCs](#1-instalación-en-dos-pcs)
-    - [2. Arranque de escenarios VNX](#2-arranque-de-escenarios-vnx)
-    - [3. Definición del cluster k8s en OSM](#3-definición-del-cluster-k8s-en-osm)
-    - [4. Familiarización con GUI de OSM](#4-familiarización-con-gui-de-osm)
-    - [5. Repositorios de helm charts y docker](#5-repositorios-de-helm-charts-y-docker)
-    - [6. (P) Relación entre helm y docker](#6-p-relación-entre-helm-y-docker)
-    - [7. Instalación de descriptores en OSM](#7-instalación-de-descriptores-en-osm)
-    - [8. (P) Análisis de descriptores](#8-p-análisis-de-descriptores)
+    - [1. Instalación del entorno](#1-instalación-del-entorno)
+      - [1.1 Instalación y arranque de la máquina virtual en el laboratorio](#11-instalación-y-arranque-de-la-máquina-virtual-en-el-laboratorio)
+      - [1.1.alt Instalación y arranque de la máquina virtual en equipo propio](#11alt-instalación-y-arranque-de-la-máquina-virtual-en-equipo-propio)
+      - [1.2 Instalación del entorno en la máquina virtual](#12-instalación-del-entorno-en-la-máquina-virtual)
+    - [2. Definición OSM del clúster k8s y configuración de red](#2-definición-osm-del-clúster-k8s-y-configuración-de-red)
+    - [3. Familiarización con GUI de OSM](#3-familiarización-con-gui-de-osm)
+    - [4. Repositorios de helm charts y docker](#4-repositorios-de-helm-charts-y-docker)
+    - [5. (P) Relación entre helm y docker](#5-p-relación-entre-helm-y-docker)
+    - [6. Instalación de descriptores en OSM](#6-instalación-de-descriptores-en-osm)
+    - [7. (P) Análisis de descriptores](#7-p-análisis-de-descriptores)
+    - [8. Arranque de escenarios VNX](#8-arranque-de-escenarios-vnx)
     - [9. Creación de instancias del servicio](#9-creación-de-instancias-del-servicio)
     - [10. Comprobación de los pods arrancados](#10-comprobación-de-los-pods-arrancados)
     - [11. (P) Acceso a los pods ya arrancados](#11-p-acceso-a-los-pods-ya-arrancados)
@@ -117,58 +120,40 @@ Suba a través del Moodle un único fichero zip que incluya el fichero pdf y las
 capturas que se solicitan.
 
 ## Desarrollo de la práctica
-### 1. Instalación en dos PCs
-
-Cada alumno, desde cuentas diferentes, accederá a un PC,  _pc-k8s_ 
-para el clúster de K8S, y _pc-osm_ para OSM. 
+### 1. Instalación del entorno
+#### 1.1 Instalación y arranque de la máquina virtual en el laboratorio
+Se accederá a un PC del laboratorio,  _pc-k8s_ para el clúster de K8S. 
 
 En _pc-k8s_ ejecute:
 
 ```
-# En pc-k8s, instala y arranca RDSV-K8S y la conecta con OSM en pc-osm
-/lab/rdsv/get-osmlab2 RDSV-K8S pc-osm
-```
->Ejemplo, con pc-osm=l060 y pc-k8s=l059
->
->```
->/lab/rdsv/get-osmlab2 RDSV-K8S l060
->```
->
-
-En _pc-osm_ ejecute:
-
-```
-# En pc-osm, instala y arranca RDSV-OSM y la conecta con K8S en pc-k8s
-/lab/rdsv/get-osmlab2 RDSV-OSM pc-k8s
+# En pc-k8s, instala y arranca RDSV-K8S
+/lab/rdsv/get-osmlab-k8s
 ```
 
+Este comando:
+- instala la ova que contiene la máquina virtual,
+- crea el directorio `$HOME/shared` en la cuenta del usuario del laboratorio y
+la añade como directorio compartido en la máquina virtual, en
+`/home/upm/shared`. El objetivo es que esa carpeta compartida sea accesible 
+tanto en el PC anfitrión como en la máquina _RDSV-K8S_. 
 
->Ejemplo, con pc-osm=l060 y pc-k8s=l059
->
->```
->/lab/rdsv/get-osmlab2 RDSV-OSM l059
->```
->
+#### 1.1.alt Instalación y arranque de la máquina virtual en equipo propio
 
-Desde cualquiera de los dos PCs compruebe la conectividad a ambas máquinas:
+Tras descargar e instalar la ova, utilice la opción de configuración de
+_Carpetas Compartidas_ para compartir una carpeta de su equipo con la máquina
+virtual permanentemente, con punto de montaje `/home/upm/shared`.
 
-```
-ping -c 5 192.168.56.11  # K8S
-ping -c 5 192.168.56.12  # OSM
-```
+#### 1.2 Instalación del entorno en la máquina virtual
 
-Si hay conectividad, configure la MTU de la interfaz eth1 en ambas máquinas:
-
-```
-ssh upm@192.168.56.11 "sudo ip link set dev eth1 mtu 1400"
-```
+Arranque la máquina, por ejemplo por línea de comando:
 
 ```
-ssh upm@192.168.56.12 "sudo ip link set dev eth1 mtu 1400"
-```
+vboxmanage startvm RDSV-K8S
+``` 
 
-Además descargue en la carpeta shared en ambos PCs, el repositorio de la 
-práctica:
+En la máquina virtual, abra un terminal y descargue en el directorio compartido
+el repositorio de la práctica: 
 
 ```
 cd ~/shared
@@ -176,66 +161,250 @@ git clone https://github.com/educaredes/nfv-lab.git
 cd nfv-lab
 ```
 
->Nota: si ya lo ha descargado antes puede actualizarlo con:
+>**Nota:**
+>Si ya lo ha descargado antes puede actualizarlo con:
+>
 >```
 >cd ~/shared/nfv-lab
 >git pull
 >```
 
-Para los apartados siguientes, considere que _pc-k8s_, en el que ha arrancado
-_RDSV-K8S_, es el _PC anfitrión_ (estará menos cargado).
+Instale el túnel hacia el servidor OSM mediante:
 
->#### 1.alt. Instalación en un único PC
->
->Alternativamente, para tener todo el entorno en una única máquina, ejecute en un
->PC del laboratorio:
->
->```
->/lab/rdsv/rdsv-get-osmlab
->```
->
->Este comando:
->- instala la ova que contiene las dos máquinas virtuales en VirtualBox,
->- crea la red de interconexión entre ellas, si no está ya creada,
->- crea el directorio `$HOME/shared` en la cuenta del usuario del laboratorio y
->la añade como directorio compartido en las dos máquinas virtuales, en
->`/home/upm/shared`. El objetivo es que esa carpeta compartida sea accesible 
->tanto en el PC anfitrión como en las máquinas _RDSV-OSM_ y _RDSV-K8S_. 
->
->A continuación descargue en ese directorio compartido el repositorio de la
->práctica: 
->
->```
->cd ~/shared
->git clone https://github.com/educaredes/nfv-lab.git
->cd nfv-lab
->```
->
->Y arranque por línea de comando las máquinas:
->
->```
->vboxmanage startvm RDSV-OSM --type headless # arrancar sin interfaz gráfica
->vboxmanage startvm RDSV-K8S
->``` 
->
->> **Nota:**
->> El entorno OSM puede tardar varios minutos en terminar de arrancar.
+```
+cd ~/bin
+wget idefix.dit.upm.es/download/rdsv/tinc/install-tun
+chmod +x install-tun
+./install-tun <letra>
+```
 
-### 2. Arranque de escenarios VNX 
+>**Nota:**
+>El profesor asignará una \<letra\> a cada alumno o grupo de alumnos, de forma
+>que cada clúster de k8s gestionado por el OSM central tenga una dirección IP
+>distinta.
+
+Compruebe que se ha establecido el túnel haciendo ping al servidor OSM:
+
+```
+ping 10.11.12.1
+```
+
+### 2. Definición OSM del clúster k8s y configuración de red 
+
+Configure desde un terminal la bash para que el cliente de OSM instalado en
+_RDSV-K8S_ acceda al servidor, así como un alias para el comando `microk8s kubectl`:
+
+```
+echo "export OSM_USER=nombre-de-usuario" >> ~/.bashrc
+echo "export OSM_PASSWORD=password-de-usuario" >> ~/.bashrc
+echo "export OSM_PROJECT=proyecto-de-usuario" >> ~/.bashrc
+alias kubectl='microk8s kubectl'
+source ~/.bashrc
+```
+
+Registre el clúster en OSM. Para ello obtenga la dirección de la mv en la red 10.11.12.0/24 del túnel mediante:
+
+```
+ifconfig | grep 10.11.12
+```
+
+Edite el fichero ~/k8s-cluster.yaml para sustituir su dirección IP por la del
+túnel: use un editor y modifique la línea _server_ reemplazando la IP.
+
+A continuación registre un vim _dummy_ y un clúster dependiente de ese vim con
+los siguientes comandos:
+
+```
+osm vim-create --name dummy_vim --user u --password p --tenant p \
+--account_type dummy --auth_url http://localhost/dummy
+
+KID=$(osm k8scluster-add --creds ~/k8s-cluster.yaml --version 1.21 \
+--vim dummy_vim --description "External k8s cluster" --k8s-nets \
+'{"net1": "osm-ext"}' microk8s-cluster)
+```
+
+Y compruebe que se devuelve correctamente el identificador del clúster mediante:
+
+```
+echo $KID
+```
+
+Obtenga la información registrada en OSM para el clúster:
+
+```
+osm k8scluster-show $KID
+```
+
+En el resultado del show, busque la información sobre el `namespace` que va
+a utilizar OSM en el clúster para desplegar los pods de los servicios de red. 
+Puede utilizar:
+
+```
+osm k8scluster-show --literal $KID | grep -A1 projects
+```
+
+Defina una variable para guardar ese valor, que se utilizará en los scripts 
+de la práctica.
+
+```
+export OSMNS=<namespace> # todo seguido, sin espacios y sin < >
+```
+
+> **Ejemplo:**
+> 
+>```
+>export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a
+>```
+
+Compruebe si el namespace existe con:
+
+```
+kubectl get namespaces
+```
+
+Si no existe cree el namespace en el clúster de k8s
+(esto lo hace OSM la primera vez que se instancia un servicios, pero en nuestro
+caso lo creamos antes para poder hacer la configuración del siguiente paso):
+
+```
+kubectl create namespace $OSMNS 
+```
+
+Y use de nuevo con el comando _get namespaces_ para comprobar si se ha creado. 
+
+
+A continuación, para conectar el namespace con los escenarios de VNX se deben
+crear 2 Network Attachment Definitions de _Multus_ asociados a ese namespace,
+ejecutando los comandos:
+
+```
+cat <<EOF | kubectl create -n $OSMNS -f -
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+ name: extnet1
+ annotations:
+   k8s.v1.cni.cncf.io/resourceName: ovs-cni.network.kubevirt.io/ExtNet1
+spec:
+ config: '{
+   "cniVersion": "0.3.1",
+   "type": "ovs",
+   "bridge": "ExtNet1"
+ }'
+EOF
+
+cat <<EOF | kubectl create -n $OSMNS -f -
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+ name: accessnet1
+ annotations:
+   k8s.v1.cni.cncf.io/resourceName: ovs-cni.network.kubevirt.io/AccessNet1
+spec:
+ config: '{
+   "cniVersion": "0.3.1",
+   "type": "ovs",
+   "bridge": "AccessNet1"
+ }'
+EOF
+
+```
+
+Compruebe que se han creado con 
+
+```
+kubectl get -n $OSMNS network-attachment-definitions
+```
+
+> **Nota:**
+> Mostrará como salida:
+>
+>```
+>NAME         AGE
+>extnet1      90s
+>accessnet1   88s
+>```
+
+Y los detalles, con 
+
+```
+kubectl get -n $OSMNS network-attachment-definition extnet1 -o yaml
+kubectl get -n $OSMNS network-attachment-definition accessnet1 -o yaml
+```
+
+
+### 3. Familiarización con GUI de OSM
+
+Desde el _PC anfitrión_, acceda a la interfaz gráfica de _OSM_:
+
+```
+# Acceso desde el PC anfitrión, user/pass: admin/admin
+firefox 192.168.56.12 &
+```
+
+Familiarícese con las distintas opciones del menú, especialmente:
+- _Packages_: gestión de las plantillas de servicios de red (NS Packages)
+y VNFs. 
+- _Instances_: gestión de la instancias de los servicios desplegados
+- _K8s_: gestión del registro de clústeres y repositorios k8s
+
+### 4. Repositorios de helm charts y docker
+
+A través de la GUI registraremos el repositorio de helm charts que 
+utilizaremos en la práctica, alojado en Github Pages.
+
+Acceda a la opción de menú _K8s Repos_, haga clic sobre el botón
+ _Add K8s Repository_ y rellene los campos con los valores:
+- id: `helmchartrepo`
+- type: "Helm Chart" 
+- URL: `https://educaredes.github.io/nfv-lab` (NO DEBE TERMINAR EN "/")
+- description: _una descripción textual del repositorio_
+
+![new-k8s-repository-details](img/new-k8s-repository.png)
+
+En la carpeta compartida `$HOME/shared/nfv-lab/helm` puede encontrar las
+definiciones de los helm charts `accesschart` y `cpechart`, mientras que en
+`$HOME/shared/nfv-lab/img` está la definición del contenedor docker único que se
+va a utilizar, `educaredes/vnf-img`. Este contenedor está alojado en DockerHub,
+compruébelo accediendo a [este enlace](https://hub.docker.com/u/educaredes).
+
+### 5. (P) Relación entre helm y docker
+
+Busque en la carpeta `helm` en qué ficheros se hace referencia al contenedor
+docker. Anote el resultado para incluirlo como parte de la entrega. Puede 
+utilizar:
+
+```
+grep -R "educaredes/vnf-img"
+```
+
+### 6. Instalación de descriptores en OSM
+
+Desde el _PC anfitrión_, acceda gráficamente al directorio 
+`$HOME/shared/nfv-lab/pck`. Realice el proceso de instalación de los 
+descriptores de las KNFs y del servicio de red (onboarding):
+- Acceda al menu de OSM Packages->VNF packages y arrastre los ficheros 
+`accessknf_vnfd.tar.gz` y `cpeknf_vnfd.tar.gz`   
+- Acceda al menu de OSM Packages->NS packages y arrastre el fichero 
+`renes_ns.tar.gz`
+
+### 7. (P) Análisis de descriptores
+
+Acceda a la descripción de las VNFs/KNFs y del servicio. Para entregar como 
+resultado de la práctica:
+1.	En la descripción de las VNFs, identifique y copie la información referente
+al helm chart que se utiliza para desplegar el pod correspondiente en el clúster
+de Kubernetes.
+2.	En la descripción del servicio, identifique y copie la información 
+referente a las dos VNFs.
+
+### 8. Arranque de escenarios VNX 
 
 Acceda a _RDSV-K8S_ y compruebe que están creados los switches `AccessNet1` y
 `ExtNet1` tecleando en un terminal:
 
 ```
 sudo ovs-vsctl show
-```
-
-Compruebe también mediante un ping la conectividad con _RDSV-OSM_ y con el PC 
-anfitrión.
-
-```
-ping -c 5 192.168.56.12
-ping -c 5 192.168.56.1
 ```
 
 A continuación arranque el escenario de la red residencial:
@@ -286,130 +455,9 @@ xhost +
 >access control disabled, clients can connect from any host
 >```
 
-### 3. Definición del cluster k8s en OSM
-
-Ahora desde el _PC anfitrión_ use un terminal para acceder a _RDSV-OSM_:
-
-```
-# Ejecutar desde el PC anfitrión
-ssh -l upm 192.168.56.12  # password: xxxx
-```
-
-A continuación, compruebe que OSM tiene configurado un cluster de k8s mediante 
-el comando:
-
-```
-osm k8scluster-list
-```
-
-El campo *id* del cluster es un identificador que se puede usar para gestionar
- el clúster. Para ver más información, utilice:
-
-```
-KID=<id obtenido de k8scluster-list>   # todo seguido, sin espacios y sin < >
-osm k8scluster-show $KID
-```
-
-En el resultado del show, busque la información sobre el `namespace` que va
-a utilizar OSM en el clúster para desplegar los pods de los servicios de red. 
-Puede utilizar:
-
-```
-osm k8scluster-show --literal $KID | grep -A1 projects
-```
-
-Defina una variable para guardar ese valor, que se utilizará en los scripts 
-de la práctica.
-
-```
-export OSMNS=<namespace> # todo seguido, sin espacios y sin < >
-```
-> **Ejemplo:**
-> >
->```
->export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a
->```
-
-Desde el terminal en _RDSV-OSM_, comprobemos que el cliente de k8s `kubectl`
-está configurado para acceder al clúster. Liste los namespaces del clúster,
-desde el terminal:
-
-```
-# Desde terminal en RDSV-OSM
-kubectl get namespaces
-```
-
-Deberá ver que entre los namespaces se encuentra el valor que ha obtenido
-mediante `osm`.
-
-### 4. Familiarización con GUI de OSM
-
-Desde el _PC anfitrión_, acceda a la interfaz gráfica de _OSM_:
-
-```
-# Acceso desde el PC anfitrión, user/pass: admin/admin
-firefox 192.168.56.12 &
-```
-
-Familiarícese con las distintas opciones del menú, especialmente:
-- _Packages_: gestión de las plantillas de servicios de red (NS Packages)
-y VNFs. 
-- _Instances_: gestión de la instancias de los servicios desplegados
-- _K8s_: gestión del registro de clústeres y repositorios k8s
-
-### 5. Repositorios de helm charts y docker
-
-A través de la GUI registraremos el repositorio de helm charts que 
-utilizaremos en la práctica, alojado en Github Pages.
-
-Acceda a la opción de menú _K8s Repos_, haga clic sobre el botón
- _Add K8s Repository_ y rellene los campos con los valores:
-- id: `helmchartrepo`
-- type: "Helm Chart" 
-- URL: `https://educaredes.github.io/nfv-lab` (NO DEBE TERMINAR EN "/")
-- description: _una descripción textual del repositorio_
-
-![new-k8s-repository-details](img/new-k8s-repository.png)
-
-En la carpeta compartida `$HOME/shared/nfv-lab/helm` puede encontrar las
-definiciones de los helm charts `accesschart` y `cpechart`, mientras que en
-`$HOME/shared/nfv-lab/img` está la definición del contenedor docker único que se
-va a utilizar, `educaredes/vnf-img`. Este contenedor está alojado en DockerHub,
-compruébelo accediendo a [este enlace](https://hub.docker.com/u/educaredes).
-
-### 6. (P) Relación entre helm y docker
-
-Busque en la carpeta `helm` en qué ficheros se hace referencia al contenedor
-docker. Anote el resultado para incluirlo como parte de la entrega. Puede 
-utilizar:
-
-```
-grep -R "educaredes/vnf-img"
-```
-
-### 7. Instalación de descriptores en OSM
-
-Desde el _PC anfitrión_, acceda gráficamente al directorio 
-`$HOME/shared/nfv-lab/pck`. Realice el proceso de instalación de los 
-descriptores de las KNFs y del servicio de red (onboarding):
-- Acceda al menu de OSM Packages->VNF packages y arrastre los ficheros 
-`accessknf_vnfd.tar.gz` y `cpeknf_vnfd.tar.gz`   
-- Acceda al menu de OSM Packages->NS packages y arrastre el fichero 
-`renes_ns.tar.gz`
-
-### 8. (P) Análisis de descriptores
-
-Acceda a la descripción de las VNFs/KNFs y del servicio. Para entregar como 
-resultado de la práctica:
-1.	En la descripción de las VNFs, identifique y copie la información referente
-al helm chart que se utiliza para desplegar el pod correspondiente en el clúster
-de Kubernetes.
-2.	En la descripción del servicio, identifique y copie la información 
-referente a las dos VNFs.
-
 ### 9. Creación de instancias del servicio
 
-Desde el terminal en _RDSV-OSM_, lanzamos los siguientes comandos:
+Desde el terminal lanzamos los siguientes comandos:
 
 ```
 export NSID1=$(osm ns-create --ns_name renes1 --nsd_name renes --vim_account dummy_vim)
@@ -432,13 +480,14 @@ comando:
 osm ns-delete $NSID1
 ```
 
+Y a continuación lanzar de nuevo la creación de una nueva instancia.
+
 Acceda a la GUI de OSM, opción NS Instances, para ver cómo también es posible
 gestionar el servicio gráficamente.
 
 ### 10. Comprobación de los pods arrancados
 
-Desde el terminal en _RDSV-OSM_, usaremos kubectl para obtener los pods que 
-han arrancado en _RDSV-K8S_:
+Usaremos kubectl para obtener los pods que han arrancado en el clúster:
 
 ```
 kubectl -n $OSMNS get pods
@@ -463,7 +512,7 @@ kubectl -n $OSMNS exec -it $ACCPOD -- ifconfig eth0
 
 kubectl -n $OSMNS exec -it $CPEPOD -- /bin/bash
 # Y a continuación haga un ping a la dirección IP anotada
-# salga con exit
+# Salga con exit
 ```
 
 ### 12. (P) Scripts de configuración del servicio

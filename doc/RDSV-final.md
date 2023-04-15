@@ -1,7 +1,7 @@
 # RDSV/SDNV Recomendaciones sobre el trabajo final
 
 - [RDSV/SDNV Recomendaciones sobre el trabajo final](#rdsvsdnv-recomendaciones-sobre-el-trabajo-final)
-  - [1. Instalación y arranque de las máquina virtuales en el laboratorio](#1-instalación-y-arranque-de-las-máquina-virtuales-en-el-laboratorio)
+  - [1. Instalación y arranque de la máquina virtual](#1-instalación-y-arranque-de-la-máquina-virtual)
   - [2. Repositorios propios](#2-repositorios-propios)
     - [Carpetas](#carpetas)
     - [Repositorio docker](#repositorio-docker)
@@ -13,11 +13,11 @@
   - [Otras recomendaciones](#otras-recomendaciones)
 
 
-## 1. Instalación y arranque de las máquina virtuales en el laboratorio
+## 1. Instalación y arranque de la máquina virtual
 
-Siga las instrucciones del la [práctica 4](RDSV-p4.md) para instalar y arrancar
-las máquinas virtuales en el laboratorio. Por prestaciones, se recomienda la
-[instalación en dos PCs](RDSV-p4.md#1-instalación-en-dos-pcs).
+Siga las instrucciones del la [revisión de la práctica 4](RDSV-p4.md) para
+instalar y arrancar la máquina virtual. El servidor OSM que se utilizará está
+instalado centralmente y los profesores le asignarán una cuenta de usuario.
 
 ## 2. Repositorios propios
 
