@@ -335,11 +335,14 @@ kubectl get -n $OSMNS network-attachment-definition accessnet1 -o yaml
 
 ### 3. Familiarización con GUI de OSM
 
-Desde el _PC anfitrión_, acceda a la interfaz gráfica de _OSM_:
+Desde el _PC anfitrión_, acceda a la interfaz gráfica de _OSM_ a través de
+http://osm.dit.upm.es
+
+Compruebe que también puede acceder desde la máquina virtual mediante:
 
 ```
-# Acceso desde el PC anfitrión, user/pass: admin/admin
-firefox 192.168.56.12 &
+# Acceso desde la máquina virtual
+firefox 10.11.12.1 &
 ```
 
 Familiarícese con las distintas opciones del menú, especialmente:
