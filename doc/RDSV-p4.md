@@ -191,18 +191,24 @@ ping 10.11.12.1
 
 ### 2. Definición OSM del clúster k8s y configuración de red 
 
-Configure desde un terminal la bash para que el cliente de OSM instalado en
-_RDSV-K8S_ acceda al servidor, así como un alias para el comando `microk8s kubectl`:
+
+Configure desde un terminal las variables de entorno que el cliente de OSM
+instalado en _RDSV-K8S_ acceda al servidor, así como un alias para el comando
+`microk8s kubectl`:
 
 ```
 echo "export OSM_USER=nombre-de-usuario" >> ~/.bashrc
 echo "export OSM_PASSWORD=password-de-usuario" >> ~/.bashrc
 echo "export OSM_PROJECT=proyecto-de-usuario" >> ~/.bashrc
-alias kubectl='microk8s kubectl'
+
+echo "export OSM_HOSTNAME=10.11.12.1" >> ~/.bashrc
+echo "alias kubectl='microk8s kubectl'" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-Registre el clúster en OSM. Para ello obtenga la dirección de la mv en la red 10.11.12.0/24 del túnel mediante:
+Registre el clúster en OSM. Para ello obtenga la dirección de la mv en la red
+10.11.12.0/24 del túnel mediante:
+
 
 ```
 ifconfig | grep 10.11.12
@@ -229,6 +235,13 @@ Y compruebe que se devuelve correctamente el identificador del clúster mediante
 echo $KID
 ```
 
+> **Ejemplo:**
+> 
+>```
+>~$ echo $KID
+>68945185-1051-4cc0-8b1e-26382fc729e7
+>```
+
 Obtenga la información registrada en OSM para el clúster:
 
 ```
@@ -241,7 +254,19 @@ Puede utilizar:
 
 ```
 osm k8scluster-show --literal $KID | grep -A1 projects
+
 ```
+
+> **Ejemplo:**
+> 
+>```
+
+>~$ osm k8scluster-show --literal $KID | grep -A1 projects
+>   projects_read:
+>   - 66ad98eb-bc56-48a9-96c8-8d14c612931c
+>   projects_write:
+>   - 66ad98eb-bc56-48a9-96c8-8d14c612931c
+>```
 
 Defina una variable para guardar ese valor, que se utilizará en los scripts 
 de la práctica.
@@ -253,7 +278,7 @@ export OSMNS=<namespace> # todo seguido, sin espacios y sin < >
 > **Ejemplo:**
 > 
 >```
->export OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a
+>export OSMNS=66ad98eb-bc56-48a9-96c8-8d14c612931c
 >```
 
 Compruebe si el namespace existe con:
@@ -270,7 +295,7 @@ caso lo creamos antes para poder hacer la configuración del siguiente paso):
 kubectl create namespace $OSMNS 
 ```
 
-Y use de nuevo con el comando _get namespaces_ para comprobar si se ha creado. 
+Y use de nuevo el comando _get namespaces_ para comprobar si se ha creado. 
 
 
 A continuación, para conectar el namespace con los escenarios de VNX se deben
@@ -316,10 +341,10 @@ Compruebe que se han creado con
 kubectl get -n $OSMNS network-attachment-definitions
 ```
 
-> **Nota:**
-> Mostrará como salida:
+> **Ejemplo:**
 >
 >```
+>~> kubectl get -n $OSMNS network-attachment-definitions
 >NAME         AGE
 >extnet1      90s
 >accessnet1   88s
