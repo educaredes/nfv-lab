@@ -191,6 +191,7 @@ ping 10.11.12.1
 
 ### 2. Definición OSM del clúster k8s y configuración de red 
 
+
 Configure desde un terminal las variables de entorno que el cliente de OSM
 instalado en _RDSV-K8S_ acceda al servidor, así como un alias para el comando
 `microk8s kubectl`:
@@ -199,6 +200,7 @@ instalado en _RDSV-K8S_ acceda al servidor, así como un alias para el comando
 echo "export OSM_USER=nombre-de-usuario" >> ~/.bashrc
 echo "export OSM_PASSWORD=password-de-usuario" >> ~/.bashrc
 echo "export OSM_PROJECT=proyecto-de-usuario" >> ~/.bashrc
+
 echo "export OSM_HOSTNAME=10.11.12.1" >> ~/.bashrc
 echo "alias kubectl='microk8s kubectl'" >> ~/.bashrc
 source ~/.bashrc
@@ -206,6 +208,7 @@ source ~/.bashrc
 
 Registre el clúster en OSM. Para ello obtenga la dirección de la mv en la red
 10.11.12.0/24 del túnel mediante:
+
 
 ```
 ifconfig | grep 10.11.12
@@ -251,11 +254,13 @@ Puede utilizar:
 
 ```
 osm k8scluster-show --literal $KID | grep -A1 projects
+
 ```
 
 > **Ejemplo:**
 > 
 >```
+
 >~$ osm k8scluster-show --literal $KID | grep -A1 projects
 >   projects_read:
 >   - 66ad98eb-bc56-48a9-96c8-8d14c612931c
@@ -337,7 +342,6 @@ kubectl get -n $OSMNS network-attachment-definitions
 ```
 
 > **Ejemplo:**
-> Mostrará como salida:
 >
 >```
 >~> kubectl get -n $OSMNS network-attachment-definitions
