@@ -124,25 +124,35 @@ capturas que se solicitan.
 #### 1.1 Instalación y arranque de la máquina virtual en el laboratorio
 Se accederá a un PC del laboratorio,  _pc-k8s_ para el clúster de K8S. 
 
-En _pc-k8s_ ejecute:
+En _pc-k8s_, abra un terminal, cree un directorio `shared` y descargue allí el
+repositorio de la práctica: 
 
 ```
-# En pc-k8s, instala y arranca RDSV-K8S
-/lab/rdsv/get-osmlab-k8s
+mkdir -p ~/shared
+cd ~/shared
+git clone https://github.com/educaredes/nfv-lab.git
+cd nfv-lab
 ```
 
-Este comando:
+A continuación, ejecute:
+
+```
+chmod +x bin/get-osmlab-k8s
+bin/get-osmlab-k8s
+```
+
+El comando `bin/get-osmlab-k8s`:
 - instala la ova que contiene la máquina virtual,
-- crea el directorio `$HOME/shared` en la cuenta del usuario del laboratorio y
-la añade como directorio compartido en la máquina virtual, en
-`/home/upm/shared`. El objetivo es que esa carpeta compartida sea accesible 
-tanto en el PC anfitrión como en la máquina _RDSV-K8S_. 
+- añade el directorio compartido en la máquina virtual, en `/home/upm/shared`.
+El objetivo es que esa carpeta compartida sea accesible tanto en el PC anfitrión
+como en la máquina _RDSV-K8S_. 
 
 #### 1.1.alt Instalación y arranque de la máquina virtual en equipo propio
 
-Tras descargar e instalar la ova, utilice la opción de configuración de
+Tras descargar e importar la ova, utilice la opción de configuración de
 _Carpetas Compartidas_ para compartir una carpeta de su equipo con la máquina
-virtual permanentemente, con punto de montaje `/home/upm/shared`.
+virtual permanentemente, con punto de montaje `/home/upm/shared`. Asegúrese
+además de configurar 4096 MB de memoria y 2 CPUs.
 
 #### 1.2 Instalación del entorno en la máquina virtual
 
