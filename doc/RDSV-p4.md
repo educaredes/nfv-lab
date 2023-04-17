@@ -185,8 +185,13 @@ Instale el túnel hacia el servidor OSM mediante:
 cd ~/bin
 wget idefix.dit.upm.es/download/rdsv/tinc/install-tun
 chmod +x install-tun
-./install-tun <letra>
+./install-tun <letra> <tinc-server>
 ```
+
+donde `\<tinc-server\>` será:
+- en caso de usar un PC del laboratorio, `labserver06.lab.dit.upm.es`
+- en caso de conectarse desde un equipo personal propio, déjelo en blanco
+
 
 >**Nota:**
 >El profesor asignará una \<letra\> a cada alumno o grupo de alumnos, de forma
