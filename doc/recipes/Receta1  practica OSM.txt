@@ -199,3 +199,7 @@ a la máquina virtual (puerto 16443). Eso hace posible que OSM pueda comunicarse
 con el clúster k8s de la mv -->
 
 
+Comandos creacion usuarios OSM:
+
+osm project-create <project-name>
+osm user-create <user> --password <pass> --project-role-mappings <project-name>,project_admin
