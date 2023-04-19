@@ -78,24 +78,20 @@ El entorno utilizado para gestionar los servicios de red es OSM.
 
 *Fig. 3. Visión global del escenario*
 
-El escenario explicado se va a implementar para la práctica en dos máquinas
-Linux en VirtualBox, conectadas a la red `192.168.56.0/24` junto con el PC
-anfitrión (`192.168.56.1`): 
+El escenario explicado se va a implementar para la práctica en una máquina Linux
+en VirtualBox, **RDSV-K8S**, que permite emular las distintas redes y hosts del
+escenario, y el cluster de Kubernetes (K8s) de la central local. Tiene
+instaladas las herramientas:
+- el paquete _microk8s_ para proporcionar la funcionalidad de k8s,
+- la herramienta _VNX_, que se usará para emular los equipos de la red
+  residencial, el router isp1 y el servidor s1,
+- _Open vSwitch (ovs)_, que permitirá emular la red de acceso AccessNet1, la red
+  externa ExtNet1 que da salida al router isp1, y que además se utiliza tanto en
+  la emulación del bgr1 como en las KNFs.
 
-- **RDSV-K8S** (`192.168.56.11`). Permite emular las distintas redes y hosts del
-  escenario, y el cluster de Kubernetes (K8s) de la central local. Tiene
-  instaladas las herramientas:
-   - el paquete _microk8s_ para proporcionar la funcionalidad de k8s
-   - la herramienta _VNX_, que se usará para emular los equipos de la red
-     residencial, el router isp1 y el servidor s1
-   - _Open vSwitch (ovs)_, que permitirá emular la red de acceso AccessNet1, la
-     red externa ExtNet1 que da salida al router isp1, y que además se utiliza
-     tanto en la emulación del bgr1 como en las KNFs
-- **RDSV-OSM** (`192.168.56.12`). Instalación del entorno _OSM_, al que se
-  accede gráficamente con un navegador, o mediante terminal con el comando `osm`.
-
-Esas máquinas tendrán conectividad entre ellas y con el host a través de la red
-192.168.56.0/24.
+Esas máquina tendrán conectividad con el servidor OSM instalado en la
+infraestructura de laboratorios del DIT, a través de una red privada virtual
+creada mediante la herramienta _tinc_. 
 
 El detalle del escenario se puede ver en la Fig 4. 
 
