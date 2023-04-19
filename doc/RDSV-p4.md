@@ -271,12 +271,11 @@ osm k8scluster-show --literal $KID | grep -A1 projects
 > **Ejemplo:**
 > 
 >```
-
 >~$ osm k8scluster-show --literal $KID | grep -A1 projects
->   projects_read:
->   - 66ad98eb-bc56-48a9-96c8-8d14c612931c
->   projects_write:
->   - 66ad98eb-bc56-48a9-96c8-8d14c612931c
+>projects_read:
+>- 66ad98eb-bc56-48a9-96c8-8d14c612931c
+>projects_write:
+>- 66ad98eb-bc56-48a9-96c8-8d14c612931c
 >```
 
 Defina una variable para guardar ese valor, que se utilizará en los scripts 
