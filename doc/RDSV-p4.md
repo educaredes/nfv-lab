@@ -568,14 +568,14 @@ tráfico de la red residencial hacia Internet.
 
 ### 13. (P) Configuración del servicio
 
-Desde _RDSV-OSM_, configure el servicio renes1 mediante `osm_renes1.sh`:
+Desde _RDSV-K8S_, configure el servicio renes1 mediante `osm_renes1.sh`:
 
 ```
 ./osm_renes1.sh
 ```
 
 Analice a continuación el detalle del escenario en la Fig. 4 e indique 
-qué comando(s) puede utilizar **desde _RDSV-OSM_** para comprobar si hay 
+qué comando(s) puede utilizar **desde _RDSV-K8S_** para comprobar si hay 
 conectividad entre el servicio desplegado y el dispositivo `brg1` de la 
 red residencial. Verifique que haya conectividad. 
 
