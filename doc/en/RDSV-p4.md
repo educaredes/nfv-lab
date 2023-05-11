@@ -1,6 +1,6 @@
-# RDSV/SDNV P4 - Plataforma de orquestación de servicios basados en NFV
+# RDSV/SDNV P4 - NFV Management and Orchestration
 
-- [RDSV/SDNV P4 - Plataforma de orquestación de servicios basados en NFV](#rdsvsdnv-p4---plataforma-de-orquestación-de-servicios-basados-en-nfv)
+- [RDSV/SDNV P4 - NFV Management and Orchestration](#rdsvsdnv-p4---nfv-management-and-orchestration)
   - [Summary](#summary)
   - [Scenario](#scenario)
   - [Delivery of results](#delivery-of-results)
@@ -27,12 +27,13 @@
 
 ## Summary
 In this lab, the [Open Source MANO (OSM)](https://osm.etsi.org) platform will be
-used to go deeper in the orchestration of virtualised network functions. The
-scenario to be used is inspired by the conversion of local exchanges into data
-centres that allow, among other things, to replace network services offered by
-specific and proprietary hardware with software-defined network services running
-on general-purpose hardware. The network functions deployed in these exchanges
-are managed by an orchestration platform such as OSM or XOS.
+used to delve deeper in the management and orchestration of virtualised network
+functions. The scenario to be used is inspired by the conversion of local
+exchanges into data centres that allow, among other things, to replace network
+services offered by specific and proprietary hardware with software-defined
+network services running on general-purpose hardware. The network functions
+deployed in these exchanges are managed by an orchestration platform such as OSM
+or XOS.
 
 The network service under study is the residential Internet access service. Fig.
 1 illustrates the functions traditionally performed by the "residential router"
@@ -94,7 +95,7 @@ created using the _tinc_ tool.
 
 The detail of the scenario can be seen in Fig 4. 
 
-![Detailed view of the scenario](img/nfv-lab-figure4.drawio.png)
+![Detailed view of the scenario](img/nfv-lab-figura4.drawio.png)
 
 *Fig 4. Detailed view of the scenario*
 
@@ -109,9 +110,11 @@ dynamically dynamically assigned when the KNFs are instantiated.
 
 ## Delivery of results
 
-In the following sections you will find some marked with (P). You will have to respond to these items in a document memo-p4.pdf.
+In the following sections you will find some marked with (P). You will have to
+respond to these items in a document memo-p4.pdf.
 
-Upload a single zip file including the pdf file and the requested screenshots to the  Moodle task created for this.
+Upload a single zip file including the pdf file and the requested screenshots to
+the  Moodle task created for this.
 
 
 ## Development of the practice
@@ -612,7 +615,9 @@ firefox www.dit.upm.es &
 
 ### 17. (P) Service for the second residential network
 
-Specify and perform the necessary steps to give Internet access to the second home network (h21, h22). For service configuration, take `osm_renes1.sh` as a starting point and create a new `osm_renes2.sh` script.
+Specify and perform the necessary steps to give Internet access to the second
+home network (h21, h22). For service configuration, take `osm_renes1.sh` as a
+starting point and create a new `osm_renes2.sh` script.
 
 Check that the above steps are working correctly:
 - check that h21 and h22 get access to the internet.
