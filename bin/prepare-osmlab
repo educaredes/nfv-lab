@@ -48,6 +48,9 @@ osm k8scluster-show microk8s-cluster > /dev/null 2>&1 && ( echo "-- Deleting mic
 sleep 6
 #read -p "PAK"
 
+echo "-- Updating microk8s-cluster IP in yaml"
+sed -i 's/^\(    server: https:\/\/\).*/\1'$MYIP:16443'/' ~/k8s-cluster.yaml
+
 echo "-- Registering microk8s-cluster"
 KID=$(osm k8scluster-add --creds ~/k8s-cluster.yaml --version 1.21 \
 --vim dummy_vim --description "External k8s cluster" --k8s-nets \
