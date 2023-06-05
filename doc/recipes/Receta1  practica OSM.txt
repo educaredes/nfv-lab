@@ -203,3 +203,168 @@ Comandos creacion usuarios OSM:
 
 osm project-create <project-name>
 osm user-create <user> --password <pass> --project-role-mappings <project-name>,project_admin
+
+### 2. OSM definition of the k8s cluster and network configuration
+
+
+Configure from a terminal the environment variables for the OSM client installed
+on _RDSV-K8S_ to access the server, as well as an alias for 
+the `microk8s kubectl` command:
+
+```
+echo "export OSM_USER=nombre-de-usuario" >> ~/.bashrc
+echo "export OSM_PASSWORD=password-de-usuario" >> ~/.bashrc
+echo "export OSM_PROJECT=proyecto-de-usuario" >> ~/.bashrc
+
+echo "export OSM_HOSTNAME=10.11.12.1" >> ~/.bashrc
+echo "alias kubectl='microk8s kubectl'" >> ~/.bashrc
+source ~/.bashrc
+```
+
+Register the cluster in OSM. To do this, obtain the address of the mv on the
+10.11.12.0/24 network from the tunnel via:
+
+
+```
+ifconfig | grep 10.11.12
+```
+
+Edit the ~/k8s-cluster.yaml file to replace your IP address with that of the
+tunnel: use an editor and modify the _server_ line by replacing the IP.
+
+Then register a vim _dummy_ and a cluster dependent on that vim with the
+following commands:
+
+```
+osm vim-create --name dummy_vim --user u --password p --tenant p \
+--account_type dummy --auth_url http://localhost/dummy
+
+KID=$(osm k8scluster-add --creds ~/k8s-cluster.yaml --version 1.21 \
+--vim dummy_vim --description "External k8s cluster" --k8s-nets \
+'{"net1": "osm-ext"}' microk8s-cluster)
+```
+And check that the cluster identifier is correctly returned via:
+:
+
+```
+echo $KID
+```
+
+> **Example:**
+> 
+>```
+>~$ echo $KID
+>68945185-1051-4cc0-8b1e-26382fc729e7
+>```
+
+Get the information registered in OSM for the cluster:
+
+```
+osm k8scluster-show $KID
+```
+
+In the output of the above command, look for information about the namespace to
+be used by OSM in the cluster to deploy the network services pods. You can use:
+
+```
+osm k8scluster-show --literal $KID | grep -A1 projects
+
+```
+
+> **Example:**
+> 
+>```
+>~$ osm k8scluster-show --literal $KID | grep -A1 projects
+>projects_read:
+>- 66ad98eb-bc56-48a9-96c8-8d14c612931c
+>projects_write:
+>- 66ad98eb-bc56-48a9-96c8-8d14c612931c
+>```
+
+Define a variable to store this value, which will be used in the lab scripts.
+
+```
+export OSMNS=<namespace> #  no spaces and no < >
+```
+
+> **Example:**
+> 
+>```
+>export OSMNS=66ad98eb-bc56-48a9-96c8-8d14c612931c
+>```
+
+Check if the namespace exists with:
+
+```
+kubectl get namespaces
+```
+
+If it does not exist, create the namespace in the k8s cluster (this is done by
+OSM the first time a service is instantiated, but in our case we create it
+before so we can do the configuration for the next step):
+
+```
+kubectl create namespace $OSMNS 
+```
+
+And use the _get namespaces_ command again to check if it has been created. 
+
+
+Then, to connect the namespace to the VNX scenarios, 2 _Multus_ Network
+Attachment Definitions associated to that namespace must be created by executing
+the commands:
+
+```
+cat <<EOF | kubectl create -n $OSMNS -f -
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+ name: extnet1
+ annotations:
+   k8s.v1.cni.cncf.io/resourceName: ovs-cni.network.kubevirt.io/ExtNet1
+spec:
+ config: '{
+   "cniVersion": "0.3.1",
+   "type": "ovs",
+   "bridge": "ExtNet1"
+ }'
+EOF
+
+cat <<EOF | kubectl create -n $OSMNS -f -
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+ name: accessnet1
+ annotations:
+   k8s.v1.cni.cncf.io/resourceName: ovs-cni.network.kubevirt.io/AccessNet1
+spec:
+ config: '{
+   "cniVersion": "0.3.1",
+   "type": "ovs",
+   "bridge": "AccessNet1"
+ }'
+EOF
+
+```
+
+Check that they have been created with
+
+```
+kubectl get -n $OSMNS network-attachment-definitions
+```
+
+> **Example:**
+>
+>```
+>~> kubectl get -n $OSMNS network-attachment-definitions
+>NAME         AGE
+>extnet1      90s
+>accessnet1   88s
+>```
+
+And check the details, with
+
+```
+kubectl get -n $OSMNS network-attachment-definition extnet1 -o yaml
+kubectl get -n $OSMNS network-attachment-definition accessnet1 -o yaml
+```

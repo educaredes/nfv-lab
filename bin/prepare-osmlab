@@ -65,6 +65,9 @@ OSMNS=$( osm k8scluster-show --literal $KID | awk '/projects_read/{getline;print
 echo "-- KID=$KID"
 echo "-- OSMNS=$OSMNS"
 
+sed -i -e '/OSMNS/d' ~/.bashrc
+echo "export OSMNS=$OSMNS" >> ~/.bashrc
+
 # Create OSM namespace if not already created
 echo "-- kubectl get namespace $OSMNS"
 microk8s kubectl get namespace $OSMNS >/dev/null 2>&1 || microk8s kubectl create namespace $OSMNS 
