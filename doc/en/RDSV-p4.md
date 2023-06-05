@@ -154,8 +154,7 @@ cd nfv-lab
 Install the tunnel to the OSM server via:
 
 ```
-cd ~/bin
-chmod +x install-tun
+cd ~/shared/nfv-lab/bin
 ./install-tun <letter> <tinc-server>
 ```
 
@@ -181,8 +180,7 @@ Configure the environment to access OSM with your username and to register your
 k8s cluster with the following:
 
 ```
-cd ~/bin
-chmod +x install-tun
+cd ~/shared/nfv-lab/bin
 ./prepare-osmlab <letter> 
 ```
 
