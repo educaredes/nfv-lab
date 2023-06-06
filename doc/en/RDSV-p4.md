@@ -285,14 +285,15 @@ sudo vnx -f vnx/nfv3_home_lxc_ubuntu64.xml -t
 
 The scenario contains two residential networks, we will initially focus on the
 first one (end systems h11 and h12). Check on the terminals of hosts h11 and h12
-that they have no IP address assigned on the `eth1` interface via:
+(_user/password: root/xxxx_) that they have no IP address assigned on the `eth1`
+interface via:
 
 ```
 ifconfig eth1
 ```
 
 > **Note:**
-> Hosts have the VNX management network configured on the `eth0` interface.
+> Hosts have a VNX management network configured on the `eth0` interface. 
 
 Also check that the DHCP client does not allow them to obtain IP address and
 that they do not have access to the Internet:
@@ -403,7 +404,7 @@ From _RDSV-K8S_, configure the renes1 service using `osm_renes1.sh`:
 ```
 
 Then, discuss the scenario in Fig. 4 and propose the command(s) you could use
-**from _RDSV-K8S_ ** to check if there is connectivity between the deployed
+**from _RDSV-K8S_** to check if there is connectivity between the deployed
 service and the `brg1` device in the residential network. Verify that there is
 connectivity.
 
