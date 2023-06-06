@@ -283,9 +283,13 @@ cd /home/upm/shared/nfv-lab
 sudo vnx -f vnx/nfv3_home_lxc_ubuntu64.xml -t
 ```
 
+> **Note:**
+> To access any of the  virtual machines started with VNX,
+> _user/password : root/xxxx_ 
+
 The scenario contains two residential networks, we will initially focus on the
 first one (end systems h11 and h12). Check on the terminals of hosts h11 and h12
-(_user/password: root/xxxx_) that they have no IP address assigned on the `eth1`
+that they have no IP address assigned on the `eth1`
 interface via:
 
 ```
