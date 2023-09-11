@@ -360,7 +360,7 @@ manage the service graphically.
 
 ### 10. Checking k8s pods
 
-We will use `kubectl` to get the names of the pods that have been launched in the cluster:
+We will use `kubectl` to get the pods that have started in the cluster:
 
 ```
 kubectl -n $OSMNS get pods
@@ -369,8 +369,8 @@ kubectl -n $OSMNS get pods
 Next, define two variables:
 
 ```
-ACCPOD=<KNF:access_pod_name>
-CPEPOD=<KNF:cpe_pod_name>
+ACCPOD=<nombre del pod de la KNF:access>
+CPEPOD=<nombre del pod de la KNF:cpe>
 ```
 
 ### 11. (P) Access to pods
