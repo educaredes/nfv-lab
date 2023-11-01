@@ -20,5 +20,8 @@
     ],
     "markdown.marp.themes": [
         "doc/theme.css"
+    ],
+    "cSpell.words": [
+        "labserver"
     ]
 }

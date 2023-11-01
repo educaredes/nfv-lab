@@ -1,30 +1,32 @@
-# RDSV/SDNV P4 - Plataforma de orquestación de servicios basados en NFV
+<!-- omit from toc -->
+RDSV/SDNV P4 - Plataforma de orquestación de servicios basados en NFV
+=====================================================================
 
-- [RDSV/SDNV P4 - Plataforma de orquestación de servicios basados en NFV](#rdsvsdnv-p4---plataforma-de-orquestación-de-servicios-basados-en-nfv)
-  - [Resumen](#resumen)
-  - [Escenario](#escenario)
-  - [Entrega de resultados](#entrega-de-resultados)
-  - [Desarrollo de la práctica](#desarrollo-de-la-práctica)
-    - [1. Instalación del entorno](#1-instalación-del-entorno)
-      - [1.1 Instalación y arranque de la máquina virtual en el laboratorio](#11-instalación-y-arranque-de-la-máquina-virtual-en-el-laboratorio)
-      - [1.1.alt Instalación y arranque de la máquina virtual en equipo propio](#11alt-instalación-y-arranque-de-la-máquina-virtual-en-equipo-propio)
-      - [1.2 Instalación del entorno en la máquina virtual](#12-instalación-del-entorno-en-la-máquina-virtual)
-    - [2. Definición OSM del clúster k8s y configuración de red](#2-definición-osm-del-clúster-k8s-y-configuración-de-red)
-    - [3. Familiarización con GUI de OSM](#3-familiarización-con-gui-de-osm)
-    - [4. Repositorios de helm charts y docker](#4-repositorios-de-helm-charts-y-docker)
-    - [5. (P) Relación entre helm y docker](#5-p-relación-entre-helm-y-docker)
-    - [6. Instalación de descriptores en OSM](#6-instalación-de-descriptores-en-osm)
-    - [7. (P) Análisis de descriptores](#7-p-análisis-de-descriptores)
-    - [8. Arranque de escenarios VNX](#8-arranque-de-escenarios-vnx)
-    - [9. Creación de instancias del servicio](#9-creación-de-instancias-del-servicio)
-    - [10. Comprobación de los pods arrancados](#10-comprobación-de-los-pods-arrancados)
-    - [11. (P) Acceso a los pods ya arrancados](#11-p-acceso-a-los-pods-ya-arrancados)
-    - [12. (P) Scripts de configuración del servicio](#12-p-scripts-de-configuración-del-servicio)
-    - [13. (P) Configuración del servicio](#13-p-configuración-del-servicio)
-    - [14. (P) Servicio desde la red de acceso](#14-p-servicio-desde-la-red-de-acceso)
-    - [15. (P) Análisis de tráfico en AccessNet1](#15-p-análisis-de-tráfico-en-accessnet1)
-    - [16. (P) Análisis de tráfico en ExtNet1](#16-p-análisis-de-tráfico-en-extnet1)
-    - [17. (P) Servicio para la segunda red residencial](#17-p-servicio-para-la-segunda-red-residencial)
+
+- [Resumen](#resumen)
+- [Escenario](#escenario)
+- [Entrega de resultados](#entrega-de-resultados)
+- [Desarrollo de la práctica](#desarrollo-de-la-práctica)
+  - [1. Instalación del entorno](#1-instalación-del-entorno)
+    - [1.1 Instalación y arranque de la máquina virtual en el laboratorio](#11-instalación-y-arranque-de-la-máquina-virtual-en-el-laboratorio)
+    - [1.1.alt Instalación y arranque de la máquina virtual en equipo propio](#11alt-instalación-y-arranque-de-la-máquina-virtual-en-equipo-propio)
+    - [1.2 Instalación del entorno en la máquina virtual](#12-instalación-del-entorno-en-la-máquina-virtual)
+  - [2. Definición OSM del clúster k8s y configuración de red](#2-definición-osm-del-clúster-k8s-y-configuración-de-red)
+  - [3. Familiarización con GUI de OSM](#3-familiarización-con-gui-de-osm)
+  - [4. Repositorios de helm charts y docker](#4-repositorios-de-helm-charts-y-docker)
+  - [5. (:question:) Relación entre helm y docker](#5-question-relación-entre-helm-y-docker)
+  - [6. Instalación de descriptores en OSM](#6-instalación-de-descriptores-en-osm)
+  - [7. (P) Análisis de descriptores](#7-p-análisis-de-descriptores)
+  - [8. Arranque de escenarios VNX](#8-arranque-de-escenarios-vnx)
+  - [9. Creación de instancias del servicio](#9-creación-de-instancias-del-servicio)
+  - [10. Comprobación de los pods arrancados](#10-comprobación-de-los-pods-arrancados)
+  - [11. (P) Acceso a los pods ya arrancados](#11-p-acceso-a-los-pods-ya-arrancados)
+  - [12. (P) Scripts de configuración del servicio](#12-p-scripts-de-configuración-del-servicio)
+  - [13. (P) Configuración del servicio](#13-p-configuración-del-servicio)
+  - [14. (P) Servicio desde la red de acceso](#14-p-servicio-desde-la-red-de-acceso)
+  - [15. (P) Análisis de tráfico en AccessNet1](#15-p-análisis-de-tráfico-en-accessnet1)
+  - [16. (P) Análisis de tráfico en ExtNet1](#16-p-análisis-de-tráfico-en-extnet1)
+  - [17. (P) Servicio para la segunda red residencial](#17-p-servicio-para-la-segunda-red-residencial)
 
 ## Resumen
 En esta práctica, se va a utilizar la plataforma de código abierto [Open Source
@@ -406,7 +408,7 @@ definiciones de los helm charts `accesschart` y `cpechart`, mientras que en
 va a utilizar, `educaredes/vnf-img`. Este contenedor está alojado en DockerHub,
 compruébelo accediendo a [este enlace](https://hub.docker.com/u/educaredes).
 
-### 5. (P) Relación entre helm y docker
+### 5. (:question:) Relación entre helm y docker
 
 Busque en la carpeta `helm` en qué ficheros se hace referencia al contenedor
 docker. Anote el resultado para incluirlo como parte de la entrega. Puede 
