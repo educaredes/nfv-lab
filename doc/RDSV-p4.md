@@ -14,7 +14,7 @@ RDSV/SDNV P4 - Plataforma de orquestación de servicios basados en NFV
   - [2. Definición OSM del clúster k8s y configuración de red](#2-definición-osm-del-clúster-k8s-y-configuración-de-red)
   - [3. Familiarización con GUI de OSM](#3-familiarización-con-gui-de-osm)
   - [4. Repositorios de helm charts y docker](#4-repositorios-de-helm-charts-y-docker)
-  - [5. (:question:) Relación entre helm y docker](#5-question-relación-entre-helm-y-docker)
+  - [5. (P) Relación entre helm y docker](#5-p-relación-entre-helm-y-docker)
   - [6. Instalación de descriptores en OSM](#6-instalación-de-descriptores-en-osm)
   - [7. (P) Análisis de descriptores](#7-p-análisis-de-descriptores)
   - [8. Arranque de escenarios VNX](#8-arranque-de-escenarios-vnx)
@@ -408,7 +408,7 @@ definiciones de los helm charts `accesschart` y `cpechart`, mientras que en
 va a utilizar, `educaredes/vnf-img`. Este contenedor está alojado en DockerHub,
 compruébelo accediendo a [este enlace](https://hub.docker.com/u/educaredes).
 
-### 5. (:question:) Relación entre helm y docker
+### 5. (P) Relación entre helm y docker
 
 Busque en la carpeta `helm` en qué ficheros se hace referencia al contenedor
 docker. Anote el resultado para incluirlo como parte de la entrega. Puede 
