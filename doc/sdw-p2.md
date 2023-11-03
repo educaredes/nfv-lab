@@ -2,27 +2,6 @@
 SDW Caso práctico 2: Plataforma de orquestación de servicios basados en NFV
 ===========================================================================
 
-- [Resumen](#resumen)
-- [Entorno](#entorno)
-- [Desarrollo de la práctica](#desarrollo-de-la-práctica)
-  - [1. Instalación del entorno](#1-instalación-del-entorno)
-  - [2. Definición OSM del clúster k8s y configuración de red](#2-definición-osm-del-clúster-k8s-y-configuración-de-red)
-  - [3. Familiarización con la GUI de OSM](#3-familiarización-con-la-gui-de-osm)
-  - [4. Repositorio de helm charts y docker](#4-repositorio-de-helm-charts-y-docker)
-  - [5. (P) Relación entre helm y docker](#5-p-relación-entre-helm-y-docker)
-  - [6. Instalación de descriptores en OSM](#6-instalación-de-descriptores-en-osm)
-  - [7. (P) Análisis de descriptores](#7-p-análisis-de-descriptores)
-  - [8. Arranque de escenarios VNX](#8-arranque-de-escenarios-vnx)
-  - [9. Creación de instancias del servicio](#9-creación-de-instancias-del-servicio)
-  - [10. Comprobación de los pods arrancados](#10-comprobación-de-los-pods-arrancados)
-  - [11. (P) Acceso a los pods ya arrancados](#11-p-acceso-a-los-pods-ya-arrancados)
-  - [12. (P) Scripts de configuración del servicio](#12-p-scripts-de-configuración-del-servicio)
-  - [13. (P) Configuración del servicio](#13-p-configuración-del-servicio)
-  - [14. (P) Servicio desde la red de acceso](#14-p-servicio-desde-la-red-de-acceso)
-  - [15. (P) Análisis de tráfico en AccessNet1](#15-p-análisis-de-tráfico-en-accessnet1)
-  - [16. (P) Análisis de tráfico en ExtNet1](#16-p-análisis-de-tráfico-en-extnet1)
-  - [17. (P) Servicio para la segunda red residencial](#17-p-servicio-para-la-segunda-red-residencial)
-
 # Resumen
 
 En esta práctica, se va a profundizar en las funciones de red virtualizadas
@@ -167,6 +146,14 @@ descriptores de KNFs y del servicio de red (onboarding):
 `pingknf_vnfd.tar.gz` y `pongknf_vnfd.tar.gz`. 
 - Acceda al menu de OSM Packages->NS packages y arrastre el fichero 
 `pingpong_ns.tar.gz`
+
+Alternativamente, puede utilizar la línea de comandos:
+
+```
+osm vnfd-create $HOME/shared/sdw-lab/pck/pingknf_vnfd.tar.gz
+osm vnfd-create $HOME/shared/sdw-lab/pck/pongknf_vnfd.tar.gz
+osm nsd-create $HOME/shared/sdw-p2/pck/pingpong_nsd.tar.gz
+```
 
 ## 6. (P) Análisis de descriptores
 

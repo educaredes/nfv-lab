@@ -100,7 +100,7 @@ spec:
  }'
 EOF
 
-# Configure Multus extnet1
+# Configure Multus accessnet1
 microk8s kubectl get -n $OSMNS network-attachment-definitions accessnet1 || \
 cat <<EOF | microk8s kubectl create -n $OSMNS -f -
 apiVersion: "k8s.cni.cncf.io/v1"
@@ -118,7 +118,7 @@ spec:
 EOF
 
 # Configure Multus mplswan
-microk8s kubectl get -n $OSMNS network-attachment-definitions accessnet1 || \
+microk8s kubectl get -n $OSMNS network-attachment-definitions mplswan || \
 cat <<EOF | microk8s kubectl create -n $OSMNS -f -
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
