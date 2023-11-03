@@ -2,6 +2,20 @@
 SDW Caso práctico 2: Plataforma de orquestación de servicios basados en NFV
 ===========================================================================
 
+- [Resumen](#resumen)
+- [Entorno](#entorno)
+- [Desarrollo de la práctica](#desarrollo-de-la-práctica)
+  - [1. Instalación del entorno](#1-instalación-del-entorno)
+  - [2. Definición OSM del clúster k8s y configuración de red](#2-definición-osm-del-clúster-k8s-y-configuración-de-red)
+  - [3. Familiarización con la GUI de OSM](#3-familiarización-con-la-gui-de-osm)
+  - [4. (P) Repositorio de helm charts](#4-p-repositorio-de-helm-charts)
+  - [5. Instalación de descriptores en OSM](#5-instalación-de-descriptores-en-osm)
+  - [6. (P) Análisis de descriptores](#6-p-análisis-de-descriptores)
+  - [7. Creación de instancias del servicio](#7-creación-de-instancias-del-servicio)
+  - [8. Comprobación de los pods arrancados](#8-comprobación-de-los-pods-arrancados)
+  - [9. (P) Acceso a los pods ya arrancados](#9-p-acceso-a-los-pods-ya-arrancados)
+- [Anexo I - Comandos](#anexo-i---comandos)
+
 # Resumen
 
 En esta práctica, se va a profundizar en las funciones de red virtualizadas
