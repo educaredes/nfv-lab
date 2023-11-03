@@ -23,7 +23,7 @@ En esta práctica, se va a profundizar en las funciones de red virtualizadas
 MANO (OSM)](https://osm.etsi.org). Se va a ver cómo se despliegan funciones de
 red virtualizadas mediante OSM a través de ejemplos que permitan entender
 distintos procesos, como la creación de VNFs, la preparación de las plantillas
-para VNFs y servicios de red y la carga (onboarding_) de los servicios de red y
+para VNFs y servicios de red y la carga (_onboarding_) de los servicios de red y
 sus VNFs en este tipo de plataformas NFV.
 
 # Entorno
