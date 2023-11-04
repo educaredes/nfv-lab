@@ -3,14 +3,17 @@
 <!--
 
 ~~~~~~~~~~~~~~~~~~~~
-VNX Sample scenarios
+VNX SD-WAN scenario
 ~~~~~~~~~~~~~~~~~~~~
 
-Name:        nfv3_server_lxc_ubuntu64
-Description: 
+Name:        sdw_nets
+Description: Virtualized scenario for external nets in a central office.
+             Connects a machine voip_gw to a MplsWan network and an isp1 router
+             to ExtNet1,simulating an access to Internet and an s1 server
 
-This file is part of the Virtual Networks over LinuX (VNX) Project distribution. 
-(www: http://www.dit.upm.es/vnx - e-mail: vnx@dit.upm.es) 
+Author: luis.bellido@upm.es
+
+Created for: VNX http://www.dit.upm.es/vnx - e-mail: vnx@dit.upm.es) 
 
 Departamento de Ingenieria de Sistemas Telematicos (DIT)
 Universidad Politecnica de Madrid
@@ -23,7 +26,7 @@ SPAIN
   xsi:noNamespaceSchemaLocation="/usr/share/xml/vnx/vnx-2.00.xsd">
   <global>
     <version>2.0</version>
-    <scenario_name>nfv3_server_lxc_ubuntu64</scenario_name>
+    <scenario_name>sdw_nets</scenario_name>
     <automac offset="4"/>
     <vm_mgmt type="none" />
     <!--vm_mgmt type="private" network="10.250.0.0" mask="24" offset="12">
@@ -34,11 +37,25 @@ SPAIN
         <console id="1" display="yes"/>
     </vm_defaults>
   </global>
-    
+
+  <net name="Internet" mode="openvswitch"/>
+
   <net name="ExtNet1" mode="openvswitch" managed="no"/>
-  <net name="Internet" mode="virtual_bridge" managed="yes"/>
+  <net name="MplsWan" mode="openvswitch" managed="no"/>
+
   <net name="virbr0" mode="virtual_bridge" managed="no"/>
-  
+
+  <vm name="voip-gw" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="MplsWan">
+        <mac>00:00:00:00:00:20</mac>
+        <ipv4>10.20.0.254/24</ipv4>
+    </if>
+    <forwarding type="ip" />
+    <route type="ipv4" gw="10.20.0.1">10.20.1.0/24</route>
+    <route type="ipv4" gw="10.20.0.2">10.20.2.0/24</route>
+  </vm>
+
   <vm name="isp1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
     <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
     <if id="1" net="ExtNet1">
@@ -51,23 +68,30 @@ SPAIN
       <ipv4>dhcp</ipv4>
     </if>
     <forwarding type="ip" />
+    <route type="ipv4" gw="10.100.3.2">10.100.2.0/24</route>
     <filetree seq="on_boot" root="/usr/bin/" perms="755">/usr/bin/vnx_config_nat</filetree>
     <exec seq="on_boot" type="verbatim">
        sleep 1
        dhclient eth9
        sleep 1
        /usr/bin/vnx_config_nat eth1 eth9
-
-       # Change interface MTU
-       ifconfig eth1 mtu 1380
-       sed -i -e '/iface eth1 inet static/a \   mtu 1380' /etc/network/interfaces
     </exec>
   </vm>
+
   <vm name="s1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
     <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
     <if id="1" net="Internet">
-      <ipv4>10.100.3.2/24</ipv4>
+      <ipv4>10.100.3.3/24</ipv4>
     </if>
-    <route type="ipv4" gw="10.100.3.1">default</route>
+    <route type="ipv4" gw="10.100.3.1">10.100.1.0/24</route>
+    <!--route type="ipv4" gw="10.100.3.2">10.100.2.0/24</route-->
+    <route type="ipv4" gw="10.100.3.1">0.0.0.0/0</route>
+    <!-- Copy the files under conf/tutorial_ubuntu/h3 to vm /var/www/html directory -->
+    <filetree seq="on_boot" root="/var/www/html/">conf/s1/*</filetree>
+    <!-- Start/stop apache www server -->
+    <exec seq="on_boot" type="verbatim" ostype="system">
+        chmod 644 /var/www/html/*
+        service apache2 start
+    </exec>
   </vm>
 </vnx>

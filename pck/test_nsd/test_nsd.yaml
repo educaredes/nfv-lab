@@ -1,0 +1,44 @@
+# All Rights Reserved.
+#
+#    Licensed under the Apache License, Version 2.0 (the "License"); you may
+#    not use this file except in compliance with the License. You may obtain
+#    a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#    License for the specific language governing permissions and limitations
+#    under the License.
+nsd:
+  nsd:
+  - id: test
+    name: test
+    designer: educaredes
+    description: Test NS consisting of 2 KNFs
+    version: '1.0'
+    df:
+    - id: default-df
+      vnf-profile:
+      - id: test1
+        virtual-link-connectivity:
+          - constituent-cpd-id:
+              - constituent-base-element-id: test1
+                constituent-cpd-id: mgmt-ext
+            virtual-link-profile-id: mgmtnet
+        vnfd-id: testknf
+      - id: test2
+        virtual-link-connectivity:
+          - constituent-cpd-id:
+              - constituent-base-element-id: test2
+                constituent-cpd-id: mgmt-ext
+            virtual-link-profile-id: mgmtnet
+        vnfd-id: testknf
+    version: '1.0'    
+    virtual-link-desc:
+      - id: mgmtnet
+        mgmt-network: true
+    vnfd-id:
+      - testknf
+      - testknf

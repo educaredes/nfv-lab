@@ -1,0 +1,1 @@
+5887bddc279ab54fa36dfdab6889db9d	testknf_vnfd/testknf_vnfd.yaml

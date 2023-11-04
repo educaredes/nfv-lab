@@ -1,0 +1,18 @@
+vnfd:
+  description: KNF de test
+  df:
+  - id: default-df
+  ext-cpd:
+  - id: mgmt-ext
+    k8s-cluster-net: mgmtnet
+  id: testknf
+  k8s-cluster:
+    nets:
+    - id: mgmtnet
+  kdu:
+  - name: repos
+    helm-chart: helmchartrepo/testchart
+  mgmt-cp: mgmt-ext
+  product-name: testknf
+  provider: GUI
+  version: '1.0'
