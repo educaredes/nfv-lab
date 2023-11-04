@@ -3,56 +3,56 @@ entries:
   accesschart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-04T09:11:31.516113266+01:00"
+    created: "2023-11-04T12:15:54.698678+01:00"
     description: A Helm chart for Kubernetes
     digest: b6eff9cf299a4f1d7c806421e0fef9f39e59e31e15777f56a872f3cfe3303766
     name: accesschart
     type: application
     urls:
-    - https://lbellido.github.io/sdw-lab/accesschart-0.1.0.tgz
+    - https://educaredes.github.io/sdw-lab/accesschart-0.1.0.tgz
     version: 0.1.0
   cpechart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-04T09:11:31.518059714+01:00"
+    created: "2023-11-04T12:15:54.699064+01:00"
     description: A Helm chart for Kubernetes
     digest: 33e7a2973a7664e175bccb21815e3fa0aaf2e41a8d6a41e8a15490f2c4e0136b
     name: cpechart
     type: application
     urls:
-    - https://lbellido.github.io/sdw-lab/cpechart-0.1.0.tgz
+    - https://educaredes.github.io/sdw-lab/cpechart-0.1.0.tgz
     version: 0.1.0
   pingchart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-04T09:11:31.5194938+01:00"
+    created: "2023-11-04T12:15:54.699263+01:00"
     description: A Helm chart for Kubernetes
     digest: b13b4ed8b08542c3a159d327689b3a7f50d3590525621df132ed35e53b14d44e
     name: pingchart
     type: application
     urls:
-    - https://lbellido.github.io/sdw-lab/pingchart-0.1.0.tgz
+    - https://educaredes.github.io/sdw-lab/pingchart-0.1.0.tgz
     version: 0.1.0
   pongchart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-04T09:11:31.520755897+01:00"
+    created: "2023-11-04T12:15:54.69947+01:00"
     description: A Helm chart for Kubernetes
     digest: ceda7dd9ac421f874fc6c47d9c4738c50e19f715e1830725e178858930727e31
     name: pongchart
     type: application
     urls:
-    - https://lbellido.github.io/sdw-lab/pongchart-0.1.0.tgz
+    - https://educaredes.github.io/sdw-lab/pongchart-0.1.0.tgz
     version: 0.1.0
   testchart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-04T09:11:31.522953663+01:00"
+    created: "2023-11-04T12:15:54.699799+01:00"
     description: A Helm chart for Kubernetes
     digest: eb8526da9d5c2c74ac74928e5e5d615f66f48b738814a1b26a051cc89e3b91f2
     name: testchart
     type: application
     urls:
-    - https://lbellido.github.io/sdw-lab/testchart-0.1.0.tgz
+    - https://educaredes.github.io/sdw-lab/testchart-0.1.0.tgz
     version: 0.1.0
-generated: "2023-11-04T09:11:31.513955617+01:00"
+generated: "2023-11-04T12:15:54.698115+01:00"
