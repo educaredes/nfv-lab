@@ -8,7 +8,7 @@ SDW Caso práctico 2: Plataforma de orquestación de servicios basados en NFV
   - [1. Instalación del entorno](#1-instalación-del-entorno)
   - [2. Definición OSM del clúster k8s y configuración de red](#2-definición-osm-del-clúster-k8s-y-configuración-de-red)
   - [3. Familiarización con la GUI de OSM](#3-familiarización-con-la-gui-de-osm)
-  - [4. (P) Repositorio de helm charts](#4-p-repositorio-de-helm-charts)
+  - [4. Repositorio de helm charts](#4-repositorio-de-helm-charts)
   - [5. Instalación de descriptores en OSM](#5-instalación-de-descriptores-en-osm)
   - [6. (P) Análisis de descriptores](#6-p-análisis-de-descriptores)
   - [7. Creación de instancias del servicio](#7-creación-de-instancias-del-servicio)
@@ -134,7 +134,7 @@ y VNFs.
 - _Instances_: gestión de la instancias de los servicios desplegados
 - _K8s_: gestión del registro de clústeres y repositorios k8s
 
-## 4. (P) Repositorio de helm charts
+## 4. Repositorio de helm charts
 
 Para implementar las funciones de red virtualizadas se usarán _helm charts_, que
 empaquetan todos los recursos necesarios para el despliegue de una aplicación en
@@ -250,18 +250,20 @@ kubectl -n $OSMNS exec -it $PONG -- ifconfig eth0
 
 # Y a continuación haga un ping a la dirección IP anotada
 kubectl -n $OSMNS exec -it $PING -- ping -c 3 <direccion IP de pong>
-
 ```
 
 ## 10. (P) Conexiones externas
 
-A continuación se analizará la interacción de los servicios de red con redes
-externas, en este caso definidas mediante switches _Open vSwitch_. Compruebe
-que están creados los switches `MplsWan` y `ExtNet1` tecleando en un terminal:
+A continuación se analizará la interacción de los servicios de red lanzados con
+redes externas, definidas en este caso mediante switches _Open vSwitch_.
+Compruebe que están creados los switches `MplsWan` y `ExtNet1` tecleando en un
+terminal:
 
 ```
 sudo ovs-vsctl show
 ```
+
+>Nota: pueden mostrarse otros switches adicionales, que puede ignorar en esta práctica.
 
 Para conectar los pods arrancados con los switches, se ha utilizado
 [Multus](https://github.com/k8snetworkplumbingwg/multus-cni), un plugin de tipo
@@ -273,11 +275,13 @@ ejecutando el comando:
 kubectl get -n $OSMNS network-attachment-definitions
 ```
 
-Los pods estan ya configurados y conectados a las redes:
+Los pods están ya configurados y conectados a las redes:
 -  _ping_, a través de su interfaz `net1`, a la red `MplsWan`,
 -  _pong_, también a través de su interfaz `net1`, a la red `ExtNet1`.
 
-Basándose en los comandos ejecutados en el apartado anterior, obtenga la dirección IP de los dos pods en sus interfaces `net1`. Incluya en la memoria los comandos utilizados.
+Basándose en los comandos ejecutados en el apartado anterior, obtenga la
+dirección IP de los dos pods en sus interfaces `net1`. Incluya en la memoria los
+comandos utilizados.
 
 ## 11. Escenario de la red "real"
 
@@ -352,6 +356,16 @@ osm ns-list
 osm vnf-list
 ```
 
+Ejecuta un `<comando>` en un pod:
 
+```
+kubectl  -n $OSMNS exec -it $PING -- <comando>
+```
+
+Abre una shell en un pod:
+
+```
+kubectl  -n $OSMNS exec -it $PING -- /bin/sh
+```
 
 
