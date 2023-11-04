@@ -14,6 +14,10 @@ SDW Caso práctico 2: Plataforma de orquestación de servicios basados en NFV
   - [7. Creación de instancias del servicio](#7-creación-de-instancias-del-servicio)
   - [8. Comprobación de los pods arrancados](#8-comprobación-de-los-pods-arrancados)
   - [9. (P) Acceso a los pods ya arrancados](#9-p-acceso-a-los-pods-ya-arrancados)
+  - [10. (P) Conexiones externas](#10-p-conexiones-externas)
+  - [11. Escenario de la red "real"](#11-escenario-de-la-red-real)
+  - [12. (P) Pruebas de conectividad desde los pods](#12-p-pruebas-de-conectividad-desde-los-pods)
+  - [13. (P) Conclusiones](#13-p-conclusiones)
 - [Anexo I - Comandos](#anexo-i---comandos)
 
 # Resumen
@@ -216,6 +220,9 @@ Y a continuación lanzar de nuevo la creación de una nueva instancia.
 Acceda a la GUI de OSM, opción NS Instances, para ver cómo también es posible
 gestionar el servicio gráficamente.
 
+En el Anexo I puede encontrar algunos comandos adicionales que le pueden
+resultar útiles para obtener información sobre el entorno.
+
 ## 8. Comprobación de los pods arrancados
 
 Usaremos kubectl para obtener los pods que han arrancado en el clúster:
@@ -246,12 +253,88 @@ kubectl -n $OSMNS exec -it $PING -- ping -c 3 <direccion IP de pong>
 
 ```
 
-Para terminar esta parte, a través de las opciones OSM:
+## 10. (P) Conexiones externas
+
+A continuación se analizará la interacción de los servicios de red con redes
+externas, en este caso definidas mediante switches _Open vSwitch_. Compruebe
+que están creados los switches `MplsWan` y `ExtNet1` tecleando en un terminal:
+
+```
+sudo ovs-vsctl show
+```
+
+Para conectar los pods arrancados con los switches, se ha utilizado
+[Multus](https://github.com/k8snetworkplumbingwg/multus-cni), un plugin de tipo
+_container network interface_ (CNI) para Kubernetes. Compruebe que están creados
+los _Network Attachment Definitions_ de _Multus_ `mplswan` y `extnet1`
+ejecutando el comando:
+
+```
+kubectl get -n $OSMNS network-attachment-definitions
+```
+
+Los pods estan ya configurados y conectados a las redes:
+-  _ping_, a través de su interfaz `net1`, a la red `MplsWan`,
+-  _pong_, también a través de su interfaz `net1`, a la red `ExtNet1`.
+
+Basándose en los comandos ejecutados en el apartado anterior, obtenga la dirección IP de los dos pods en sus interfaces `net1`. Incluya en la memoria los comandos utilizados.
+
+## 11. Escenario de la red "real"
+
+![scenario details](img/sdw-nets-pingpong.drawio.png)
+
+Arranque el escenario de la red *sdw_nets*:
+
+```
+cd /home/upm/shared/sdw-lab/vnx
+sudo vnx -f sdw_nets.xml -t
+```
+
+El escenario, tal como muestra la figura, contiene:
+
+- un equipo _voip-gw_, que simula un equipo de la red corporativa accesible
+  directamente a través de un servicio MetroEthernet (switch `MplsWan`),
+- un router _isp1_ que simula un router de salida hacia Internet (switch
+  `Internet`),
+- un servidor _s1_ que simula un equipo conectado a Internet.
+
+Puede acceder a los terminales de los distintos equipos con las credenciales
+`root/xxxx`.
+
+
+## 12. (P) Pruebas de conectividad desde los pods
+
+Haga una captura del texto o captura de pantalla del resultado de los 
+siguientes comandos y explique el resultado.
+
+```
+kubectl  -n $OSMNS exec -it $PING -- ping 10.20.0.254
+# Resultado y explicación:
+```
+
+```
+kubectl  -n $OSMNS exec -it $PONG -- ping 10.100.1.254
+# Resultado y explicación:
+```
+
+```
+kubectl  -n $OSMNS exec -it $PONG -- ip route
+# Resultado y explicación:
+```
+
+```
+kubectl  -n $OSMNS exec -it $PONG -- wget -O - 10.100.3.3
+# Resultado y explicación:
+```
+
+Para terminar a través de las opciones OSM:
 - Dé de baja la instancia del NS (icono de papelera en NS instances)
 
-En el Anexo I puede encontrar algunos comandos adicionales que le pueden
-resultar útiles para obtener información sobre el entorno.
+## 13. (P) Conclusiones
 
+Incluya en la entrega un apartado de conclusiones con su valoración de la
+práctica, incluyendo los posibles problemas que haya encontrado y sus
+sugerencias.
 
 #	Anexo I - Comandos
 
