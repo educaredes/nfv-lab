@@ -86,5 +86,12 @@ SPAIN
     <route type="ipv4" gw="10.100.3.1">10.100.1.0/24</route>
     <!--route type="ipv4" gw="10.100.3.2">10.100.2.0/24</route-->
     <route type="ipv4" gw="10.100.3.1">0.0.0.0/0</route>
+    <!-- Copy the files under conf/tutorial_ubuntu/h3 to vm /var/www/html directory -->
+    <filetree seq="on_boot" root="/var/www/html/">conf/s1/*</filetree>
+    <!-- Start/stop apache www server -->
+    <exec seq="on_boot" type="verbatim" ostype="system">
+        chmod 644 /var/www/html/*
+        service apache2 start
+    </exec>
   </vm>
 </vnx>
