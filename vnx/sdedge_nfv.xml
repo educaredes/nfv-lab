@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+~~~~~~~~~~~~~~~~~~~~
+VNX SD-WAN scenario
+~~~~~~~~~~~~~~~~~~~~
+
+Name:        sdedge_nfv
+Description: Virtualized scenario for sdwan edge in central office
+             The CPE is just a bridge with two local interfaces
+             and one interface linking to the telecom provider
+
+This file is part of the Virtual Networks over LinuX (VNX) Project distribution. 
+(www: http://www.dit.upm.es/vnx - e-mail: vnx@dit.upm.es) 
+
+Departamento de Ingenieria de Sistemas Telematicos (DIT)
+Universidad Politecnica de Madrid
+SPAIN
+
+-->
+
+
+<vnx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="/usr/share/xml/vnx/vnx-2.00.xsd">
+  <global>
+    <version>2.0</version>
+    <scenario_name>sdedge_nfv</scenario_name>
+    <automac offset="4"/>
+    <vm_mgmt type="none" />
+    <!--vm_mgmt type="private" network="10.250.0.0" mask="24" offset="12">
+       <host_mapping />
+    </vm_mgmt--> 
+    <vm_defaults>
+        <console id="0" display="no"/>
+        <console id="1" display="yes"/>
+    </vm_defaults>
+  </global>
+    
+  <net name="lan1" mode="virtual_bridge" />
+  <net name="lan11" mode="veth" type="p2p"/>
+  <net name="lan12" mode="veth" type="p2p"/>
+  <net name="AccessNet1" mode="openvswitch" managed="no"/>
+  <net name="lan2" mode="virtual_bridge" />
+  <net name="lan21" mode="veth" type="p2p"/>
+  <net name="lan22" mode="veth" type="p2p"/>
+  <net name="AccessNet2" mode="openvswitch" managed="no"/>
+
+  <net name="Internet" mode="openvswitch"/>
+
+  <net name="ExtNet1" mode="openvswitch" managed="no"/>
+  <net name="ExtNet2" mode="openvswitch" managed="no"/>
+  <net name="MplsWan" mode="openvswitch" managed="no"/>
+
+  <net name="virbr0" mode="virtual_bridge" managed="no"/>
+
+
+  <vm name="h1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="lan1">
+        <ipv4>10.20.1.2/24</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+       # Change interfaces MTU
+       ifconfig eth1 mtu 1400
+       sed -i -e '/iface eth1 inet static/a \   mtu 1400' /etc/network/interfaces
+    </exec>
+    <route type="ipv4" gw="10.20.1.1">default</route>
+  </vm>   
+
+  <vm name="t1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="lan1">
+        <ipv4>10.20.1.200/24</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+       # Change interfaces MTU
+       ifconfig eth1 mtu 1400
+       sed -i -e '/iface eth1 inet static/a \   mtu 1400' /etc/network/interfaces
+    </exec>
+    <route type="ipv4" gw="10.20.1.1">default</route>
+  </vm>   
+
+  <vm name="h2" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="lan2">
+        <ipv4>10.20.2.2/24</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+       # Change interfaces MTU
+       ifconfig eth1 mtu 1400
+       sed -i -e '/iface eth1 inet static/a \   mtu 1400' /etc/network/interfaces
+    </exec>
+    <route type="ipv4" gw="10.20.2.1">default</route>
+  </vm>   
+
+  <vm name="t2" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="lan2">
+        <ipv4>10.20.2.200/24</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+       # Change interfaces MTU
+       ifconfig eth1 mtu 1400
+       sed -i -e '/iface eth1 inet static/a \   mtu 1400' /etc/network/interfaces
+    </exec>
+    <route type="ipv4" gw="10.20.2.1">default</route>
+  </vm>   
+
+  <vm name="r1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="lan1">
+        <ipv4>10.20.1.1/24</ipv4>
+    </if>
+    <if id="2" net="lan11">
+        <ipv4>10.20.0.1/24</ipv4>
+    </if>
+    <if id="3" net="lan12">
+        <ipv4>192.168.255.253/24</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+       # Change interfaces MTU
+       ifconfig eth1 mtu 1400
+       sed -i -e '/iface eth1 inet static/a \   mtu 1400' /etc/network/interfaces
+    </exec>
+    <forwarding type="ip" />
+    <route type="ipv4" gw="10.20.0.2">10.20.2.0/24</route>
+    <route type="ipv4" gw="192.168.255.254">0.0.0.0/0</route>
+  </vm>   
+  <vm name="r2" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="lan2">
+        <ipv4>10.20.2.1/24</ipv4>
+    </if>
+    <if id="2" net="lan21">
+        <ipv4>10.20.0.2/24</ipv4>
+    </if>
+    <if id="3" net="lan22">
+        <ipv4>192.168.255.253/24</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+       # Change interfaces MTU
+       ifconfig eth1 mtu 1400
+       sed -i -e '/iface eth1 inet static/a \   mtu 1400' /etc/network/interfaces
+    </exec>
+    <forwarding type="ip" />
+    <route type="ipv4" gw="10.20.0.1">10.20.1.0/24</route>
+    <route type="ipv4" gw="192.168.255.254">0.0.0.0/0</route>
+  </vm>   
+
+  <vm name="voip-gw" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="MplsWan">
+        <mac>00:00:00:00:00:20</mac>
+        <ipv4>10.20.0.254/24</ipv4>
+    </if>
+    <forwarding type="ip" />
+    <route type="ipv4" gw="10.20.0.1">10.20.1.0/24</route>
+    <route type="ipv4" gw="10.20.0.2">10.20.2.0/24</route>
+  </vm>
+
+  <vm name="bcg1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="lan11">
+    </if>
+    <if id="2" net="lan12">
+    </if>
+    <if id="3" net="AccessNet1">
+      <ipv4>10.255.0.2/24</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+        service openvswitch-switch start
+        sleep 5
+        ovs-vsctl add-br brwan
+        ovs-vsctl add-port brwan eth1
+        ovs-vsctl add-port brwan vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.255.0.1
+        ovs-vsctl add-br brint
+        ovs-vsctl add-port brint eth2
+        ovs-vsctl add-port brint vxlan2 -- set interface vxlan2 type=vxlan options:remote_ip=10.255.0.1 options:key=inet options:dst_port=8742
+    </exec>
+  </vm>
+
+  <vm name="bcg2" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="lan21">
+    </if>
+    <if id="2" net="lan22">
+    </if>
+    <if id="3" net="AccessNet2">
+      <ipv4>10.255.0.2/24</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+        service openvswitch-switch start
+        sleep 5
+        ovs-vsctl add-br brwan
+        ovs-vsctl add-port brwan eth1
+        ovs-vsctl add-port brwan vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.255.0.1 
+        ovs-vsctl add-br brint
+        ovs-vsctl add-port brint eth2
+        ovs-vsctl add-port brint vxlan2 -- set interface vxlan2 type=vxlan options:remote_ip=10.255.0.1 options:key=inet options:dst_port=8742
+    </exec>
+  </vm>
+  <vm name="isp1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="ExtNet1">
+      <ipv4>10.100.1.254/24</ipv4>
+    </if>
+    <if id="2" net="Internet">
+      <ipv4>10.100.3.1/24</ipv4>
+    </if>
+    <if id="9" net="virbr0">
+      <ipv4>dhcp</ipv4>
+    </if>
+    <forwarding type="ip" />
+    <route type="ipv4" gw="10.100.3.2">10.100.2.0/24</route>
+    <filetree seq="on_boot" root="/usr/bin/" perms="755">/usr/bin/vnx_config_nat</filetree>
+    <exec seq="on_boot" type="verbatim">
+       sleep 1
+       dhclient eth9
+       sleep 1
+       /usr/bin/vnx_config_nat eth1 eth9
+    </exec>
+  </vm>
+  <vm name="isp2" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="ExtNet2">
+      <ipv4>10.100.2.254/24</ipv4>
+    </if>
+    <if id="2" net="Internet">
+      <ipv4>10.100.3.2/24</ipv4>
+    </if>
+    <if id="9" net="virbr0">
+      <ipv4>dhcp</ipv4>
+    </if>
+    <forwarding type="ip" />
+    <route type="ipv4" gw="10.100.3.1">10.100.1.0/24</route>
+    <filetree seq="on_boot" root="/usr/bin/" perms="755">/usr/bin/vnx_config_nat</filetree>
+    <exec seq="on_boot" type="verbatim">
+       sleep 1
+       dhclient eth9
+       sleep 1
+       /usr/bin/vnx_config_nat eth1 eth9
+    </exec>
+  </vm>
+  <vm name="s1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="Internet">
+      <ipv4>10.100.3.3/24</ipv4>
+    </if>
+    <route type="ipv4" gw="10.100.3.1">10.100.1.0/24</route>
+    <route type="ipv4" gw="10.100.3.2">10.100.2.0/24</route>
+    <route type="ipv4" gw="10.100.3.1">0.0.0.0/0</route>
+  </vm>
+</vnx>
