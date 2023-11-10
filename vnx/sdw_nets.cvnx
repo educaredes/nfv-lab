@@ -1,5 +1,0 @@
-<vnx_cfg>
-  <vm name="voip-gw" win="600,370,600,350" status="minimized"/>
-  <vm name="isp1" win="0,0,600,350" status="minimized"/>
-  <vm name="s1" win="0,370,600,350" status="minimized"/>
-</vnx_cfg>

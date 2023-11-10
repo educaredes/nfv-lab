@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+~~~~~~~~~~~~~~~~~~~~
+VNX Sample scenarios
+~~~~~~~~~~~~~~~~~~~~
+
+Name:        nfv3_home_lxc_ubuntu64
+Description: 
+
+This file is part of the Virtual Networks over LinuX (VNX) Project distribution. 
+(www: http://www.dit.upm.es/vnx - e-mail: vnx@dit.upm.es) 
+
+Departamento de Ingenieria de Sistemas Telematicos (DIT)
+Universidad Politecnica de Madrid
+SPAIN
+
+-->
+
+
+<vnx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="/usr/share/xml/vnx/vnx-2.00.xsd">
+  <global>
+    <version>2.0</version>
+    <scenario_name>nfv3_home_lxc_ubuntu64</scenario_name>
+    <automac offset="4"/>
+    <!--vm_mgmt type="none" /-->
+    <vm_mgmt type="private" network="10.250.0.0" mask="24" offset="12">
+       <host_mapping />
+    </vm_mgmt> 
+    <vm_defaults>
+        <console id="0" display="no"/>
+        <console id="1" display="yes"/>
+    </vm_defaults>
+  </global>
+    
+  <net name="virbr0" mode="virtual_bridge" managed="no"/>
+
+  <net name="AccessNet1" mode="openvswitch" managed="no"/>
+  <net name="home1net" mode="virtual_bridge" />
+  <net name="home2net" mode="virtual_bridge" />
+  
+  <vm name="h11" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="home1net">
+      <ipv4>dhcp</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+       # Change interface MTU
+       ifconfig eth1 mtu 1380
+       sed -i -e '/iface eth1 inet static/a \   mtu 1380' /etc/network/interfaces
+    </exec>
+    <route type="ipv4" gw="192.168.255.1">0.0.0.0/0</route>
+  </vm>   
+  <vm name="h12" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="home1net">
+      <ipv4>dhcp</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+       # Change interface MTU
+       ifconfig eth1 mtu 1380
+       sed -i -e '/iface eth1 inet static/a \   mtu 1380' /etc/network/interfaces
+    </exec>
+    <route type="ipv4" gw="192.168.255.1">0.0.0.0/0</route>
+  </vm> 
+  <vm name="brg1" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="home1net">
+    </if>
+    <if id="2" net="AccessNet1">
+      <ipv4>10.255.0.2/24</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+        service openvswitch-switch start
+        sleep 5
+        ovs-vsctl add-br br0
+        ovs-vsctl add-port br0 eth1
+        ovs-vsctl add-port br0 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.255.0.1
+    </exec>
+  </vm>
+  <vm name="h21" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="home2net">
+      <ipv4>dhcp</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+       # Change interfaces MTU
+       ifconfig eth1 mtu 1380
+       sed -i -e '/iface eth1 inet static/a \   mtu 1380' /etc/network/interfaces
+    </exec>
+  </vm>   
+  <vm name="h22" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="home2net">
+      <ipv4>dhcp</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+       # Change interface MTU
+       ifconfig eth1 mtu 1380
+       sed -i -e '/iface eth1 inet static/a \   mtu 1380' /etc/network/interfaces
+    </exec>
+  </vm> 
+  <vm name="brg2" type="lxc" exec_mode="lxc-attach" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="home2net">
+    </if>
+    <if id="2" net="AccessNet1">
+      <ipv4>10.255.0.4/24</ipv4>
+    </if>
+    <exec seq="on_boot" type="verbatim">
+        service openvswitch-switch start
+        sleep 5
+        ovs-vsctl add-br br0
+        ovs-vsctl add-port br0 eth1
+        ovs-vsctl add-port br0 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.255.0.3
+    </exec>
+  </vm>
+</vnx>

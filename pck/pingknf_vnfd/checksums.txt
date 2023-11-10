@@ -1,1 +1,0 @@
-f76f41b5597817ac73721f13ca533394	pingknf_vnfd/pingknf_vnfd.yaml

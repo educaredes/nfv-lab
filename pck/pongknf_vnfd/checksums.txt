@@ -1,1 +1,0 @@
-b96b6d719b7c8e90c76ec5b3be56939c	pongknf_vnfd/pongknf_vnfd.yaml
