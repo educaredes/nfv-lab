@@ -15,16 +15,16 @@ sed -i -e '/OSM_USER/d' \
        ~/.bashrc
 
 echo "export OSM_USER=user$SCEN" >> ~/.bashrc
-echo "export OSM_PASSWORD=iotalentum$SCEN" >> ~/.bashrc
-echo "export OSM_PROJECT=project$SCEN" >> ~/.bashrc
+echo "export OSM_PASSWORD=xxxx$SCEN" >> ~/.bashrc
+echo "export OSM_PROJECT=prj$SCEN" >> ~/.bashrc
 
 echo "export OSM_HOSTNAME=10.11.12.1" >> ~/.bashrc
 echo "alias kubectl='microk8s kubectl'" >> ~/.bashrc
 
 #source ~/.bashrc 
 export OSM_USER=user$SCEN
-export OSM_PASSWORD=iotalentum$SCEN
-export OSM_PROJECT=project$SCEN
+export OSM_PASSWORD=xxxx$SCEN
+export OSM_PROJECT=prj$SCEN
 export OSM_HOSTNAME=10.11.12.1
 
 echo "-- "
@@ -90,6 +90,7 @@ spec:
  }'
 EOF
 
+# Configure Multus accessnet1
 microk8s kubectl get -n $OSMNS network-attachment-definitions accessnet1 || \
 cat <<EOF | microk8s kubectl create -n $OSMNS -f -
 apiVersion: "k8s.cni.cncf.io/v1"
