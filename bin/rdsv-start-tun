@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-DEF_TUNSERVER_NAME="ccn-lab5.dit.upm.es"  # Tunnel server to connect to
+DEF_TUNSERVER_NAME="labserver06.lab.dit.upm.es"  # Tunnel server to connect to
 DEF_REPSERVER_NAME="idefix.dit.upm.es"    # Server to retrieve the tunnel config from
 USAGE="
 Usage: 
 
-  install-tun <scenario_letter> [<tun-server> <repository-server>]
+  rdsv-start-tun <scenario_letter> [<tun-server> <repository-server>]
 
   Downloads a tinc tunnel client configuration and starts it. 
 
@@ -18,9 +18,9 @@ Usage:
       If <repository-server> is specified, <tun-server> must be specified also.
 
   Examples:
-    install-tun A
-    install-tun A $DEF_TUNSERVER_NAME
-    install-tun A $DEF_TUNSERVER_NAME $DEF_REPSERVER_NAME
+    rdsv-start-tun A
+    rdsv-start-tun A $DEF_TUNSERVER_NAME
+    rdsv-start-tun A $DEF_TUNSERVER_NAME $DEF_REPSERVER_NAME
 "
 
 if [ "$#" -lt 1 ]; then 
@@ -114,7 +114,7 @@ fi
 
 
 echo "--"
-echo "-- install-tun"
+echo "-- rdsv-start-tun"
 echo "--   POD=$POD, LAB_SERVER=$TUNSERVER_NAME($TUNSERVER_IP), REPO_SERVER=$REPSERVER_NAME($REPSERVER_IP)"
 echo "--"
 echo "-- Downloading scenario $POD..."
@@ -129,7 +129,7 @@ rm -f $TUNCFGFNAME
 TMPDIR=$( mktemp -d -t tinc-XXXX ) 
 cd $TMPDIR
 echo "-- Downloading scenario $TUNCFGFNAME..."
-wget $REPSERVER_NAME/download/rdsv/tinc/${TUNCFGFNAME} -O ${TUNCFGFNAME} -c
+wget $REPSERVER_NAME/download/rdsv/tinc2/${TUNCFGFNAME} -O ${TUNCFGFNAME} -c
 if [ $? -ne 0 ]; then
     echo "--"
     echo "-- ERROR: cannot download scenario $TUNCFGFNAME"

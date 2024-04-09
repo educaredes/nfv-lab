@@ -154,14 +154,14 @@ cd nfv-lab
 Install the tunnel to the OSM server via:
 
 ```
-cd ~/shared/nfv-lab/bin
-./install-tun <letter> <tinc-server>
+cd ~/shared/sdedge-ns/bin
+./rdsv-start-tun <letra>  # If accessing from the DIT-UPM lab
 ```
 
-where  `\<tinc-server\>` shall be:
-- in case of using a PC from the DIT labs, `labserver06.lab.dit.upm.es`
-- if connecting from your own personal computer, leave blank
-
+```
+cd ~/shared/sdedge-ns/bin
+./rdsv-start-tun <letra> labtun5.dit.upm.es  # If accessing from your own PC
+```
 
 >**Note:** The teacher will assign a \<letter\> to each student or group of
 >students, so that each cluster of k8s managed by the central OSM has a
@@ -171,7 +171,7 @@ where  `\<tinc-server\>` shall be:
 Verify that the tunnel has been established by pinging the OSM server:
 
 ```
-ping 10.11.12.1
+ping 10.11.13.1
 ```
 
 ### 2. OSM definition of the k8s cluster and network configuration
@@ -181,7 +181,7 @@ k8s cluster with the following:
 
 ```
 cd ~/shared/nfv-lab/bin
-./prepare-osmlab <letter> 
+./rdsv-config-osmlab <letter> 
 ```
 
 Then, **exit the terminal** and open a new one.
@@ -205,7 +205,7 @@ Check that you can also access from the virtual machine via:
 
 ```
 # Acceso desde la máquina virtual
-firefox 10.11.12.1 &
+firefox 10.11.13.1 &
 ```
 
 Familiarise yourself with the different menu options, especially:
