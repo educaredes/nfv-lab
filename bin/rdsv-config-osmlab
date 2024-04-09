@@ -14,23 +14,23 @@ sed -i -e '/OSM_USER/d' \
        -e '/alias kubectl/d' \
        ~/.bashrc
 
-echo "export OSM_USER=user$SCEN" >> ~/.bashrc
-echo "export OSM_PASSWORD=iotalentum$SCEN" >> ~/.bashrc
-echo "export OSM_PROJECT=project$SCEN" >> ~/.bashrc
+echo "export OSM_USER=rdsv$SCEN" >> ~/.bashrc
+echo "export OSM_PASSWORD=xxxx$SCEN" >> ~/.bashrc
+echo "export OSM_PROJECT=rpry$SCEN" >> ~/.bashrc
 
-echo "export OSM_HOSTNAME=10.11.12.1" >> ~/.bashrc
+echo "export OSM_HOSTNAME=10.11.13.1" >> ~/.bashrc
 echo "alias kubectl='microk8s kubectl'" >> ~/.bashrc
 
 #source ~/.bashrc 
-export OSM_USER=user$SCEN
-export OSM_PASSWORD=iotalentum$SCEN
-export OSM_PROJECT=project$SCEN
-export OSM_HOSTNAME=10.11.12.1
+export OSM_USER=rdsv$SCEN
+export OSM_PASSWORD=xxxx$SCEN
+export OSM_PROJECT=rpry$SCEN
+export OSM_HOSTNAME=10.11.13.1
 
 echo "-- "
 echo "-- Script for preparing the enviroment for OSM laboratory "
 echo "-- "
-MYIP=$( ifconfig | grep 10.11.12 | awk '{print $2}' )
+MYIP=$( ifconfig | grep 10.11.13 | awk '{print $2}' )
 echo "-- My IP=$MYIP"
 
 # Delete dummy VIM if registered
@@ -73,6 +73,60 @@ echo "-- kubectl get namespace $OSMNS"
 microk8s kubectl get namespace $OSMNS >/dev/null 2>&1 || microk8s kubectl create namespace $OSMNS 
 microk8s kubectl get namespace $OSMNS
 
+# Enable access to services running on the host machine via fixed IP address
+microk8s enable host-access
+
+# Enable NGINX Ingress Controller for MicroK8 to access pod services through localhost:port
+microk8s enable ingress
+
+
+# Create external interfaces
+echo "Creating external interfaces"
+sudo ovs-vsctl --if-exists del-br AccessNet1
+sudo ovs-vsctl --if-exists del-br AccessNet2
+sudo ovs-vsctl --if-exists  del-br ExtNet1
+sudo ovs-vsctl --if-exists  del-br ExtNet2
+sudo ovs-vsctl --if-exists  del-br MplsWan
+sudo ovs-vsctl add-br AccessNet1
+sudo ovs-vsctl add-br AccessNet2
+sudo ovs-vsctl add-br ExtNet1
+sudo ovs-vsctl add-br ExtNet2
+sudo ovs-vsctl add-br MplsWan
+
+# Configure Multus accessnet1
+microk8s kubectl get -n $OSMNS network-attachment-definitions accessnet1 || \
+cat <<EOF | microk8s kubectl create -n $OSMNS -f -
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+ name: accessnet1
+ annotations:
+   k8s.v1.cni.cncf.io/resourceName: ovs-cni.network.kubevirt.io/AccessNet1
+spec:
+ config: '{
+   "cniVersion": "0.3.1",
+   "type": "ovs",
+   "bridge": "AccessNet1"
+ }'
+EOF
+
+# Configure Multus accessnet2
+microk8s kubectl get -n $OSMNS network-attachment-definitions accessnet2 || \
+cat <<EOF | microk8s kubectl create -n $OSMNS -f -
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+ name: accessnet2
+ annotations:
+   k8s.v1.cni.cncf.io/resourceName: ovs-cni.network.kubevirt.io/AccessNet2
+spec:
+ config: '{
+   "cniVersion": "0.3.1",
+   "type": "ovs",
+   "bridge": "AccessNet2"
+ }'
+EOF
+
 # Configure Multus extnet1
 microk8s kubectl get -n $OSMNS network-attachment-definitions extnet1 || \
 cat <<EOF | microk8s kubectl create -n $OSMNS -f -
@@ -90,19 +144,39 @@ spec:
  }'
 EOF
 
-microk8s kubectl get -n $OSMNS network-attachment-definitions accessnet1 || \
+
+# Configure Multus extnet2
+microk8s kubectl get -n $OSMNS network-attachment-definitions extnet2 || \
 cat <<EOF | microk8s kubectl create -n $OSMNS -f -
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
- name: accessnet1
+ name: extnet2
  annotations:
-   k8s.v1.cni.cncf.io/resourceName: ovs-cni.network.kubevirt.io/AccessNet1
+   k8s.v1.cni.cncf.io/resourceName: ovs-cni.network.kubevirt.io/ExtNet2
 spec:
  config: '{
    "cniVersion": "0.3.1",
    "type": "ovs",
-   "bridge": "AccessNet1"
+   "bridge": "ExtNet2"
+ }'
+EOF
+
+
+# Configure Multus mplswan
+microk8s kubectl get -n $OSMNS network-attachment-definitions mplswan || \
+cat <<EOF | microk8s kubectl create -n $OSMNS -f -
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+ name: mplswan
+ annotations:
+   k8s.v1.cni.cncf.io/resourceName: ovs-cni.network.kubevirt.io/MplsWan
+spec:
+ config: '{
+   "cniVersion": "0.3.1",
+   "type": "ovs",
+   "bridge": "MplsWan"
  }'
 EOF
 
