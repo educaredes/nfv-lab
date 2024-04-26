@@ -2,8 +2,14 @@
 Repository for NFV lab with OSM MANO.
 It contains a helm-repository, check out the [index.yaml](index.yaml)
 
+## Acknowledgements
+
+Project [ECTICS](https://www.dit.upm.es/~giros/project/ectics/) (PID2019-105257RB-C21) funded by:
+
+![financing-logo](doc/img/MICIU_AEI_w400.jpg)
+
 ## Scenario
-![scenario detail](doc/img/nfv-lab-figura4.drawio.png)
+![scenario detail](doc/en/img/nfv-lab-figura4.drawio.png)
 
 ## Quick testing guide
 1. Launch the machines RDSV-OSM and RDSV-K8S
