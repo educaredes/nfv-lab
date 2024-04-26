@@ -4,7 +4,7 @@ It contains a helm-repository, check out the [index.yaml](index.yaml)
 
 ## Acknowledgements
 
-Project [ECTICS](https://www.dit.upm.es/~giros/project/ectics/) (PID2019-105257RB-C21) funded by:
+This work is a result of project [ECTICS](https://www.dit.upm.es/~giros/project/ectics/) (PID2019-105257RB-C21), funded by:
 
 ![financing-logo](doc/img/MICIU_AEI_w400.jpg)
 
