@@ -154,12 +154,12 @@ cd nfv-lab
 Install the tunnel to the OSM server via:
 
 ```
-cd ~/shared/sdedge-ns/bin
+cd ~/shared/nfv-lab/bin
 ./rdsv-start-tun <letra>  # If accessing from the DIT-UPM lab
 ```
 
 ```
-cd ~/shared/sdedge-ns/bin
+cd ~/shared/nfv-lab/bin
 ./rdsv-start-tun <letra> labtun5.dit.upm.es  # If accessing from your own PC
 ```
 
@@ -204,7 +204,7 @@ From the _host PC_, access the _OSM_ GUI via http://osm.dit.upm.es.
 Check that you can also access from the virtual machine via:
 
 ```
-# Acceso desde la máquina virtual
+# Access from the VM
 firefox 10.11.13.1 &
 ```
 
