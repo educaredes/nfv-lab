@@ -23,9 +23,9 @@ echo "alias kubectl='microk8s kubectl'" >> ~/.bashrc
 
 #source ~/.bashrc 
 export OSM_USER=rdsv$SCEN
-export OSM_PASSWORD=xxxx$SCEN
-export OSM_PROJECT=rpry$SCEN
-export OSM_HOSTNAME=10.11.13.1
+export OSM_PASSWORD=Xxxxx1-$SCEN
+export OSM_PROJECT=pry$SCEN
+export OSM_HOSTNAME=vosm-nbi.dit.upm.es
 
 echo "-- "
 echo "-- Script for preparing the enviroment for OSM laboratory "
